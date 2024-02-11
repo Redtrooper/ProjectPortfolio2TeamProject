@@ -16,24 +16,23 @@ public class PlayerController : MonoBehaviour
     Vector3 playerVel;
     int jumpCount;
     bool isSprinting = false;
-    [SerializeField] StaminaBar staminaBar;
+    StaminaBar staminaBar;
 
     void Start()
     {
-        // Set the StaminaBar instance reference explicitly
-        staminaBar.SetInstance();
+        FindStaminaBar();
     }
 
     void Update()
-    {
-        if (staminaBar == null)
-        {
-            Debug.LogError("StaminaBar reference is null in PlayerController!");
-            return;
-        }
-
+    { 
         Movement();
         HandleSprintInput();
+    }
+
+    void FindStaminaBar()
+    {
+        staminaBar = FindObjectOfType<StaminaBar>();
+
     }
 
     void Movement()
@@ -41,6 +40,7 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             playerVel = Vector3.zero;
+            jumpCount = 0;
         }
 
         float speed = isSprinting ? sprintSpeed : walkSpeed;
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             playerVel.y = jumpForce;
             jumpCount++;
         }
-
+       
         playerVel.y += gravity * Time.deltaTime;
         controller.Move(playerVel * Time.deltaTime);
 
