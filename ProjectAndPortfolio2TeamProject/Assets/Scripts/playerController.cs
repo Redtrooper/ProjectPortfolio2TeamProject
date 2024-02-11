@@ -10,14 +10,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int jumpMax;
     [SerializeField] float jumpForce;
     [SerializeField] float gravity;
+    [SerializeField] int HP;
 
     Vector3 move;
     Vector3 playerVel;
     int jumpCount;
     bool isSprinting = false;
+    [SerializeField] StaminaBar staminaBar;
+
+    void Start()
+    {
+        // Set the StaminaBar instance reference explicitly
+        staminaBar.SetInstance();
+    }
 
     void Update()
     {
+        if (staminaBar == null)
+        {
+            Debug.LogError("StaminaBar reference is null in PlayerController!");
+            return;
+        }
+
         Movement();
         HandleSprintInput();
     }
@@ -26,7 +40,6 @@ public class PlayerController : MonoBehaviour
     {
         if (controller.isGrounded)
         {
-            jumpCount = 0;
             playerVel = Vector3.zero;
         }
 
@@ -45,10 +58,24 @@ public class PlayerController : MonoBehaviour
 
         playerVel.y += gravity * Time.deltaTime;
         controller.Move(playerVel * Time.deltaTime);
+
+        if (isSprinting)
+        {
+            int staminaCost = Mathf.CeilToInt(speed * Time.deltaTime);
+            staminaBar.UseStamina(staminaCost);
+        }
+
     }
 
     void HandleSprintInput()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift);
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && staminaBar.HasStamina();
+        staminaBar.IsPlayerSprinting = isSprinting;
+    }
+
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
     }
 }
