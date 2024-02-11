@@ -17,10 +17,15 @@ public class PlayerController : MonoBehaviour
     int jumpCount;
     bool isSprinting = false;
     StaminaBar staminaBar;
+    HealthBar healthBar;
+    private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
+    private Vector3 playerScale = new Vector3(1, 1f, 1);
 
     void Start()
     {
         FindStaminaBar();
+        FindHealthBar();
+        healthBar.setMaxHealth(HP);
     }
 
     void Update()
@@ -32,7 +37,11 @@ public class PlayerController : MonoBehaviour
     void FindStaminaBar()
     {
         staminaBar = FindObjectOfType<StaminaBar>();
+    }
 
+    void FindHealthBar()
+    {
+        healthBar = FindObjectOfType<HealthBar>();
     }
 
     void Movement()
@@ -41,6 +50,19 @@ public class PlayerController : MonoBehaviour
         {
             playerVel = Vector3.zero;
             jumpCount = 0;
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            transform.localScale = crouchScale;
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            transform.localScale = playerScale;
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
         }
 
         float speed = isSprinting ? sprintSpeed : walkSpeed;
@@ -77,5 +99,11 @@ public class PlayerController : MonoBehaviour
     public void takeDamage(int amount)
     {
         HP -= amount;
+        healthBar.UpdateHealthBar(HP);
+    }
+
+    public int getHealth()
+    {
+        return HP;
     }
 }
