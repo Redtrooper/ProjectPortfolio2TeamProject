@@ -163,7 +163,7 @@ MonoBehaviour:
   jumpMax: 2
   jumpForce: 12
   gravity: -25
-  HP: 0
+  HP: 100
 --- !u!143 &4231214651785123965
 CharacterController:
   m_ObjectHideFlags: 0
