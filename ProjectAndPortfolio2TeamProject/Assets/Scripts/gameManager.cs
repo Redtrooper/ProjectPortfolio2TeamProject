@@ -10,11 +10,14 @@ public class gameManager : MonoBehaviour
     private GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
 
+    public GameObject player;
+
     private bool isPaused;
     void Awake()
     {
         instance = this;
         timeScale = Time.timeScale;
+        player = GameObject.FindWithTag("Player");
     }
 
     void Update()
@@ -53,5 +56,4 @@ public class gameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
     }
-
 }

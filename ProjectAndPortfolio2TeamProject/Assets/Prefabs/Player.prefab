@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 2522580637765481039}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
   jumpMax: 2
   jumpForce: 12
   gravity: -25
+  HP: 0
 --- !u!143 &4231214651785123965
 CharacterController:
   m_ObjectHideFlags: 0
