@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     int jumpCount;
     bool isSprinting = false;
     StaminaBar staminaBar;
+    private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
+    private Vector3 playerScale = new Vector3(1, 1f, 1);
 
     void Start()
     {
@@ -41,6 +43,19 @@ public class PlayerController : MonoBehaviour
         {
             playerVel = Vector3.zero;
             jumpCount = 0;
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            transform.localScale = crouchScale;
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            transform.localScale = playerScale;
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
         }
 
         float speed = isSprinting ? sprintSpeed : walkSpeed;
