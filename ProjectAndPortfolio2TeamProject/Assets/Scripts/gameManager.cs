@@ -12,7 +12,7 @@ public class gameManager : MonoBehaviour
 
     public GameObject player;
 
-    private bool isPaused;
+    public bool isPaused;
     void Awake()
     {
         instance = this;
