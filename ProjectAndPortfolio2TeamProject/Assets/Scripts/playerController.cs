@@ -101,9 +101,4 @@ public class PlayerController : MonoBehaviour
         HP -= amount;
         healthBar.UpdateHealthBar(HP);
     }
-
-    public int getHealth()
-    {
-        return HP;
-    }
 }
