@@ -294,7 +294,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 7996728787786152139}
+  healthBar: {fileID: 2382128413309625083}
+  staminaBar: {fileID: 7300171916319744544}
   player: {fileID: 0}
+  isPaused: 0
 --- !u!114 &5323762166068915340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +319,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2398241250396243951}
-  - component: {fileID: 7264469869981924987}
   - component: {fileID: 2382128413309625083}
   m_Layer: 5
   m_Name: Health Bar
@@ -346,19 +348,6 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: -50}
   m_SizeDelta: {x: 450, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7264469869981924987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3678521147576301119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b85059c3aea8d94e8ac2ba17a95f758, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthSlider: {fileID: 2382128413309625083}
 --- !u!114 &2382128413309625083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,7 +1312,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1274676748626405310}
   - component: {fileID: 7300171916319744544}
-  - component: {fileID: 1935942115481351082}
   m_Layer: 5
   m_Name: Stamina Bar
   m_TagString: Untagged
@@ -1403,23 +1391,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1935942115481351082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7168176722218366338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4ba3422e935ed43b0b12635e5ac7ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  staminaBar: {fileID: 7300171916319744544}
-  maxStamina: 200
-  currentStamina: 0
-  staminaRecoveryRate: 20
-  recoveryDelay: 1
 --- !u!1 &7277371579570966443
 GameObject:
   m_ObjectHideFlags: 0

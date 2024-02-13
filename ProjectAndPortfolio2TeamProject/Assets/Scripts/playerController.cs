@@ -12,36 +12,29 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float gravity;
     [SerializeField] int HP;
 
+    // Stamina Values
+    [SerializeField] int maxStamina = 200;
+    [SerializeField] int currentStamina;
+    [SerializeField] int staminaRecoveryRate = 20;
+    [SerializeField] float recoveryDelay = 1f;
+
     Vector3 move;
     Vector3 playerVel;
     int jumpCount;
     bool isSprinting = false;
-    StaminaBar staminaBar;
-    HealthBar healthBar;
+    bool staminaRegenerating = false;
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
 
     void Start()
     {
-        FindStaminaBar();
-        FindHealthBar();
-        healthBar.setMaxHealth(HP);
+        initializeStamina();
     }
 
     void Update()
     { 
         Movement();
         HandleSprintInput();
-    }
-
-    void FindStaminaBar()
-    {
-        staminaBar = FindObjectOfType<StaminaBar>();
-    }
-
-    void FindHealthBar()
-    {
-        healthBar = FindObjectOfType<HealthBar>();
     }
 
     void Movement()
@@ -56,7 +49,6 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             transform.localScale = crouchScale;
             transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-
         }
 
         if(Input.GetKeyUp(KeyCode.LeftControl))
@@ -84,21 +76,77 @@ public class PlayerController : MonoBehaviour, IDamage
         if (isSprinting)
         {
             int staminaCost = Mathf.CeilToInt(speed * Time.deltaTime);
-            staminaBar.UseStamina(staminaCost);
+            UseStamina(staminaCost);
+        }
+        else
+        {
+            if(currentStamina < maxStamina && !staminaRegenerating)
+            {
+                StartCoroutine(staminaRegen());
+            }
         }
 
     }
 
     void HandleSprintInput()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && staminaBar.HasStamina();
-        staminaBar.IsPlayerSprinting = isSprinting;
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
+    }
+
+    void initializeStamina()
+    {
+        currentStamina = maxStamina;
+    }
+
+    [ContextMenu("Use Max Stamina")]
+    private void UseMaxStamina()
+    {
+        UseStamina(maxStamina);
+    }
+
+    IEnumerator staminaRegen()
+    {
+        staminaRegenerating = true;
+        currentStamina += staminaRecoveryRate;
+        UpdateStaminaBar();
+        yield return new WaitForSeconds(recoveryDelay);
+        staminaRegenerating = false;
+    }
+
+    public void UseStamina(int amount)
+    {
+        if(currentStamina - amount >= 0)
+        {
+            currentStamina -= amount;
+           UpdateStaminaBar();
+        }
+        else
+        {
+            Debug.Log("Not enough stamina");
+        }
     }
 
 
     public void takeDamage(int amount)
     {
         HP -= amount;
-        healthBar.UpdateHealthBar(HP);
+        if(gameManager.instance != null)
+            gameManager.instance.updateHealthBar(HP);
+    }
+
+    public int getHP()
+    {
+        return HP;
+    }
+
+    public int getMaxStamina()
+    {
+        return maxStamina;
+    }
+
+    public void UpdateStaminaBar()
+    {
+        if (gameManager.instance != null)
+            gameManager.instance.updateStaminaBar(currentStamina);
     }
 }
