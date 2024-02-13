@@ -607,6 +607,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1274676748626405310, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274676748626405310, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274676748626405310, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274676748626405310, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398241250396243951, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398241250396243951, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398241250396243951, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 2599828425299124949, guid: 4eba86c286ab3754396977933a64b3d2, type: 3}
       propertyPath: m_Name
       value: Reticle

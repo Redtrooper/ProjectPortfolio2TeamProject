@@ -22,14 +22,14 @@ public class enemyAI : MonoBehaviour, IDamage
     bool playerInRange;
     bool patrolswap;
     GameObject tempPatrolPoint;
-    Material originalMaterial;
+    Color originalColor;
     Vector3 playerDirection;
     Vector3 patrolDestination;
 
     void Start()
     {
         patrolDestination = patrolPoint1.transform.position;
-        originalMaterial = model.material;
+        originalColor = model.material.color;
         agent.speed = speed;
     }
     void Update()
@@ -112,6 +112,6 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(.15f);
-        model.material = originalMaterial;
+        model.material.color = originalColor;
     }
 }
