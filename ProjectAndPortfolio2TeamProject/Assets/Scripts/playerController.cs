@@ -21,6 +21,11 @@ public class PlayerController : MonoBehaviour, IDamage
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
 
+    [SerializeField] float firerate;
+    [SerializeField] GameObject exitlocation;
+    [SerializeField] GameObject projectile;
+    bool shootcd;
+
     void Start()
     {
         FindStaminaBar();
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage
     { 
         Movement();
         HandleSprintInput();
+        Shoot();
     }
 
     void FindStaminaBar()
@@ -100,5 +106,18 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         HP -= amount;
         healthBar.UpdateHealthBar(HP);
+    }
+
+    IEnumerator ShootTimer()
+    {
+        shootcd = true;
+        Instantiate(projectile, exitlocation.transform.position, Camera.main.transform.rotation);
+        yield return new WaitForSeconds(firerate);
+        shootcd = false;
+    }
+    void Shoot()
+    {
+        if (Input.GetButton("Shoot") && !shootcd)
+        StartCoroutine(ShootTimer());
     }
 }
