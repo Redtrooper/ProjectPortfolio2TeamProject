@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     void Update()
-    { 
+    {
         Movement();
         HandleSprintInput();
         Shoot();
@@ -51,17 +51,10 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount = 0;
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            transform.localScale = crouchScale;
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-        }
-
-        if(Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            transform.localScale = playerScale;
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-        }
+        if (Input.GetKey(KeyCode.LeftControl))
+            Crouch();
+        else
+            UnCrouch();
 
         float speed = isSprinting ? sprintSpeed : walkSpeed;
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -75,7 +68,7 @@ public class PlayerController : MonoBehaviour, IDamage
             playerVel.y = jumpForce;
             jumpCount++;
         }
-       
+
         playerVel.y += gravity * Time.deltaTime;
         controller.Move(playerVel * Time.deltaTime);
 
@@ -86,7 +79,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         else
         {
-            if(currentStamina < maxStamina && !staminaRegenerating)
+            if (currentStamina < maxStamina && !staminaRegenerating)
             {
                 StartCoroutine(staminaRegen());
             }
@@ -121,10 +114,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void UseStamina(int amount)
     {
-        if(currentStamina - amount >= 0)
+        if (currentStamina - amount >= 0)
         {
             currentStamina -= amount;
-           UpdateStaminaBar();
+            UpdateStaminaBar();
         }
         else
         {
@@ -136,7 +129,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        if(gameManager.instance != null)
+        if (gameManager.instance != null)
             gameManager.instance.updateHealthBar(HP);
     }
 
@@ -166,6 +159,14 @@ public class PlayerController : MonoBehaviour, IDamage
     void Shoot()
     {
         if (Input.GetButton("Shoot") && !shootcd)
-        StartCoroutine(ShootTimer());
+            StartCoroutine(ShootTimer());
+    }
+    void Crouch()
+    {
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+    }
+    void UnCrouch()
+    {
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
     }
 }
