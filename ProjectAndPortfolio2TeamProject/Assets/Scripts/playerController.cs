@@ -127,7 +127,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     {
         HP -= amount;
         UpdateHealthBar();
+        StartCoroutine(flashDamage());
     }
+
+    IEnumerator flashDamage() // just like in class
+    {
+        gameManager.instance.playerDamageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.instance.playerDamageFlash.SetActive(false);
+    }
+
     public void heal(int amount)
     {
         if (HP < origHP)
@@ -187,4 +196,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     {
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
     }
+
+  
 }

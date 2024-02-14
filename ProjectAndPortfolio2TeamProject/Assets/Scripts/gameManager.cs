@@ -19,6 +19,8 @@ public class gameManager : MonoBehaviour
     private int origHP;
     private int origStamina;
 
+    public GameObject playerDamageFlash; // flash here
+
     public bool isPaused;
     void Awake()
     {
