@@ -15,23 +15,11 @@ public class healthPack : MonoBehaviour
     {
         if (other.isTrigger)
             return;
-        if (other.CompareTag("Player"))
+        IHeal heal = other.GetComponent<IHeal>();
+        if (heal != null)
         {
-            IDamage dmg = other.GetComponent<IDamage>();
-            int playerHP = gameManager.instance.playerScript.getHP();
-            if (dmg != null && playerHP < 100)
-            {
-                if (healthGain + playerHP > 100)
-                { 
-                    dmg.takeDamage(playerHP - 100);
-                    Destroy(gameObject);
-                }
-                else
-                {
-                    dmg.takeDamage(-healthGain);
-                    Destroy(gameObject);
-                }
-            }
+            heal.heal(healthGain);
+            Destroy(gameObject);
         }
     }
 }

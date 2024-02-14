@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : MonoBehaviour, IDamage, IHeal
 {
     [SerializeField] CharacterController controller;
     [SerializeField] float walkSpeed;
@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool staminaRegenerating = false;
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
+    int origHP;
 
     [SerializeField] float firerate;
     [SerializeField] GameObject exitlocation;
@@ -33,7 +34,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Start()
     {
-        initializeStamina();
+        origHP = HP;
+        currentStamina = maxStamina;
     }
 
     void Update()
@@ -92,11 +94,6 @@ public class PlayerController : MonoBehaviour, IDamage
         isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
     }
 
-    void initializeStamina()
-    {
-        currentStamina = maxStamina;
-    }
-
     [ContextMenu("Use Max Stamina")]
     private void UseMaxStamina()
     {
@@ -129,8 +126,23 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        if (gameManager.instance != null)
-            gameManager.instance.updateHealthBar(HP);
+        UpdateHealthBar();
+    }
+    public void heal(int amount)
+    {
+        if (HP < origHP)
+        {
+            if (HP + amount <= origHP)
+            {
+                HP += amount;
+                UpdateHealthBar();  
+            }
+            else
+            {
+                HP = origHP;
+                UpdateHealthBar();
+            }
+        }
     }
 
     public int getHP()
@@ -143,10 +155,16 @@ public class PlayerController : MonoBehaviour, IDamage
         return maxStamina;
     }
 
-    public void UpdateStaminaBar()
+    void UpdateStaminaBar()
     {
         if (gameManager.instance != null)
             gameManager.instance.updateStaminaBar(currentStamina);
+    }
+
+    void UpdateHealthBar()
+    {
+        if (gameManager.instance != null)
+            gameManager.instance.updateHealthBar(HP);
     }
 
     IEnumerator ShootTimer()
