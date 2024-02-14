@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +11,11 @@ public class gameManager : MonoBehaviour
 
     private GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject winScreen;
 
     [SerializeField] Image healthBar;
     [SerializeField] Image staminaBar;
+    [SerializeField] Image progressBar;
 
     public GameObject player;
     public PlayerController playerScript;
@@ -20,6 +23,9 @@ public class gameManager : MonoBehaviour
     private int origStamina;
 
     public GameObject playerDamageFlash; // flash here
+
+    int checkPointsLeft = 0;
+    public int totalCheckpoints;
 
     public bool isPaused;
     void Awake()
@@ -30,6 +36,7 @@ public class gameManager : MonoBehaviour
         playerScript = player.GetComponent<PlayerController>();
         origHP = playerScript.getHP();
         origStamina = playerScript.getMaxStamina();
+        progressBar.fillAmount = 0;
     }
 
     void Update()
@@ -65,7 +72,7 @@ public class gameManager : MonoBehaviour
 
     public void confineCursor()
     {
-        Cursor.visible = false;
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
     }
 
@@ -77,5 +84,22 @@ public class gameManager : MonoBehaviour
     public void updateStaminaBar(int newStamina)
     {
         staminaBar.fillAmount = (float) newStamina/origStamina;
+    }
+
+    public void updateGameGoal(int amount)
+    {
+        checkPointsLeft += amount;
+        if (amount > 0)
+            totalCheckpoints += amount;
+        else
+            progressBar.fillAmount = (float)(totalCheckpoints - checkPointsLeft) / totalCheckpoints;
+
+        if (checkPointsLeft == 0)
+        {
+            statePaused();
+            activeMenu = winScreen;
+            activeMenu.SetActive(true);
+            confineCursor();
+        }
     }
 }
