@@ -6,6 +6,11 @@ using UnityEngine;
 public class healthPack : MonoBehaviour
 {
     [SerializeField] int healthGain;
+
+    private void Update()
+    {
+        transform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)
@@ -13,7 +18,7 @@ public class healthPack : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             IDamage dmg = other.GetComponent<IDamage>();
-            int playerHP = gameManager.instance.getPlayerHP();
+            int playerHP = gameManager.instance.playerScript.getHP();
             if (dmg != null && playerHP < 100)
             {
                 if (healthGain + playerHP > 100)

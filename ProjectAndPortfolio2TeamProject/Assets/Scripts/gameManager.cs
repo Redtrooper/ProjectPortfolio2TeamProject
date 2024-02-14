@@ -11,10 +11,13 @@ public class gameManager : MonoBehaviour
     private GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
 
-    [SerializeField] Slider healthBar;
-    [SerializeField] Slider staminaBar;
+    [SerializeField] Image healthBar;
+    [SerializeField] Image staminaBar;
 
     public GameObject player;
+    public PlayerController playerScript;
+    private int origHP;
+    private int origStamina;
 
     public bool isPaused;
     void Awake()
@@ -22,8 +25,9 @@ public class gameManager : MonoBehaviour
         instance = this;
         timeScale = Time.timeScale;
         player = GameObject.FindWithTag("Player");
-        initializeHealthBar();
-        initializeStaminaBar();
+        playerScript = player.GetComponent<PlayerController>();
+        origHP = playerScript.getHP();
+        origStamina = playerScript.getMaxStamina();
     }
 
     void Update()
@@ -63,29 +67,13 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    public int getPlayerHP()
-    {
-        return player.GetComponent<PlayerController>().getHP();
-    }
-
-    void initializeHealthBar()
-    {
-        healthBar.maxValue = player.GetComponent<PlayerController>().getHP();
-        healthBar.value = healthBar.maxValue;
-    }
-
-    void initializeStaminaBar()
-    {
-        staminaBar.maxValue = player.GetComponent<PlayerController>().getMaxStamina();
-        staminaBar.value = staminaBar.maxValue;
-    }
     public void updateHealthBar(int newHP)
     {
-        healthBar.value = newHP;
+        healthBar.fillAmount = (float) newHP/origHP;
     }
 
     public void updateStaminaBar(int newStamina)
     {
-        staminaBar.value = newStamina;
+        staminaBar.fillAmount = (float) newStamina/origStamina;
     }
 }
