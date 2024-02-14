@@ -12,6 +12,7 @@ public class gameManager : MonoBehaviour
     private GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject winScreen;
+    [SerializeField] GameObject lossScreen;
 
     [SerializeField] Image healthBar;
     [SerializeField] Image staminaBar;
@@ -101,5 +102,13 @@ public class gameManager : MonoBehaviour
             activeMenu.SetActive(true);
             confineCursor();
         }
+    }
+
+    public void youLose()
+    {
+        statePaused();
+        activeMenu = lossScreen;
+        activeMenu.SetActive(true);
+        confineCursor();
     }
 }
