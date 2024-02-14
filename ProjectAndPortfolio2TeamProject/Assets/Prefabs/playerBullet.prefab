@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8498025904449480962}
   - component: {fileID: 2412155023176681642}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: playerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   damageAmount: 5
   speed: 40
   destroyTime: 2
+  sourceIsFriendly: 1
 --- !u!33 &1705549995501192465
 MeshFilter:
   m_ObjectHideFlags: 0

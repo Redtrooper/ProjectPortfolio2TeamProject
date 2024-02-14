@@ -8,6 +8,8 @@ public class bullet : MonoBehaviour
     [SerializeField] int damageAmount;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
+
+    [SerializeField] bool sourceIsFriendly;
     
     void Start()
     {
@@ -19,6 +21,8 @@ public class bullet : MonoBehaviour
     {
 
         if (other.isTrigger)
+            return;
+        else if (other.CompareTag("Player") && sourceIsFriendly)
             return;
 
         IDamage dmg = other.GetComponent<IDamage>();
