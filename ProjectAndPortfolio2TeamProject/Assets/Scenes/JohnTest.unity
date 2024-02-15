@@ -334,6 +334,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Anime Protag
       objectReference: {fileID: 0}
+    - target: {fileID: 4821601200114918828, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5194749388830184876, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: m_Enabled
       value: 1
