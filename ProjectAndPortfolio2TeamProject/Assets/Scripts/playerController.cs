@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     void UnCrouch()
     {
         playerModel.localScale = playerScale;
-        Camera.main.transform.localPosition = Vector3.zero;
+        Camera.main.transform.localPosition = new Vector3(0f, 0.5f, 0f);
         gun.localScale = originalGunScale; 
     }
 
