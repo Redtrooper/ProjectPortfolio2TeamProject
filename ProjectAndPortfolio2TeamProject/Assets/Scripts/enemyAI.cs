@@ -28,7 +28,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Start()
     {
-        patrolDestination = patrolPoint1.transform.position;
+        if (patrolPoint1 != null && patrolPoint2 != null)
+        {
+            patrolDestination = patrolPoint1.transform.position; 
+        }
         originalColor = model.material.color;
         agent.speed = speed;
     }
@@ -36,7 +39,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (CheckForPlayer())
             MoveNShoot();
-        else
+        else if(patrolPoint1 != null && patrolPoint2 != null)
             Patrol();
     }
     void MoveNShoot()
