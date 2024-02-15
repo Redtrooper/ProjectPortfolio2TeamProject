@@ -29,6 +29,7 @@ public class gameManager : MonoBehaviour
     public PlayerController playerScript;
     private int origHP;
     private int origStamina;
+    private Color staminaBarColor;
 
     public GameObject playerDamageFlash; // flash here
 
@@ -45,6 +46,7 @@ public class gameManager : MonoBehaviour
         playerSpawn = GameObject.FindWithTag("Player Spawn Position");
         origHP = playerScript.getHP();
         origStamina = playerScript.getMaxStamina();
+        staminaBarColor = staminaBar.color;
         progressBar.fillAmount = 0;
         maxAmmo.text = playerScript.getMaxAmmo().ToString();
         currentAmmo.text = maxAmmo.text;
@@ -96,6 +98,14 @@ public class gameManager : MonoBehaviour
     public void updateStaminaBar(int newStamina)
     {
         staminaBar.fillAmount = (float)newStamina / origStamina;
+    }
+
+    public void toggleExhaustedStaminaBar()
+    {
+        if (staminaBar.color == staminaBarColor)
+            staminaBar.color = Color.red;
+        else
+            staminaBar.color = staminaBarColor;
     }
 
     public void updateGameGoal(int amount)

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     private int currentAmmo;
     [SerializeField] float reloadTime;
     private bool isReloading = false;
+    private bool isExhausted;
 
 
     // Stamina Values
@@ -105,7 +106,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     void HandleSprintInput()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0 && !isExhausted; 
     }
 
     [ContextMenu("Use Max Stamina")]
@@ -119,6 +120,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         staminaRegenerating = true;
         currentStamina += staminaRecoveryRate;
         UpdateStaminaBar();
+        if (isExhausted && currentStamina == maxStamina) 
+        {
+            isExhausted = false;
+            gameManager.instance.toggleExhaustedStaminaBar();
+        }
         yield return new WaitForSeconds(recoveryDelay);
         staminaRegenerating = false;
     }
@@ -129,6 +135,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         {
             currentStamina -= amount;
             UpdateStaminaBar();
+            if (currentStamina <= 0)
+            { 
+                isExhausted = true;
+                gameManager.instance.toggleExhaustedStaminaBar();
+            }
         }
         else
         {
