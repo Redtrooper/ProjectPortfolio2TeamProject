@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] Image healthBar;
     [SerializeField] Image staminaBar;
     [SerializeField] Image progressBar;
+    [SerializeField] TMP_Text keyCount;
 
     public GameObject player;
     public PlayerController playerScript;
@@ -82,12 +84,12 @@ public class gameManager : MonoBehaviour
 
     public void updateHealthBar(int newHP)
     {
-        healthBar.fillAmount = (float) newHP/origHP;
+        healthBar.fillAmount = (float)newHP / origHP;
     }
 
     public void updateStaminaBar(int newStamina)
     {
-        staminaBar.fillAmount = (float) newStamina/origStamina;
+        staminaBar.fillAmount = (float)newStamina / origStamina;
     }
 
     public void updateGameGoal(int amount)
@@ -114,4 +116,10 @@ public class gameManager : MonoBehaviour
         activeMenu.SetActive(true);
         confineCursor();
     }
+
+    public void updateKeyCountUI(int amount)
+    {
+        keyCount.text = "x" + amount.ToString();
+    }
+
 }

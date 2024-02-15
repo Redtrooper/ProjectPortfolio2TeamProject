@@ -241,11 +241,13 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     public void giveKey(int amount)
     {
         keys += amount;
+        gameManager.instance.updateKeyCountUI(keys);
     }
 
     public void useKey(int amount)
     {
         keys -= amount;
+        gameManager.instance.updateKeyCountUI(keys);
     }
   
 }
