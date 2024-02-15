@@ -279,6 +279,8 @@ MonoBehaviour:
   jumpForce: 12
   gravity: -25
   HP: 100
+  playerModel: {fileID: 306448665430234397}
+  gun: {fileID: 9090806317595220516}
   maxStamina: 200
   currentStamina: 0
   staminaRecoveryRate: 20
