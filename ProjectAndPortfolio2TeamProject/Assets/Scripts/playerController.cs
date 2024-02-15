@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     void Start()
     {
         origHP = HP;
-        currentStamina = maxStamina;
+        respawn();
     }
 
     void Update()
@@ -200,5 +200,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
     }
 
+    public void respawn()
+    {
+        HP = origHP;
+        UpdateHealthBar();
+        currentStamina = maxStamina;
+        UpdateStaminaBar();
+
+        controller.enabled = false;
+        transform.position = gameManager.instance.playerSpawn.transform.position;
+        controller.enabled = true;
+    }
   
 }

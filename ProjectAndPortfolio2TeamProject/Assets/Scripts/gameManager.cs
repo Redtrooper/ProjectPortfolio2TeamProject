@@ -9,6 +9,8 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
     private float timeScale;
 
+    public GameObject playerSpawn;
+
     private GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject winScreen;
@@ -26,7 +28,7 @@ public class gameManager : MonoBehaviour
     public GameObject playerDamageFlash; // flash here
 
     int checkPointsLeft = 0;
-    public int totalCheckpoints;
+    int totalCheckpoints;
 
     public bool isPaused;
     void Awake()
@@ -35,6 +37,7 @@ public class gameManager : MonoBehaviour
         timeScale = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
+        playerSpawn = GameObject.FindWithTag("Player Spawn Position");
         origHP = playerScript.getHP();
         origStamina = playerScript.getMaxStamina();
         progressBar.fillAmount = 0;
