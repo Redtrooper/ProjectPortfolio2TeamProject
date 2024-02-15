@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
     int origHP;
+    int keys = 0;
 
     [SerializeField] float firerate;
     [SerializeField] GameObject exitlocation;
@@ -61,9 +62,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
             jumpCount = 0;
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
+       if (Input.GetKey(KeyCode.LeftControl))
             Crouch();
-        else
+       else
             UnCrouch();
 
         float speed = isSprinting ? sprintSpeed : walkSpeed;
@@ -224,9 +225,27 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         currentStamina = maxStamina;
         UpdateStaminaBar();
 
-        controller.enabled = false;
-        transform.position = gameManager.instance.playerSpawn.transform.position;
-        controller.enabled = true;
+        if (gameManager.instance.playerSpawn != null)
+        {
+            controller.enabled = false;
+            transform.position = gameManager.instance.playerSpawn.transform.position;
+            controller.enabled = true; 
+        }
+    }
+
+    public int getKeyCount()
+    {
+        return keys;
+    }
+
+    public void giveKey(int amount)
+    {
+        keys += amount;
+    }
+
+    public void useKey(int amount)
+    {
+        keys -= amount;
     }
   
 }
