@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     [SerializeField] float jumpForce;
     [SerializeField] float gravity;
     [SerializeField] int HP;
+    [SerializeField] Transform playerModel;
+    [SerializeField] Transform gun;
+    private Vector3 originalPlayerScale;
+    private Vector3 originalGunScale;
+
+
 
     // Stamina Values
     [SerializeField] int maxStamina = 200;
@@ -36,6 +42,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     {
         origHP = HP;
         respawn();
+        originalPlayerScale = playerModel.localScale;
+        originalGunScale = gun.localScale;
     }
 
     void Update()
@@ -188,19 +196,28 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     }
     void Shoot()
     {
+
         if (Input.GetButton("Shoot") && !shootcd)
             StartCoroutine(ShootTimer());
     }
     void Crouch()
     {
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        playerModel.localScale = crouchScale;
+        Camera.main.transform.localPosition = new Vector3(0f, -0.5f, 0f);
+
+        // this line here makes the gun scale stay the same when crouching - john
+        gun.localScale = Vector3.Scale(originalGunScale, new Vector3(1f, 1f / crouchScale.y, 1f));
+
     }
     void UnCrouch()
     {
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        playerModel.localScale = playerScale;
+        Camera.main.transform.localPosition = Vector3.zero;
+        gun.localScale = originalGunScale; 
     }
 
-    public void respawn()
+
+        public void respawn()
     {
         HP = origHP;
         UpdateHealthBar();
