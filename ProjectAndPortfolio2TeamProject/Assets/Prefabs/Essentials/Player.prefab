@@ -282,12 +282,12 @@ MonoBehaviour:
   playerModel: {fileID: 306448665430234397}
   gun: {fileID: 9090806317595220516}
   maxAmmo: 30
-  reloadTime: 3.5
-  maxStamina: 200
+  reloadTime: 2.5
+  maxStamina: 1000
   currentStamina: 0
-  staminaRecoveryRate: 20
-  recoveryDelay: 1
-  firerate: 0.1
+  staminaRecoveryRate: 5
+  recoveryDelay: 0.05
+  firerate: 0.25
   exitlocation: {fileID: 2167458911452146167}
   projectile: {fileID: 523656449581014684, guid: c32570ddd7bd8624291fa57b9e973815, type: 3}
 --- !u!143 &840522430156782247

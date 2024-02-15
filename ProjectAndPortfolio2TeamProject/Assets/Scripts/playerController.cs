@@ -256,6 +256,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         UpdateHealthBar();
         currentStamina = maxStamina;
         UpdateStaminaBar();
+        if (isExhausted)
+        {
+            isExhausted = false;
+            gameManager.instance.toggleExhaustedStaminaBar();
+        }
+        
 
         if (gameManager.instance.playerSpawn != null)
         {
