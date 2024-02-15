@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a54127659e8e8941bd9e3c4a5180e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 40
+  hp: 10
   damage: 2
   turnspeed: 60
   speed: 6
@@ -308,6 +308,7 @@ MonoBehaviour:
   projectile: {fileID: 157687882469607331, guid: 10d08e25ff30b334d93a5c590459beda, type: 3}
   patrolPoint1: {fileID: 0}
   patrolPoint2: {fileID: 0}
+  hasKey: 0
 --- !u!195 &8998525051798973
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -420,7 +421,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 20
+  m_Radius: 40
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7980148138439954693
 GameObject:

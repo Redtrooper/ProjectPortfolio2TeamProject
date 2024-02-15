@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 6832849431239489832}
   - component: {fileID: 5307901101966814986}
   m_Layer: 0
-  m_Name: Cameron
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,7 +398,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4848276217440298068}
-  - component: {fileID: 3990836156678332565}
   - component: {fileID: 1484832897569377060}
   m_Layer: 0
   m_Name: WeaponHolster
@@ -423,20 +422,6 @@ Transform:
   - {fileID: 9090806317595220516}
   m_Father: {fileID: 4821601200114918828}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3990836156678332565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4824637324920661082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f6d7139f7e9f814b9f971d2165121c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  sensitivityMultiplier: 0
 --- !u!114 &1484832897569377060
 MonoBehaviour:
   m_ObjectHideFlags: 0
