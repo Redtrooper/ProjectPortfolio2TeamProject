@@ -14,6 +14,7 @@ public class checkpoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.playerSpawn.transform.position = transform.position;
             Destroy(gameObject);
         }
     }

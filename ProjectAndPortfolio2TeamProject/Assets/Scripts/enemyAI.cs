@@ -21,6 +21,7 @@ public class enemyAI : MonoBehaviour, IDamage
     bool shootcd;
     bool playerInRange;
     bool patrolswap;
+    [SerializeField] bool hasKey;
     GameObject tempPatrolPoint;
     Color originalColor;
     Vector3 playerDirection;
@@ -28,7 +29,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Start()
     {
-        patrolDestination = patrolPoint1.transform.position;
+        if (patrolPoint1 != null && patrolPoint2 != null)
+        {
+            patrolDestination = patrolPoint1.transform.position; 
+        }
         originalColor = model.material.color;
         agent.speed = speed;
     }
@@ -36,7 +40,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (CheckForPlayer())
             MoveNShoot();
-        else
+        else if(patrolPoint1 != null && patrolPoint2 != null)
             Patrol();
     }
     void MoveNShoot()
@@ -99,7 +103,11 @@ public class enemyAI : MonoBehaviour, IDamage
         hp -= amount;
         StartCoroutine(DamageFlash());
         if (hp <= 0)
+        {
+            if (hasKey)
+                Instantiate(gameManager.instance.keyPickup, transform.position, transform.rotation);
             Destroy(gameObject);
+        }
     }
     IEnumerator Shoot()
     {

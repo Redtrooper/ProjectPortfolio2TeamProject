@@ -11,6 +11,17 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     [SerializeField] float jumpForce;
     [SerializeField] float gravity;
     [SerializeField] int HP;
+    [SerializeField] Transform playerModel;
+    [SerializeField] Transform gun;
+    private Vector3 originalPlayerScale;
+    private Vector3 originalGunScale;
+
+    [SerializeField] int maxAmmo;
+    private int currentAmmo;
+    [SerializeField] float reloadTime;
+    private bool isReloading = false;
+    private bool isExhausted;
+
 
     // Stamina Values
     [SerializeField] int maxStamina = 200;
@@ -26,6 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
     int origHP;
+    int keys = 0;
 
     [SerializeField] float firerate;
     [SerializeField] GameObject exitlocation;
@@ -35,7 +47,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     void Start()
     {
         origHP = HP;
-        currentStamina = maxStamina;
+        respawn();
+        originalPlayerScale = playerModel.localScale;
+        originalGunScale = gun.localScale;
+        currentAmmo = maxAmmo;
     }
 
     void Update()
@@ -53,9 +68,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
             jumpCount = 0;
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
+       if (Input.GetKey(KeyCode.LeftControl))
             Crouch();
-        else
+       else
             UnCrouch();
 
         float speed = isSprinting ? sprintSpeed : walkSpeed;
@@ -91,7 +106,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     void HandleSprintInput()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0 && !isExhausted; 
     }
 
     [ContextMenu("Use Max Stamina")]
@@ -105,6 +120,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         staminaRegenerating = true;
         currentStamina += staminaRecoveryRate;
         UpdateStaminaBar();
+        if (isExhausted && currentStamina == maxStamina) 
+        {
+            isExhausted = false;
+            gameManager.instance.toggleExhaustedStaminaBar();
+        }
         yield return new WaitForSeconds(recoveryDelay);
         staminaRegenerating = false;
     }
@@ -115,6 +135,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         {
             currentStamina -= amount;
             UpdateStaminaBar();
+            if (currentStamina <= 0)
+            { 
+                isExhausted = true;
+                gameManager.instance.toggleExhaustedStaminaBar();
+            }
         }
         else
         {
@@ -183,22 +208,89 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     {
         shootcd = true;
         Instantiate(projectile, exitlocation.transform.position, Camera.main.transform.rotation);
+        currentAmmo -= 1;
+        gameManager.instance.updateAmmoCountUI(currentAmmo);
         yield return new WaitForSeconds(firerate);
         shootcd = false;
     }
     void Shoot()
     {
-        if (Input.GetButton("Shoot") && !shootcd)
+
+        if (Input.GetButton("Shoot") && !shootcd && currentAmmo > 0 && !isReloading)
             StartCoroutine(ShootTimer());
+        else if (Input.GetButtonDown("Reload") && !isReloading && currentAmmo < maxAmmo)
+        {
+            isReloading = true;
+            gameManager.instance.toggleReloadIcon();
+            Invoke("Reload", reloadTime);
+        }
+    }
+
+    void Reload()
+    {
+        currentAmmo = maxAmmo;
+        gameManager.instance.updateAmmoCountUI(currentAmmo);
+        gameManager.instance.toggleReloadIcon();
+        isReloading = false;
     }
     void Crouch()
     {
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        playerModel.localScale = crouchScale;
+        Camera.main.transform.localPosition = new Vector3(0f, -0.5f, 0f);
+
+        // this line here makes the gun scale stay the same when crouching - john
+        gun.localScale = Vector3.Scale(originalGunScale, new Vector3(1f, 1f / crouchScale.y, 1f));
+
     }
     void UnCrouch()
     {
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        playerModel.localScale = playerScale;
+        Camera.main.transform.localPosition = new Vector3(0f, 0.5f, 0f);
+        gun.localScale = originalGunScale; 
     }
 
+
+        public void respawn()
+    {
+        HP = origHP;
+        UpdateHealthBar();
+        currentStamina = maxStamina;
+        UpdateStaminaBar();
+        if (isExhausted)
+        {
+            isExhausted = false;
+            gameManager.instance.toggleExhaustedStaminaBar();
+        }
+        
+
+        if (gameManager.instance.playerSpawn != null)
+        {
+            controller.enabled = false;
+            transform.position = gameManager.instance.playerSpawn.transform.position;
+            controller.enabled = true; 
+        }
+    }
+
+    public int getKeyCount()
+    {
+        return keys;
+    }
+
+    public void giveKey(int amount)
+    {
+        keys += amount;
+        gameManager.instance.updateKeyCountUI(keys);
+    }
+
+    public void useKey(int amount)
+    {
+        keys -= amount;
+        gameManager.instance.updateKeyCountUI(keys);
+    }
+
+    public int getMaxAmmo()
+    {
+        return maxAmmo;
+    }
   
 }
