@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     private Vector3 originalPlayerScale;
     private Vector3 originalGunScale;
 
+    [SerializeField] int maxAmmo;
+    private int currentAmmo;
+    [SerializeField] float reloadTime;
+    private bool isReloading = false;
 
 
     // Stamina Values
@@ -45,6 +49,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         respawn();
         originalPlayerScale = playerModel.localScale;
         originalGunScale = gun.localScale;
+        currentAmmo = maxAmmo;
     }
 
     void Update()
@@ -192,14 +197,30 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     {
         shootcd = true;
         Instantiate(projectile, exitlocation.transform.position, Camera.main.transform.rotation);
+        currentAmmo -= 1;
+        gameManager.instance.updateAmmoCountUI(currentAmmo);
         yield return new WaitForSeconds(firerate);
         shootcd = false;
     }
     void Shoot()
     {
 
-        if (Input.GetButton("Shoot") && !shootcd)
+        if (Input.GetButton("Shoot") && !shootcd && currentAmmo > 0)
             StartCoroutine(ShootTimer());
+        else if (Input.GetButtonDown("Reload") && !isReloading && currentAmmo < maxAmmo)
+        {
+            isReloading = true;
+            gameManager.instance.toggleReloadIcon();
+            Invoke("Reload", reloadTime);
+        }
+    }
+
+    void Reload()
+    {
+        currentAmmo = maxAmmo;
+        gameManager.instance.updateAmmoCountUI(currentAmmo);
+        gameManager.instance.toggleReloadIcon();
+        isReloading = false;
     }
     void Crouch()
     {
@@ -248,6 +269,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     {
         keys -= amount;
         gameManager.instance.updateKeyCountUI(keys);
+    }
+
+    public int getMaxAmmo()
+    {
+        return maxAmmo;
     }
   
 }

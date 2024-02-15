@@ -21,6 +21,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] Image staminaBar;
     [SerializeField] Image progressBar;
     [SerializeField] TMP_Text keyCount;
+    [SerializeField] TMP_Text currentAmmo;
+    [SerializeField] TMP_Text maxAmmo;
+    [SerializeField] TMP_Text reloadText;
 
     public GameObject player;
     public PlayerController playerScript;
@@ -43,6 +46,9 @@ public class gameManager : MonoBehaviour
         origHP = playerScript.getHP();
         origStamina = playerScript.getMaxStamina();
         progressBar.fillAmount = 0;
+        maxAmmo.text = playerScript.getMaxAmmo().ToString();
+        currentAmmo.text = maxAmmo.text;
+        reloadText.enabled = false;
     }
 
     void Update()
@@ -122,4 +128,13 @@ public class gameManager : MonoBehaviour
         keyCount.text = "x" + amount.ToString();
     }
 
+    public void updateAmmoCountUI(int amount)
+    {
+        currentAmmo.text = amount.ToString("00");
+    }
+
+    public void toggleReloadIcon()
+    {
+        reloadText.enabled = !reloadText.enabled;
+    }
 }
