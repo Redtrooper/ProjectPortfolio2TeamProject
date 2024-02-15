@@ -2775,6 +2775,7 @@ MonoBehaviour:
   currentAmmo: {fileID: 8265177184786447788}
   maxAmmo: {fileID: 6153160608839641567}
   reloadText: {fileID: 94622973681952358}
+  keyPickup: {fileID: 1094541893443516611, guid: da3fce8bad7b69449bf0e9f60bb1f12b, type: 3}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   playerDamageFlash: {fileID: 3926914219806547329}

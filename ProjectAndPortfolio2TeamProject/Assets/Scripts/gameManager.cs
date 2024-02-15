@@ -25,6 +25,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text maxAmmo;
     [SerializeField] TMP_Text reloadText;
 
+    public GameObject keyPickup;
+
     public GameObject player;
     public PlayerController playerScript;
     private int origHP;
