@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 5194749388830184876}
   - component: {fileID: 4884936221935779298}
   m_Layer: 0
-  m_Name: Anime Protag
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
