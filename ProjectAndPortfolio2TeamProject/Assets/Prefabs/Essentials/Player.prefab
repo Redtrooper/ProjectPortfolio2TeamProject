@@ -281,6 +281,8 @@ MonoBehaviour:
   HP: 100
   playerModel: {fileID: 306448665430234397}
   gun: {fileID: 9090806317595220516}
+  maxAmmo: 30
+  reloadTime: 3.5
   maxStamina: 200
   currentStamina: 0
   staminaRecoveryRate: 20

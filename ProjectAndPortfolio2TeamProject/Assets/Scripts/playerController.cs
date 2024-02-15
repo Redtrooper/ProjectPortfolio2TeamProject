@@ -205,7 +205,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     void Shoot()
     {
 
-        if (Input.GetButton("Shoot") && !shootcd && currentAmmo > 0)
+        if (Input.GetButton("Shoot") && !shootcd && currentAmmo > 0 && !isReloading)
             StartCoroutine(ShootTimer());
         else if (Input.GetButtonDown("Reload") && !isReloading && currentAmmo < maxAmmo)
         {
