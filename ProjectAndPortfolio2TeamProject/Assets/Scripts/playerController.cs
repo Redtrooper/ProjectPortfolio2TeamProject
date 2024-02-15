@@ -128,6 +128,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         HP -= amount;
         UpdateHealthBar();
         StartCoroutine(flashDamage());
+
+        if (HP <= 0)
+            gameManager.instance.youLose();
     }
 
     IEnumerator flashDamage() // just like in class
