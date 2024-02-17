@@ -18,6 +18,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject projectile;
     [SerializeField] GameObject patrolPoint1;
     [SerializeField] GameObject patrolPoint2;
+    bool isAggro; // this will make it so they go aggro when shot out of range - john
     bool shootcd;
     bool playerInRange;
     bool patrolswap;
@@ -38,10 +39,22 @@ public class enemyAI : MonoBehaviour, IDamage
     }
     void Update()
     {
-        if (CheckForPlayer())
+        if (isAggro)
+        {
             MoveNShoot();
-        else if(patrolPoint1 != null && patrolPoint2 != null)
-            Patrol();
+        }
+        else
+        {
+            if (CheckForPlayer())
+            {
+                isAggro = true;
+                MoveNShoot();
+            }
+            else if (patrolPoint1 != null && patrolPoint2 != null)
+            {
+                Patrol();
+            }
+        }
     }
     void MoveNShoot()
     {
@@ -100,6 +113,12 @@ public class enemyAI : MonoBehaviour, IDamage
     }
     public void takeDamage(int amount)
     {
+        if (!isAggro)
+        {
+            isAggro = true; 
+        }
+
+
         hp -= amount;
         StartCoroutine(DamageFlash());
         if (hp <= 0)
