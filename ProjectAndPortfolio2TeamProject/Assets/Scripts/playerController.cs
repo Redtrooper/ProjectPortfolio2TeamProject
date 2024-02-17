@@ -23,11 +23,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     private bool isExhausted;
 
 
-    // Stamina Values
-    [SerializeField] int maxStamina = 200;
+    [SerializeField] int jumpStaminaCost;
+    [SerializeField] int maxStamina;
     [SerializeField] int currentStamina;
-    [SerializeField] int staminaRecoveryRate = 20;
-    [SerializeField] float recoveryDelay = 1f;
+    [SerializeField] int staminaRecoveryRate;
+    [SerializeField] float recoveryDelay;
 
     Vector3 move;
     Vector3 playerVel;
@@ -82,6 +82,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            
+            UseStamina(jumpStaminaCost);
+
             playerVel.y = jumpForce;
             jumpCount++;
         }
