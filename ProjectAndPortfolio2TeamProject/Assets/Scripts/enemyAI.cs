@@ -18,6 +18,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject projectile;
     [SerializeField] GameObject patrolPoint1;
     [SerializeField] GameObject patrolPoint2;
+    [SerializeField] GameObject keyModel;
     bool isAggro; // this will make it so they go aggro when shot out of range - john
     bool shootcd;
     bool playerInRange;
@@ -36,6 +37,12 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         originalColor = model.material.color;
         agent.speed = speed;
+
+        if (keyModel != null)
+        {
+            keyModel.SetActive(hasKey);
+        }
+
     }
     void Update()
     {
@@ -124,7 +131,13 @@ public class enemyAI : MonoBehaviour, IDamage
         if (hp <= 0)
         {
             if (hasKey)
+            {
                 Instantiate(gameManager.instance.keyPickup, transform.position, transform.rotation);
+                if (keyModel != null)
+                {
+                    keyModel.SetActive(true); 
+                }
+            }
             Destroy(gameObject);
         }
     }
