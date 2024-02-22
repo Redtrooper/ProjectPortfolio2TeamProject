@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8498025904449480962}
   - component: {fileID: 2412155023176681642}
   m_Layer: 0
-  m_Name: playerBullet
+  m_Name: Bullet - Assualt Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

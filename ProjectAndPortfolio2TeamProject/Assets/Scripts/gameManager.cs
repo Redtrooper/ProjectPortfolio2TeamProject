@@ -142,6 +142,7 @@ public class gameManager : MonoBehaviour
     public void updateAmmoCountUI(int amount)
     {
         currentAmmo.text = amount.ToString("00");
+        maxAmmo.text = playerScript.getMaxAmmo().ToString("00");
     }
 
     public void toggleReloadIcon()

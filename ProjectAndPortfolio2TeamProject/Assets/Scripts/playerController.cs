@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage, IHeal
@@ -16,9 +17,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     private Vector3 originalPlayerScale;
     private Vector3 originalGunScale;
 
-    [SerializeField] int maxAmmo;
+    private int maxAmmo;
     private int currentAmmo;
-    [SerializeField] float reloadTime;
+    private float reloadTime;
     private bool isReloading = false;
     private bool isExhausted;
 
@@ -39,9 +40,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     int origHP;
     int keys = 0;
 
-    [SerializeField] float firerate;
-    [SerializeField] GameObject exitlocation;
-    [SerializeField] GameObject projectile;
+    private float firerate = 0;
+    [SerializeField] Transform exitlocation;
+    private GameObject projectile = null;
+    [SerializeField] GameObject weaponModel;
     bool shootcd;
 
     void Start()
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         originalPlayerScale = playerModel.localScale;
         originalGunScale = gun.localScale;
         currentAmmo = maxAmmo;
+        gameManager.instance.updateAmmoCountUI(currentAmmo);
     }
 
     void Update()
@@ -210,7 +213,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     IEnumerator ShootTimer()
     {
         shootcd = true;
-        Instantiate(projectile, exitlocation.transform.position, Camera.main.transform.rotation);
+        Instantiate(projectile, exitlocation.position, Camera.main.transform.rotation);
         currentAmmo -= 1;
         gameManager.instance.updateAmmoCountUI(currentAmmo);
         yield return new WaitForSeconds(firerate);
@@ -294,6 +297,21 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     public int getMaxAmmo()
     {
         return maxAmmo;
+    }
+
+    public void setWeaponStats(weaponStats weapon, Transform exitPoint)
+    {
+        firerate = weapon.weaponFireRate;
+        projectile = weapon.weaponProjectile;
+        currentAmmo = weapon.weaponAmmoCurr;
+        maxAmmo = weapon.weaponAmmoMax;
+        reloadTime = weapon.weaponReloadTime;
+        exitlocation.localPosition = exitPoint.localPosition;
+
+        gameManager.instance.updateAmmoCountUI(currentAmmo);
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
   
 }
