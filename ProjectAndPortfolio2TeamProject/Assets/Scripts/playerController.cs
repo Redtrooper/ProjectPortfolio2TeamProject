@@ -5,53 +5,66 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage, IHeal
 {
-    [SerializeField] CharacterController controller;
+    [Header("----- Player Stats -----")]
+    [SerializeField] int HP;
     [SerializeField] float walkSpeed;
     [SerializeField] float sprintSpeed;
     [SerializeField] int jumpMax;
     [SerializeField] float jumpForce;
     [SerializeField] float gravity;
-    [SerializeField] int HP;
-    [SerializeField] Transform playerModel;
-    [SerializeField] Transform gun;
-    private Vector3 originalPlayerScale;
-    private Vector3 originalGunScale;
 
+    [Header("----- Player Model & Transform -----")]
+    [SerializeField] CharacterController controller;
+    [SerializeField] Transform playerModel;
+
+    // Private Player Variables
+    private Vector3 originalPlayerScale;
+    private int origHP;
+    private int keys = 0;
+    private int jumpCount;
+
+    // Player Movement
+    private Vector3 move;
+    private Vector3 playerVel;
+
+    [Header("----- Weapons -----")]
+    [SerializeField] GameObject weaponModel;
+    [SerializeField] Transform exitlocation;
+
+    // Private Weapon Variables
     private int maxAmmo;
     private int currentAmmo;
     private float reloadTime;
-    private bool isReloading = false;
-    private bool isExhausted;
+    private float firerate;
+    private Vector3 originalGunScale;
+    private int selectedWeapon;
+    private List<weaponStats> weaponList = new List<weaponStats>();
+    private GameObject projectile = null;
 
-
-    [SerializeField] int jumpStaminaCost;
+    [Header("----- Stamina -----")]
     [SerializeField] int maxStamina;
     [SerializeField] int currentStamina;
     [SerializeField] int staminaRecoveryRate;
-    [SerializeField] float recoveryDelay;
+    [SerializeField] float staminaRecoveryDelay;
+    [SerializeField] int jumpStaminaCost;
 
-    Vector3 move;
-    Vector3 playerVel;
-    int jumpCount;
-    bool isSprinting = false;
-    bool staminaRegenerating = false;
+    // Crouch Scaling Stuff
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
-    int origHP;
-    int keys = 0;
 
-    private float firerate = 0;
-    [SerializeField] Transform exitlocation;
-    private GameObject projectile = null;
-    [SerializeField] GameObject weaponModel;
-    bool shootcd;
+    // Player States
+    private bool isShooting = false;
+    private bool isReloading = false;
+    private bool isExhausted = false;
+    private bool isSprinting = false;
+    private bool isRegeneratingStamina = false;
 
     void Start()
     {
         origHP = HP;
         respawn();
         originalPlayerScale = playerModel.localScale;
-        originalGunScale = gun.localScale;
+        originalGunScale = weaponModel.transform.localScale;
         currentAmmo = maxAmmo;
         gameManager.instance.updateAmmoCountUI(currentAmmo);
     }
@@ -60,7 +73,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     {
         Movement();
         HandleSprintInput();
-        Shoot();
+        if (weaponList.Count > 0)
+        {
+            selectWeapon();
+            Shoot(); 
+        }
     }
 
     void Movement()
@@ -101,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         }
         else
         {
-            if (currentStamina < maxStamina && !staminaRegenerating)
+            if (currentStamina < maxStamina && !isRegeneratingStamina)
             {
                 StartCoroutine(staminaRegen());
             }
@@ -122,7 +139,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     IEnumerator staminaRegen()
     {
-        staminaRegenerating = true;
+        isRegeneratingStamina = true;
         currentStamina += staminaRecoveryRate;
         UpdateStaminaBar();
         if (isExhausted && currentStamina == maxStamina) 
@@ -130,8 +147,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
             isExhausted = false;
             gameManager.instance.toggleExhaustedStaminaBar();
         }
-        yield return new WaitForSeconds(recoveryDelay);
-        staminaRegenerating = false;
+        yield return new WaitForSeconds(staminaRecoveryDelay);
+        isRegeneratingStamina = false;
     }
 
     public void UseStamina(int amount)
@@ -211,17 +228,17 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     IEnumerator ShootTimer()
     {
-        shootcd = true;
+        isShooting = true;
         Instantiate(projectile, exitlocation.position, Camera.main.transform.rotation);
         currentAmmo -= 1;
         gameManager.instance.updateAmmoCountUI(currentAmmo);
         yield return new WaitForSeconds(firerate);
-        shootcd = false;
+        isShooting = false;
     }
     void Shoot()
     {
 
-        if (Input.GetButton("Shoot") && !shootcd && currentAmmo > 0 && !isReloading)
+        if (Input.GetButton("Shoot") && !isShooting && currentAmmo > 0 && !isReloading)
             StartCoroutine(ShootTimer());
         else if (Input.GetButtonDown("Reload") && !isReloading && currentAmmo < maxAmmo)
         {
@@ -244,14 +261,14 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         Camera.main.transform.localPosition = new Vector3(0f, -0.5f, 0f);
 
         // this line here makes the gun scale stay the same when crouching - john
-        gun.localScale = Vector3.Scale(originalGunScale, new Vector3(1f, 1f / crouchScale.y, 1f));
+        weaponModel.transform.localScale = Vector3.Scale(originalGunScale, new Vector3(1f, 1f / crouchScale.y, 1f));
 
     }
     void UnCrouch()
     {
         playerModel.localScale = playerScale;
         Camera.main.transform.localPosition = new Vector3(0f, 0.5f, 0f);
-        gun.localScale = originalGunScale; 
+        weaponModel.transform.localScale = originalGunScale; 
     }
 
 
@@ -298,19 +315,53 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         return maxAmmo;
     }
 
-    public void setWeaponStats(weaponStats weapon, Transform exitPoint)
+    public void addNewWeapon(weaponStats weapon)
     {
+        selectedWeapon = weaponList.Count - 1;
+
+        weaponList.Add(weapon);
+
         firerate = weapon.weaponFireRate;
         projectile = weapon.weaponProjectile;
         currentAmmo = weapon.weaponAmmoCurr;
         maxAmmo = weapon.weaponAmmoMax;
         reloadTime = weapon.weaponReloadTime;
-        exitlocation.localPosition = exitPoint.localPosition;
+        exitlocation.localPosition = weapon.weaponExitPointPos;
+
 
         gameManager.instance.updateAmmoCountUI(currentAmmo);
 
         weaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
         weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    public void changeWeapon()
+    {
+        firerate = weaponList[selectedWeapon].weaponFireRate;
+        projectile = weaponList[selectedWeapon].weaponProjectile;
+        currentAmmo = weaponList[selectedWeapon].weaponAmmoCurr;
+        maxAmmo = weaponList[selectedWeapon].weaponAmmoMax;
+        reloadTime = weaponList[selectedWeapon].weaponReloadTime;
+        exitlocation.localPosition = weaponList[selectedWeapon].weaponExitPointPos;
+
+        gameManager.instance.updateAmmoCountUI(currentAmmo);
+
+        weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    void selectWeapon()
+    {
+        if(Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
+        {
+            selectedWeapon++;
+            changeWeapon();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
+        {
+            selectedWeapon--;
+            changeWeapon();
+        }
     }
   
 }

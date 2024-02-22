@@ -17,4 +17,5 @@ MonoBehaviour:
   weaponReloadTime: 2.5
   weaponAmmoCurr: 30
   weaponAmmoMax: 30
-  weaponModel: {fileID: 100000, guid: 6f966b9a7c817ed49973b4a8762cbbdf, type: 3}
+  weaponExitPoint: {fileID: 0}
+  weaponModel: {fileID: 1487774384131766, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}

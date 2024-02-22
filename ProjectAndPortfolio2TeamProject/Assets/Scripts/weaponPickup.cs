@@ -6,6 +6,11 @@ public class weaponPickup : MonoBehaviour
 {
     [SerializeField] weaponStats weapon;
     [SerializeField] Transform exitPoint;
+
+    private void Start()
+    {
+        weapon.weaponExitPointPos = exitPoint.localPosition;
+    }
     private void Update()
     {
         transform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
@@ -15,7 +20,7 @@ public class weaponPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.setWeaponStats(weapon, exitPoint);
+            gameManager.instance.playerScript.addNewWeapon(weapon);
             Destroy(gameObject);
         }
     }
