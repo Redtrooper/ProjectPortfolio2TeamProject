@@ -83,14 +83,13 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
         controller.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && currentStamina > 0 && !isExhausted)
         {
-            
             UseStamina(jumpStaminaCost);
-
             playerVel.y = jumpForce;
             jumpCount++;
         }
+
 
         playerVel.y += gravity * Time.deltaTime;
         controller.Move(playerVel * Time.deltaTime);
