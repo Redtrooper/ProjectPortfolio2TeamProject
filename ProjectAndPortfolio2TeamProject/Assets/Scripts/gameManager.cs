@@ -6,38 +6,46 @@ using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
+    // GameManager Instance
     public static gameManager instance;
+
+    // Game State
+    private bool isPaused;
     private float timeScale;
 
+    [Header("----- Player -----")]
+    public GameObject player;
+    public PlayerController playerScript;
     public GameObject playerSpawn;
+    public GameObject playerDamageFlash;
 
-    private GameObject activeMenu;
+    [Header("----- Menus -----")]
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject winScreen;
     [SerializeField] GameObject lossScreen;
+    private GameObject activeMenu;
 
+    [Header("----- HUD Elements -----")]
     [SerializeField] Image healthBar;
     [SerializeField] Image staminaBar;
     [SerializeField] Image progressBar;
-    [SerializeField] TMP_Text keyCount;
     [SerializeField] TMP_Text currentAmmo;
     [SerializeField] TMP_Text maxAmmo;
     [SerializeField] TMP_Text reloadText;
 
-    public GameObject keyPickup;
-
-    public GameObject player;
-    public PlayerController playerScript;
+    // Private HUD Variables
     private int origHP;
     private int origStamina;
     private Color staminaBarColor;
 
-    public GameObject playerDamageFlash; // flash here
+    [Header("----- Keys -----")]
+    [SerializeField] TMP_Text keyCount;
+    public GameObject keyPickup;
 
-    int checkPointsLeft = 0;
-    int totalCheckpoints;
+    // Game Goal
+    private int checkPointsLeft = 0;
+    private int totalCheckpoints;
 
-    public bool isPaused;
     void Awake()
     {
         instance = this;

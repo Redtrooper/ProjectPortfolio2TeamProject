@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class healthPack : MonoBehaviour
 {
+    [Header("----- Health To Gain -----")]
     [SerializeField] int healthGain;
 
     private void Update()

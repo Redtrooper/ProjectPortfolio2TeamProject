@@ -6,50 +6,50 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamage, IHeal
 {
     [Header("----- Player Stats -----")]
-    [SerializeField] int HP;
-    [SerializeField] float walkSpeed;
-    [SerializeField] float sprintSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] float jumpForce;
-    [SerializeField] float gravity;
+    [SerializeField] int playerHP;
+    [SerializeField] float playerWalkSpeed;
+    [SerializeField] float playerSprintSpeed;
+    [SerializeField] int playerJumpMax;
+    [SerializeField] float playerJumpForce;
+    [SerializeField] float playerGravity;
 
     [Header("----- Player Model & Transform -----")]
-    [SerializeField] CharacterController controller;
+    [SerializeField] CharacterController playerController;
     [SerializeField] Transform playerModel;
 
     // Private Player Variables
     private Vector3 originalPlayerScale;
-    private int origHP;
-    private int keys = 0;
-    private int jumpCount;
+    private int playerOrigHP;
+    private int playerKeys = 0;
+    private int playerJumpCount;
 
     // Player Movement
-    private Vector3 move;
+    private Vector3 playerMove;
     private Vector3 playerVel;
 
     [Header("----- Weapons -----")]
-    [SerializeField] GameObject weaponModel;
-    [SerializeField] Transform exitlocation;
+    [SerializeField] GameObject playerWeaponModel;
+    [SerializeField] Transform playerExitLocation;
 
     // Private Weapon Variables
-    private int maxAmmo;
-    private int currentAmmo;
-    private float reloadTime;
-    private float firerate;
-    private Vector3 originalGunScale;
-    private int selectedWeapon;
-    private List<weaponStats> weaponList = new List<weaponStats>();
-    private GameObject projectile = null;
+    private int playerMaxAmmo;
+    private int playerCurrentAmmo;
+    private float playerReloadTime;
+    private float playerFireRate;
+    private Vector3 playerOriginalGunScale;
+    private int playerSelectedWeapon;
+    private List<weaponStats> playerWeaponList = new List<weaponStats>();
+    private GameObject playerProjectile = null;
 
     [Header("----- Stamina -----")]
-    [SerializeField] int maxStamina;
-    [SerializeField] int currentStamina;
-    [SerializeField] int staminaRecoveryRate;
-    [SerializeField] float staminaRecoveryDelay;
-    [SerializeField] int jumpStaminaCost;
+    [SerializeField] int playerMaxStamina;
+    [SerializeField] int playerCurrentStamina;
+    [SerializeField] int playerStaminaRecoveryRate;
+    [SerializeField] float playerStaminaRecoveryDelay;
+    [SerializeField] int playerJumpStaminaCost;
 
     // Crouch Scaling Stuff
-    private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
+    private Vector3 playerCrouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale = new Vector3(1, 1f, 1);
 
     // Player States
@@ -61,19 +61,19 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     void Start()
     {
-        origHP = HP;
+        playerOrigHP = playerHP;
         respawn();
         originalPlayerScale = playerModel.localScale;
-        originalGunScale = weaponModel.transform.localScale;
-        currentAmmo = maxAmmo;
-        gameManager.instance.updateAmmoCountUI(currentAmmo);
+        playerOriginalGunScale = playerWeaponModel.transform.localScale;
+        playerCurrentAmmo = playerMaxAmmo;
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
     }
 
     void Update()
     {
         Movement();
         HandleSprintInput();
-        if (weaponList.Count > 0)
+        if (playerWeaponList.Count > 0)
         {
             selectWeapon();
             Shoot(); 
@@ -82,10 +82,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     void Movement()
     {
-        if (controller.isGrounded)
+        if (playerController.isGrounded)
         {
             playerVel = Vector3.zero;
-            jumpCount = 0;
+            playerJumpCount = 0;
         }
 
        if (Input.GetKey(KeyCode.LeftControl))
@@ -93,23 +93,23 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
        else
             UnCrouch();
 
-        float speed = isSprinting ? sprintSpeed : walkSpeed;
+        float speed = isSprinting ? playerSprintSpeed : playerWalkSpeed;
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
-        move = (horizontalInput * transform.right + verticalInput * transform.forward).normalized;
+        playerMove = (horizontalInput * transform.right + verticalInput * transform.forward).normalized;
 
-        controller.Move(move * speed * Time.deltaTime);
+        playerController.Move(playerMove * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax && currentStamina > 0 && !isExhausted)
+        if (Input.GetButtonDown("Jump") && playerJumpCount < playerJumpMax && playerCurrentStamina > 0 && !isExhausted)
         {
-            UseStamina(jumpStaminaCost);
-            playerVel.y = jumpForce;
-            jumpCount++;
+            UseStamina(playerJumpStaminaCost);
+            playerVel.y = playerJumpForce;
+            playerJumpCount++;
         }
 
 
-        playerVel.y += gravity * Time.deltaTime;
-        controller.Move(playerVel * Time.deltaTime);
+        playerVel.y += playerGravity * Time.deltaTime;
+        playerController.Move(playerVel * Time.deltaTime);
 
         if (isSprinting)
         {
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         }
         else
         {
-            if (currentStamina < maxStamina && !isRegeneratingStamina)
+            if (playerCurrentStamina < playerMaxStamina && !isRegeneratingStamina)
             {
                 StartCoroutine(staminaRegen());
             }
@@ -128,36 +128,36 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     void HandleSprintInput()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0 && !isExhausted; 
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && playerCurrentStamina > 0 && !isExhausted; 
     }
 
     [ContextMenu("Use Max Stamina")]
     private void UseMaxStamina()
     {
-        UseStamina(maxStamina);
+        UseStamina(playerMaxStamina);
     }
 
     IEnumerator staminaRegen()
     {
         isRegeneratingStamina = true;
-        currentStamina += staminaRecoveryRate;
+        playerCurrentStamina += playerStaminaRecoveryRate;
         UpdateStaminaBar();
-        if (isExhausted && currentStamina == maxStamina) 
+        if (isExhausted && playerCurrentStamina == playerMaxStamina) 
         {
             isExhausted = false;
             gameManager.instance.toggleExhaustedStaminaBar();
         }
-        yield return new WaitForSeconds(staminaRecoveryDelay);
+        yield return new WaitForSeconds(playerStaminaRecoveryDelay);
         isRegeneratingStamina = false;
     }
 
     public void UseStamina(int amount)
     {
-        if (currentStamina - amount >= 0)
+        if (playerCurrentStamina - amount >= 0)
         {
-            currentStamina -= amount;
+            playerCurrentStamina -= amount;
             UpdateStaminaBar();
-            if (currentStamina <= 0)
+            if (playerCurrentStamina <= 0)
             { 
                 isExhausted = true;
                 gameManager.instance.toggleExhaustedStaminaBar();
@@ -172,11 +172,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     public void takeDamage(int amount)
     {
-        HP -= amount;
+        playerHP -= amount;
         UpdateHealthBar();
         StartCoroutine(flashDamage());
 
-        if (HP <= 0)
+        if (playerHP <= 0)
             gameManager.instance.youLose();
     }
 
@@ -189,16 +189,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     public void heal(int amount)
     {
-        if (HP < origHP)
+        if (playerHP < playerOrigHP)
         {
-            if (HP + amount <= origHP)
+            if (playerHP + amount <= playerOrigHP)
             {
-                HP += amount;
+                playerHP += amount;
                 UpdateHealthBar();  
             }
             else
             {
-                HP = origHP;
+                playerHP = playerOrigHP;
                 UpdateHealthBar();
             }
         }
@@ -206,77 +206,77 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
     public int getHP()
     {
-        return HP;
+        return playerHP;
     }
 
     public int getMaxStamina()
     {
-        return maxStamina;
+        return playerMaxStamina;
     }
 
     void UpdateStaminaBar()
     {
         if (gameManager.instance != null)
-            gameManager.instance.updateStaminaBar(currentStamina);
+            gameManager.instance.updateStaminaBar(playerCurrentStamina);
     }
 
     void UpdateHealthBar()
     {
         if (gameManager.instance != null)
-            gameManager.instance.updateHealthBar(HP);
+            gameManager.instance.updateHealthBar(playerHP);
     }
 
     IEnumerator ShootTimer()
     {
         isShooting = true;
-        Instantiate(projectile, exitlocation.position, Camera.main.transform.rotation);
-        currentAmmo -= 1;
-        gameManager.instance.updateAmmoCountUI(currentAmmo);
-        yield return new WaitForSeconds(firerate);
+        Instantiate(playerProjectile, playerExitLocation.position, Camera.main.transform.rotation);
+        playerCurrentAmmo -= 1;
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
+        yield return new WaitForSeconds(playerFireRate);
         isShooting = false;
     }
     void Shoot()
     {
 
-        if (Input.GetButton("Shoot") && !isShooting && currentAmmo > 0 && !isReloading)
+        if (Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo > 0 && !isReloading)
             StartCoroutine(ShootTimer());
-        else if (Input.GetButtonDown("Reload") && !isReloading && currentAmmo < maxAmmo)
+        else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
         {
             isReloading = true;
             gameManager.instance.toggleReloadIcon();
-            Invoke("Reload", reloadTime);
+            Invoke("Reload", playerReloadTime);
         }
     }
 
     void Reload()
     {
-        currentAmmo = maxAmmo;
-        gameManager.instance.updateAmmoCountUI(currentAmmo);
+        playerCurrentAmmo = playerMaxAmmo;
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         gameManager.instance.toggleReloadIcon();
         isReloading = false;
     }
     void Crouch()
     {
-        playerModel.localScale = crouchScale;
+        playerModel.localScale = playerCrouchScale;
         Camera.main.transform.localPosition = new Vector3(0f, -0.5f, 0f);
 
         // this line here makes the gun scale stay the same when crouching - john
-        weaponModel.transform.localScale = Vector3.Scale(originalGunScale, new Vector3(1f, 1f / crouchScale.y, 1f));
+        playerWeaponModel.transform.localScale = Vector3.Scale(playerOriginalGunScale, new Vector3(1f, 1f / playerCrouchScale.y, 1f));
 
     }
     void UnCrouch()
     {
         playerModel.localScale = playerScale;
         Camera.main.transform.localPosition = new Vector3(0f, 0.5f, 0f);
-        weaponModel.transform.localScale = originalGunScale; 
+        playerWeaponModel.transform.localScale = playerOriginalGunScale; 
     }
 
 
         public void respawn()
     {
-        HP = origHP;
+        playerHP = playerOrigHP;
         UpdateHealthBar();
-        currentStamina = maxStamina;
+        playerCurrentStamina = playerMaxStamina;
         UpdateStaminaBar();
         if (isExhausted)
         {
@@ -287,79 +287,79 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
         if (gameManager.instance.playerSpawn != null)
         {
-            controller.enabled = false;
+            playerController.enabled = false;
             transform.position = gameManager.instance.playerSpawn.transform.position;
-            controller.enabled = true; 
+            playerController.enabled = true; 
         }
     }
 
     public int getKeyCount()
     {
-        return keys;
+        return playerKeys;
     }
 
     public void giveKey(int amount)
     {
-        keys += amount;
-        gameManager.instance.updateKeyCountUI(keys);
+        playerKeys += amount;
+        gameManager.instance.updateKeyCountUI(playerKeys);
     }
 
     public void useKey(int amount)
     {
-        keys -= amount;
-        gameManager.instance.updateKeyCountUI(keys);
+        playerKeys -= amount;
+        gameManager.instance.updateKeyCountUI(playerKeys);
     }
 
     public int getMaxAmmo()
     {
-        return maxAmmo;
+        return playerMaxAmmo;
     }
 
     public void addNewWeapon(weaponStats weapon)
     {
-        selectedWeapon = weaponList.Count - 1;
+        playerSelectedWeapon = playerWeaponList.Count - 1;
 
-        weaponList.Add(weapon);
+        playerWeaponList.Add(weapon);
 
-        firerate = weapon.weaponFireRate;
-        projectile = weapon.weaponProjectile;
-        currentAmmo = weapon.weaponAmmoCurr;
-        maxAmmo = weapon.weaponAmmoMax;
-        reloadTime = weapon.weaponReloadTime;
-        exitlocation.localPosition = weapon.weaponExitPointPos;
+        playerFireRate = weapon.weaponFireRate;
+        playerProjectile = weapon.weaponProjectile;
+        playerCurrentAmmo = weapon.weaponAmmoCurr;
+        playerMaxAmmo = weapon.weaponAmmoMax;
+        playerReloadTime = weapon.weaponReloadTime;
+        playerExitLocation.localPosition = weapon.weaponExitPointPos;
 
 
-        gameManager.instance.updateAmmoCountUI(currentAmmo);
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
-        weaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        playerWeaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        playerWeaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void changeWeapon()
     {
-        firerate = weaponList[selectedWeapon].weaponFireRate;
-        projectile = weaponList[selectedWeapon].weaponProjectile;
-        currentAmmo = weaponList[selectedWeapon].weaponAmmoCurr;
-        maxAmmo = weaponList[selectedWeapon].weaponAmmoMax;
-        reloadTime = weaponList[selectedWeapon].weaponReloadTime;
-        exitlocation.localPosition = weaponList[selectedWeapon].weaponExitPointPos;
+        playerFireRate = playerWeaponList[playerSelectedWeapon].weaponFireRate;
+        playerProjectile = playerWeaponList[playerSelectedWeapon].weaponProjectile;
+        playerCurrentAmmo = playerWeaponList[playerSelectedWeapon].weaponAmmoCurr;
+        playerMaxAmmo = playerWeaponList[playerSelectedWeapon].weaponAmmoMax;
+        playerReloadTime = playerWeaponList[playerSelectedWeapon].weaponReloadTime;
+        playerExitLocation.localPosition = playerWeaponList[playerSelectedWeapon].weaponExitPointPos;
 
-        gameManager.instance.updateAmmoCountUI(currentAmmo);
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
-        weaponModel.GetComponent<MeshFilter>().sharedMesh = weaponList[selectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        weaponModel.GetComponent<MeshRenderer>().sharedMaterial = weaponList[selectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        playerWeaponModel.GetComponent<MeshFilter>().sharedMesh = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
+        playerWeaponModel.GetComponent<MeshRenderer>().sharedMaterial = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     void selectWeapon()
     {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0 && selectedWeapon < weaponList.Count - 1)
+        if(Input.GetAxis("Mouse ScrollWheel") > 0 && playerSelectedWeapon < playerWeaponList.Count - 1)
         {
-            selectedWeapon++;
+            playerSelectedWeapon++;
             changeWeapon();
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedWeapon > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && playerSelectedWeapon > 0)
         {
-            selectedWeapon--;
+            playerSelectedWeapon--;
             changeWeapon();
         }
     }

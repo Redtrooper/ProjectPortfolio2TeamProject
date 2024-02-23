@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484596fde1f033a46b0960a7161b178b, type: 3}
   m_Name: Weapon - Shotgun
   m_EditorClassIdentifier: 
-  weaponProjectile: {fileID: 523656449581014684, guid: c32570ddd7bd8624291fa57b9e973815, type: 3}
+  weaponProjectile: {fileID: 523656449581014684, guid: 820eba4b8589d5847a8de83e23d66f7c, type: 3}
   weaponFireRate: 1
   weaponReloadTime: 3
   weaponAmmoCurr: 8
   weaponAmmoMax: 8
-  weaponExitPoint: {fileID: 0}
   weaponModel: {fileID: 100000, guid: bf2593fe0c804b84688e307cfb1ddfae, type: 3}
+  weaponExitPointPos: {x: 0, y: -0.001, z: -0.4477}

@@ -47,11 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f919566e1fd0e47b7511493ffec526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 8498025904449480962}
-  damageAmount: 25
-  speed: 5
-  destroyTime: 1
-  sourceIsFriendly: 1
+  bulletRigidBody: {fileID: 8498025904449480962}
+  bulletDamageAmount: 25
+  bulletSpeed: 10
+  bulletDestroyTime: 1
+  bulletSourceIsFriendly: 1
 --- !u!135 &6344711735835384744
 SphereCollider:
   m_ObjectHideFlags: 0

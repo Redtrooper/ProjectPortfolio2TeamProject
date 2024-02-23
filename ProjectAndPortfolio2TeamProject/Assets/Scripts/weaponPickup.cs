@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class weaponPickup : MonoBehaviour
 {
+    [Header("----- Weapon Data -----")]
     [SerializeField] weaponStats weapon;
-    [SerializeField] Transform exitPoint;
+    [SerializeField] Transform weaponExitPoint;
 
     private void Start()
     {
-        weapon.weaponExitPointPos = exitPoint.localPosition;
+        weapon.weaponExitPointPos = weaponExitPoint.localPosition;
     }
     private void Update()
     {

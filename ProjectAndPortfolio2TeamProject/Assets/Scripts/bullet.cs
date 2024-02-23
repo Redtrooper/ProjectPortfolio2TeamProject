@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    [SerializeField] Rigidbody rb;
-    [SerializeField] int damageAmount;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
+    [Header("----- RigidBody -----")]
+    [SerializeField] Rigidbody bulletRigidBody;
 
-    [SerializeField] bool sourceIsFriendly;
+    [Header("----- Bullet Properties -----")]
+    [SerializeField] int bulletDamageAmount;
+    [SerializeField] int bulletSpeed;
+    [SerializeField] int bulletDestroyTime;
+    [SerializeField] bool bulletSourceIsFriendly;
     
     void Start()
     {
-        rb.velocity = transform.forward * speed;
-        Destroy(gameObject, destroyTime);
+        bulletRigidBody.velocity = transform.forward * bulletSpeed;
+        Destroy(gameObject, bulletDestroyTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,18 +24,16 @@ public class bullet : MonoBehaviour
 
         if (other.isTrigger)
             return;
-        else if (other.CompareTag("Player") && sourceIsFriendly)
+        else if (other.CompareTag("Player") && bulletSourceIsFriendly)
             return;
 
         IDamage dmg = other.GetComponent<IDamage>();
 
         if(dmg != null )
         {
-            dmg.takeDamage(damageAmount);
+            dmg.takeDamage(bulletDamageAmount);
         }
 
         Destroy(gameObject);
     }
-    
-    
 }
