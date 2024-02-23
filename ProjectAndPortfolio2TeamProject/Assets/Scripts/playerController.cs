@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     [Header("----- Weapons -----")]
     [SerializeField] GameObject playerWeaponModel;
     [SerializeField] Transform playerExitLocation;
+    [SerializeField] GameObject grenade;
 
     // Private Weapon Variables
     private int playerMaxAmmo;
@@ -364,4 +365,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         }
     }
   
+    void throwGrenade()
+    {
+        if(Input.GetButton("Grenade"))
+        {
+            Instantiate(grenade, transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
+        }
+    }
+
 }
