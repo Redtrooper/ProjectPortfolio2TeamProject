@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6742013541084740087}
-  speed: 0
-  yVel: 0
-  destroyTime: 0
+  speed: 5
+  yVel: 1
+  destroyTime: 4
   explosion: {fileID: 1902307744681872118, guid: c3a8ae5e649e0414f8e1d8667c259342, type: 3}
 --- !u!54 &6742013541084740087
 Rigidbody:

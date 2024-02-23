@@ -247,6 +247,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
             gameManager.instance.toggleReloadIcon();
             Invoke("Reload", playerReloadTime);
         }
+
+        ThrowGrenade();
     }
 
     void Reload()
@@ -365,7 +367,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         }
     }
   
-    void throwGrenade()
+    void ThrowGrenade()
     {
         if(Input.GetButton("Grenade"))
         {
