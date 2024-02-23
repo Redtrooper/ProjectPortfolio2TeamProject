@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 628009314053614933}
   - component: {fileID: 7165689758049414525}
   m_Layer: 0
-  m_Name: StickySlimeBall
+  m_Name: Slimeball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,11 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f919566e1fd0e47b7511493ffec526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 7165689758049414525}
-  damageAmount: 15
-  speed: 10
-  destroyTime: 5
-  sourceIsFriendly: 0
+  bulletRigidBody: {fileID: 7165689758049414525}
+  bulletDamageAmount: 10
+  bulletSpeed: 25
+  bulletDestroyTime: 3
+  bulletSourceIsFriendly: 0
 --- !u!33 &15055435291564982
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -82,7 +82,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b7b78dbb60270a4a8b94c13a9fe05f8, type: 2}
+  - {fileID: 2100000, guid: d929f90ac929108439088a7ba5c80ba8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,7 +146,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b7b78dbb60270a4a8b94c13a9fe05f8, type: 2}
+  - {fileID: 2100000, guid: d929f90ac929108439088a7ba5c80ba8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -198,8 +198,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.8584906, b: 0.17323796, a: 0.78431374}
-      key1: {r: 0.2844493, g: 0.7019608, b: 0.22745095, a: 0.78431374}
+      key0: {r: 0.45882356, g: 0.227451, b: 0.7058824, a: 0.78431374}
+      key1: {r: 0.45882356, g: 0.227451, b: 0.7019608, a: 0.78431374}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

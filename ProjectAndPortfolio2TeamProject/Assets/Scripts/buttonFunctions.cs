@@ -27,4 +27,5 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.playerScript.respawn();
         resume();
     }
+
 }

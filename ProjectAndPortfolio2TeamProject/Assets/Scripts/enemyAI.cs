@@ -5,38 +5,55 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] int hp;
-    [SerializeField] int damage;
-    [SerializeField] int turnspeed;
-    [SerializeField] float speed;
-    [SerializeField] float firerate;
-    [SerializeField] int stoppingDistance;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Renderer model;
-    [SerializeField] GameObject eyes;
-    [SerializeField] GameObject exitPoint;
-    [SerializeField] GameObject projectile;
-    [SerializeField] GameObject patrolPoint1;
-    [SerializeField] GameObject patrolPoint2;
+    [Header("----- Enemy Stats -----")]
+    [SerializeField] int enemyHP;
+    [SerializeField] int enemyDamage;
+    [SerializeField] int enemyTurnSpeed;
+    [SerializeField] float enemySpeed;
+    [SerializeField] float enemyFireRate;
+    [SerializeField] int enemyStoppingDistance;
+
+    [Header("----- Model -----")]
+    [SerializeField] Renderer enemyModel;
+    [SerializeField] GameObject enemyEyes;
+    [SerializeField] GameObject enemyExitPoint;
+
+    [Header("----- Agent & Projectile -----")]
+    [SerializeField] NavMeshAgent enemyAgent;
+    [SerializeField] GameObject enemyProjectile;
+
+    [Header("----- Patrol Points -----")]
+    [SerializeField] GameObject enemyPatrolPoint1;
+    [SerializeField] GameObject enemyPatrolPoint2;
+
+    [Header("----- Key -----")]
     [SerializeField] GameObject keyModel;
-    bool isAggro; // this will make it so they go aggro when shot out of range - john
-    bool shootcd;
-    bool playerInRange;
-    bool patrolswap;
     [SerializeField] bool hasKey;
-    GameObject tempPatrolPoint;
-    Color originalColor;
-    Vector3 playerDirection;
-    Vector3 patrolDestination;
+   
+    // Enemy States
+    private bool isAggro; // this will make it so they go aggro when shot out of range - john
+    private bool isShooting;
+
+    // Player Data
+    private bool playerInRange;
+    private Vector3 playerDirection;
+
+    // Patrol
+    private bool patrolswap;
+    private GameObject tempPatrolPoint;
+    private Vector3 patrolDestination;
+
+    // Original Color
+    private Color enemyOriginalColor;
 
     void Start()
     {
-        if (patrolPoint1 != null && patrolPoint2 != null)
+        if (enemyPatrolPoint1 != null && enemyPatrolPoint2 != null)
         {
-            patrolDestination = patrolPoint1.transform.position; 
+            patrolDestination = enemyPatrolPoint1.transform.position; 
         }
-        originalColor = model.material.color;
-        agent.speed = speed;
+        enemyOriginalColor = enemyModel.material.color;
+        enemyAgent.speed = enemySpeed;
 
         if (keyModel != null)
         {
@@ -57,7 +74,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 isAggro = true;
                 MoveNShoot();
             }
-            else if (patrolPoint1 != null && patrolPoint2 != null)
+            else if (enemyPatrolPoint1 != null && enemyPatrolPoint2 != null)
             {
                 Patrol();
             }
@@ -65,25 +82,25 @@ public class enemyAI : MonoBehaviour, IDamage
     }
     void MoveNShoot()
     {
-        agent.stoppingDistance = stoppingDistance;
-        agent.SetDestination(gameManager.instance.player.transform.position);
-        if (!shootcd)
+        enemyAgent.stoppingDistance = enemyStoppingDistance;
+        enemyAgent.SetDestination(gameManager.instance.player.transform.position);
+        if (!isShooting)
             StartCoroutine(Shoot());
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
             SpinLikeAnIdiotUntilYoureFacingThePlayer();
     }
     void Patrol()
     {
-        agent.stoppingDistance = 0;
+        enemyAgent.stoppingDistance = 0;
         if (new Vector3(transform.position.x, 0, transform.position.z) !=  new Vector3(patrolDestination.x, 0, patrolDestination.z))
-            agent.SetDestination(patrolDestination);
+            enemyAgent.SetDestination(patrolDestination);
         else
         {
             patrolswap = !patrolswap;
             if (patrolswap)
-                patrolDestination = patrolPoint1.transform.position;
+                patrolDestination = enemyPatrolPoint1.transform.position;
             else 
-                patrolDestination = patrolPoint2.transform.position;
+                patrolDestination = enemyPatrolPoint2.transform.position;
         }
     }
     void OnTriggerEnter(Collider other)
@@ -100,9 +117,9 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         if (playerInRange)
         {
-            playerDirection = gameManager.instance.player.transform.position - eyes.transform.position;
+            playerDirection = gameManager.instance.player.transform.position - enemyEyes.transform.position;
             RaycastHit playerRay;
-            if (Physics.Raycast(eyes.transform.position, playerDirection, out playerRay))
+            if (Physics.Raycast(enemyEyes.transform.position, playerDirection, out playerRay))
             {
                 if (playerRay.collider.CompareTag("Player"))
                 {
@@ -116,7 +133,7 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         //turnspeed should be either really high or really low for comedic effect
         Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.rotation.y, playerDirection.z));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, turn, Time.deltaTime * turnspeed);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, turn, Time.deltaTime * enemyTurnSpeed);
     }
     public void takeDamage(int amount)
     {
@@ -126,9 +143,9 @@ public class enemyAI : MonoBehaviour, IDamage
         }
 
 
-        hp -= amount;
+        enemyHP -= amount;
         StartCoroutine(DamageFlash());
-        if (hp <= 0)
+        if (enemyHP <= 0)
         {
             if (hasKey)
             {
@@ -143,15 +160,15 @@ public class enemyAI : MonoBehaviour, IDamage
     }
     IEnumerator Shoot()
     {
-        shootcd = true;
-        Instantiate(projectile, exitPoint.transform.position, exitPoint.transform.rotation);
-        yield return new WaitForSeconds(firerate);
-        shootcd = false;
+        isShooting = true;
+        Instantiate(enemyProjectile, enemyExitPoint.transform.position, enemyExitPoint.transform.rotation);
+        yield return new WaitForSeconds(enemyFireRate);
+        isShooting = false;
     }
     IEnumerator DamageFlash()
     {
-        model.material.color = Color.red;
+        enemyModel.material.color = Color.red;
         yield return new WaitForSeconds(.15f);
-        model.material.color = originalColor;
+        enemyModel.material.color = enemyOriginalColor;
     }
 }

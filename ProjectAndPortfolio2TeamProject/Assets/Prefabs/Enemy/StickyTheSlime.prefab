@@ -296,19 +296,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a54127659e8e8941bd9e3c4a5180e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
-  damage: 2
-  turnspeed: 60
-  speed: 6
-  firerate: 5
-  stoppingDistance: 5
-  agent: {fileID: 8998525051798973}
-  model: {fileID: 2144021012147270440}
-  eyes: {fileID: 7980148138439954693}
-  exitPoint: {fileID: 4351308552710895587}
-  projectile: {fileID: 157687882469607331, guid: 10d08e25ff30b334d93a5c590459beda, type: 3}
-  patrolPoint1: {fileID: 0}
-  patrolPoint2: {fileID: 0}
+  enemyHP: 10
+  enemyDamage: 3
+  enemyTurnSpeed: 15
+  enemySpeed: 35
+  enemyFireRate: 0.05
+  enemyStoppingDistance: 5
+  enemyModel: {fileID: 2144021012147270440}
+  enemyEyes: {fileID: 7980148138439954693}
+  enemyExitPoint: {fileID: 4351308552710895587}
+  enemyAgent: {fileID: 8998525051798973}
+  enemyProjectile: {fileID: 157687882469607331, guid: 10d08e25ff30b334d93a5c590459beda, type: 3}
+  enemyPatrolPoint1: {fileID: 0}
+  enemyPatrolPoint2: {fileID: 0}
   keyModel: {fileID: 9037657674009617659}
   hasKey: 0
 --- !u!195 &8998525051798973

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] float sensitivity;
-    [SerializeField] float verticalRotationLimit = 80f;
-    [SerializeField] bool invertY = false;
+    [Header("----- Camera Settings -----")]
+    [SerializeField] float cameraSensitivity;
+    [SerializeField] float cameraVerticalRotationLimit = 80f;
+    [SerializeField] bool cameraInvertY = false;
 
-    float rotationX = 0f;
+    // Horizontal Camera Rotation
+    private float rotationX = 0f;
 
     void Start()
     {
@@ -23,15 +25,15 @@ public class CameraController : MonoBehaviour
 
     void HandleMouseLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * cameraSensitivity * Time.deltaTime;
 
-        if (invertY)
+        if (cameraInvertY)
             rotationX += mouseY;
         else
             rotationX -= mouseY;
 
-        rotationX = Mathf.Clamp(rotationX, -verticalRotationLimit, verticalRotationLimit);
+        rotationX = Mathf.Clamp(rotationX, -cameraVerticalRotationLimit, cameraVerticalRotationLimit);
 
         transform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
         transform.parent.Rotate(Vector3.up * mouseX);
