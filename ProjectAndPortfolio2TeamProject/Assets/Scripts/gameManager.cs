@@ -31,6 +31,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] Image progressBar;
     [SerializeField] TMP_Text currentAmmo;
     [SerializeField] TMP_Text maxAmmo;
+    [SerializeField] Image ammoLineFill;
+    [SerializeField] Image ammoLineBorder;
     [SerializeField] TMP_Text reloadText;
 
     // Private HUD Variables
@@ -60,6 +62,7 @@ public class gameManager : MonoBehaviour
         maxAmmo.text = playerScript.getMaxAmmo().ToString();
         currentAmmo.text = maxAmmo.text;
         reloadText.enabled = false;
+        toggleAmmunitionUI();
     }
 
     void Update()
@@ -151,6 +154,14 @@ public class gameManager : MonoBehaviour
     {
         currentAmmo.text = amount.ToString("00");
         maxAmmo.text = playerScript.getMaxAmmo().ToString("00");
+    }
+
+    public void toggleAmmunitionUI()
+    {
+        currentAmmo.enabled = !currentAmmo.enabled;
+        maxAmmo.enabled = !maxAmmo.enabled;
+        ammoLineBorder.enabled = !ammoLineBorder.enabled;
+        ammoLineFill.enabled = !ammoLineFill.enabled;
     }
 
     public void toggleReloadIcon()

@@ -334,6 +334,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     public void addNewWeapon(weaponStats weapon)
     {
+        if (playerWeaponList.Count == 0)
+            gameManager.instance.toggleAmmunitionUI();
         playerSelectedWeapon = playerWeaponList.Count - 1;
 
         playerWeaponList.Add(weapon);
