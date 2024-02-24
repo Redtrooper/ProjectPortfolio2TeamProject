@@ -168,7 +168,8 @@ MonoBehaviour:
   playerModel: {fileID: 306448665430234397}
   playerWeaponModel: {fileID: 7442822677909401598}
   playerExitLocation: {fileID: 2187767920344405328}
-  grenade: {fileID: 3181190535467322343, guid: 413ca00d1af10cb469a0a0e8c1c22eee, type: 3}
+  playerGrenade: {fileID: 3181190535467322343, guid: 413ca00d1af10cb469a0a0e8c1c22eee, type: 3}
+  playerGrenadeCooldown: 5
   playerMaxStamina: 1000
   playerCurrentStamina: 0
   playerStaminaRecoveryRate: 1

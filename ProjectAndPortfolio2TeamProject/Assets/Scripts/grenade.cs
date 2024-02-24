@@ -9,7 +9,7 @@ public class grenade : MonoBehaviour
     [SerializeField] float yVel;
     [SerializeField] int destroyTime;
 
-    [SerializeField] SphereCollider explosion;
+    [SerializeField] GameObject explosion;
     void Start()
     {
         rb.velocity = (transform.forward + new Vector3(0, yVel, 0)) * speed;
@@ -26,12 +26,9 @@ public class grenade : MonoBehaviour
     IEnumerator destroyObject()
     {
         yield return new WaitForSeconds(destroyTime);
-        if (explosion)
-        {
+        if(explosion)
             Instantiate(explosion, transform.position, transform.rotation);
-        }
         Destroy(gameObject);
-
     }
 
 }

@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     [Header("----- Weapons -----")]
     [SerializeField] GameObject playerWeaponModel;
     [SerializeField] Transform playerExitLocation;
-    [SerializeField] GameObject grenade;
+    [SerializeField] GameObject playerGrenade;
+    [SerializeField] float playerGrenadeCooldown;
 
     // Private Weapon Variables
     private int playerMaxAmmo;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     private int playerSelectedWeapon;
     private List<weaponStats> playerWeaponList = new List<weaponStats>();
     private GameObject playerProjectile = null;
+    private float playerCurrentGrenadeCooldown = 0;
 
     [Header("----- Stamina -----")]
     [SerializeField] int playerMaxStamina;
@@ -369,9 +371,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
   
     void ThrowGrenade()
     {
-        if(Input.GetButton("Grenade"))
+        playerCurrentGrenadeCooldown -= Time.deltaTime;
+        if(Input.GetButtonDown("Grenade") && playerCurrentGrenadeCooldown <= 0)
         {
-            Instantiate(grenade, transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
+            Instantiate(playerGrenade, transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
+            playerCurrentGrenadeCooldown = playerGrenadeCooldown;
         }
     }
 

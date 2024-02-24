@@ -8,20 +8,11 @@ public class explosion : MonoBehaviour
     [SerializeField] int damageAmount;
 
 
-    void Start()
+    IEnumerator Start()
     {
-        StartCoroutine(destroyAfter());
+        yield return new WaitForSeconds(.15f);
         Destroy(gameObject);
     }
-
-    IEnumerator destroyAfter()
-    {
-        yield return new WaitForSeconds(.3f);
-        Destroy(gameObject);
-    }
-
-
-
 
     private void OnTriggerEnter(Collider other)
     {
