@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class enemyAI : MonoBehaviour, IDamage, IPhysics
 {
     [Header("----- Enemy Stats -----")]
     [SerializeField] int enemyHP;
@@ -157,6 +157,10 @@ public class enemyAI : MonoBehaviour, IDamage
             }
             Destroy(gameObject);
         }
+    }
+    public void pushInDirection(Vector3 dir)
+    {
+        enemyAgent.velocity += dir/2;
     }
     IEnumerator Shoot()
     {
