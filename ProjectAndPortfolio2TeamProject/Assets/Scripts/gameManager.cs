@@ -62,7 +62,7 @@ public class gameManager : MonoBehaviour
         maxAmmo.text = playerScript.getMaxAmmo().ToString();
         currentAmmo.text = maxAmmo.text;
         reloadText.enabled = false;
-        toggleAmmunitionUI();
+        toggleAmmunitionUI(false);
     }
 
     void Update()
@@ -156,12 +156,12 @@ public class gameManager : MonoBehaviour
         maxAmmo.text = playerScript.getMaxAmmo().ToString("00");
     }
 
-    public void toggleAmmunitionUI()
+    public void toggleAmmunitionUI(bool toggle)
     {
-        currentAmmo.enabled = !currentAmmo.enabled;
-        maxAmmo.enabled = !maxAmmo.enabled;
-        ammoLineBorder.enabled = !ammoLineBorder.enabled;
-        ammoLineFill.enabled = !ammoLineFill.enabled;
+        currentAmmo.enabled = toggle;
+        maxAmmo.enabled = toggle;
+        ammoLineBorder.enabled = toggle;
+        ammoLineFill.enabled = toggle;
     }
 
     public void toggleReloadIcon()

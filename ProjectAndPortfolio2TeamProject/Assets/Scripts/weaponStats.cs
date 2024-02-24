@@ -14,6 +14,7 @@ public class weaponStats : ScriptableObject
     public int weaponAmmoCurr;
     public int weaponAmmoMax;
     public int weaponKnockback;
+    public bool weaponTakesAmmo;
 
     [Header("----- Weapon Model & Exit Point -----")]
     public GameObject weaponModel;

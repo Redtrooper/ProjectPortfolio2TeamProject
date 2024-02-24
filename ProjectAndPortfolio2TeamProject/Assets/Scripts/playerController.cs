@@ -334,8 +334,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     public void addNewWeapon(weaponStats weapon)
     {
-        if (playerWeaponList.Count == 0)
-            gameManager.instance.toggleAmmunitionUI();
+        gameManager.instance.toggleAmmunitionUI(weapon.weaponTakesAmmo);
         playerSelectedWeapon = playerWeaponList.Count - 1;
 
         playerWeaponList.Add(weapon);
@@ -358,6 +357,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     public void changeWeapon()
     {
+        gameManager.instance.toggleAmmunitionUI(playerWeaponList[playerSelectedWeapon].weaponTakesAmmo);
         playerFireRate = playerWeaponList[playerSelectedWeapon].weaponFireRate;
         playerProjectile = playerWeaponList[playerSelectedWeapon].weaponProjectile;
         playerCurrentAmmo = playerWeaponList[playerSelectedWeapon].weaponAmmoCurr;
@@ -385,7 +385,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             changeWeapon();
         }
     }
-  
+    
     void ThrowGrenade()
     {
         playerCurrentGrenadeCooldown -= Time.deltaTime;
