@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamage, IHeal
+public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 {
     [Header("----- Player Stats -----")]
     [SerializeField] int playerHP;
@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
     [SerializeField] int playerJumpMax;
     [SerializeField] float playerJumpForce;
     [SerializeField] float playerGravity;
+    [SerializeField] int playerPushBackResolution;
+    public Vector3 playerPushBack;
 
     [Header("----- Player Model & Transform -----")]
     [SerializeField] CharacterController playerController;
@@ -83,8 +85,15 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
         }
     }
 
+    public void pushInDirection(Vector3 dir)
+    { 
+        playerPushBack += dir;
+    }
+
     void Movement()
     {
+        playerPushBack = Vector3.Lerp(playerPushBack, Vector3.zero, Time.deltaTime * playerPushBackResolution);
+
         if (playerController.isGrounded)
         {
             playerVel = Vector3.zero;
@@ -112,7 +121,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
 
         playerVel.y += playerGravity * Time.deltaTime;
-        playerController.Move(playerVel * Time.deltaTime);
+        playerController.Move((playerVel + playerPushBack) * Time.deltaTime);
 
         if (isSprinting)
         {
@@ -279,6 +288,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal
 
         public void respawn()
     {
+        playerPushBack = Vector3.zero;
         playerHP = playerOrigHP;
         UpdateHealthBar();
         playerCurrentStamina = playerMaxStamina;

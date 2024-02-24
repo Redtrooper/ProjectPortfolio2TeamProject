@@ -300,7 +300,7 @@ MonoBehaviour:
   enemyDamage: 3
   enemyTurnSpeed: 15
   enemySpeed: 35
-  enemyFireRate: 0.05
+  enemyFireRate: 0.15
   enemyStoppingDistance: 5
   enemyModel: {fileID: 2144021012147270440}
   enemyEyes: {fileID: 7980148138439954693}

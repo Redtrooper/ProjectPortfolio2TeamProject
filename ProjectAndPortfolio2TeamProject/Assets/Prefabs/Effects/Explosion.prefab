@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 25
+  pushForce: 20
 --- !u!54 &-3204052175226112196
 Rigidbody:
   m_ObjectHideFlags: 0

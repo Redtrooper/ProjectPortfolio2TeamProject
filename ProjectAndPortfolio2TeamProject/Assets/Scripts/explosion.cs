@@ -6,6 +6,7 @@ public class explosion : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] int damageAmount;
+    [SerializeField] int pushForce;
 
 
     IEnumerator Start()
@@ -25,6 +26,10 @@ public class explosion : MonoBehaviour
         if (other.TryGetComponent<IDamage>(out IDamage damageable))
         {
             damageable.takeDamage(damageAmount);
+        }
+        if(other.TryGetComponent<IPhysics>(out IPhysics pushable))
+        {
+            pushable.pushInDirection((other.transform.position - transform.position).normalized * pushForce);
         }
     }
 
