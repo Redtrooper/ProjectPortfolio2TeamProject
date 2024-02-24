@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private int playerCurrentAmmo;
     private float playerReloadTime;
     private float playerFireRate;
+    private int playerWeaponKnockback;
     private Vector3 playerOriginalGunScale;
     private int playerSelectedWeapon;
     private List<weaponStats> playerWeaponList = new List<weaponStats>();
@@ -242,6 +243,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         isShooting = true;
         Instantiate(playerProjectile, playerExitLocation.position, Camera.main.transform.rotation);
+        playerPushBack -= Camera.main.transform.forward * playerWeaponKnockback;
         playerCurrentAmmo -= 1;
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         yield return new WaitForSeconds(playerFireRate);
@@ -341,7 +343,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerCurrentAmmo = weapon.weaponAmmoCurr;
         playerMaxAmmo = weapon.weaponAmmoMax;
         playerReloadTime = weapon.weaponReloadTime;
+        playerWeaponKnockback = weapon.weaponKnockback;
         playerExitLocation.localPosition = weapon.weaponExitPointPos;
+
 
 
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
@@ -357,6 +361,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerCurrentAmmo = playerWeaponList[playerSelectedWeapon].weaponAmmoCurr;
         playerMaxAmmo = playerWeaponList[playerSelectedWeapon].weaponAmmoMax;
         playerReloadTime = playerWeaponList[playerSelectedWeapon].weaponReloadTime;
+        playerWeaponKnockback = playerWeaponList[playerSelectedWeapon].weaponKnockback;
         playerExitLocation.localPosition = playerWeaponList[playerSelectedWeapon].weaponExitPointPos;
 
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
