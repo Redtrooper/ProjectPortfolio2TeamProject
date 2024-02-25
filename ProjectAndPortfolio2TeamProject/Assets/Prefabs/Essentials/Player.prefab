@@ -403,7 +403,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 4d1f8bf3fbf1b454ba9dbdb8afbe0882, type: 3}
       propertyPath: m_Name
-      value: MachinePistol_MuzzleFlash
+      value: Muzzle Flash
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 4d1f8bf3fbf1b454ba9dbdb8afbe0882, type: 3}
       propertyPath: m_IsActive
@@ -411,15 +411,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4d1f8bf3fbf1b454ba9dbdb8afbe0882, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4d1f8bf3fbf1b454ba9dbdb8afbe0882, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4d1f8bf3fbf1b454ba9dbdb8afbe0882, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4d1f8bf3fbf1b454ba9dbdb8afbe0882, type: 3}
       propertyPath: m_LocalPosition.x
