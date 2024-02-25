@@ -10,7 +10,7 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
 
     // Game State
-    private bool isPaused;
+    public bool isPaused;
     private float timeScale;
 
     [Header("----- Player -----")]
@@ -28,7 +28,7 @@ public class gameManager : MonoBehaviour
     [Header("----- HUD Elements -----")]
     [SerializeField] Image healthBar;
     [SerializeField] Image staminaBar;
-    [SerializeField] Image progressBar;
+    [SerializeField] List<Image> checkPointImages;
     [SerializeField] TMP_Text currentAmmo;
     [SerializeField] TMP_Text maxAmmo;
     [SerializeField] Image ammoLineFill;
@@ -39,6 +39,8 @@ public class gameManager : MonoBehaviour
     private int origHP;
     private int origStamina;
     private Color staminaBarColor;
+    private int checkpointInitial;
+    private int currentCheckpoint;
 
     [Header("----- Keys -----")]
     [SerializeField] TMP_Text keyCount;
@@ -46,7 +48,6 @@ public class gameManager : MonoBehaviour
 
     // Game Goal
     private int checkPointsLeft = 0;
-    private int totalCheckpoints;
 
     void Awake()
     {
@@ -58,11 +59,14 @@ public class gameManager : MonoBehaviour
         origHP = playerScript.getHP();
         origStamina = playerScript.getMaxStamina();
         staminaBarColor = staminaBar.color;
-        progressBar.fillAmount = 0;
         maxAmmo.text = playerScript.getMaxAmmo().ToString();
         currentAmmo.text = maxAmmo.text;
         reloadText.enabled = false;
         toggleAmmunitionUI(false);
+        foreach(Image checkPoint in checkPointImages)
+        {
+            checkPoint.enabled = false;
+        }
     }
 
     void Update()
@@ -124,9 +128,15 @@ public class gameManager : MonoBehaviour
     {
         checkPointsLeft += amount;
         if (amount > 0)
-            totalCheckpoints += amount;
-        else
-            progressBar.fillAmount = (float)(totalCheckpoints - checkPointsLeft) / totalCheckpoints;
+        { 
+            checkPointImages[checkpointInitial].enabled = true;
+            checkpointInitial++;
+        }
+        else if(amount < 0)
+        {
+            checkPointImages[currentCheckpoint].color = new Color(0, 255, 255);
+            currentCheckpoint++;
+        }
 
         if (checkPointsLeft == 0)
         {

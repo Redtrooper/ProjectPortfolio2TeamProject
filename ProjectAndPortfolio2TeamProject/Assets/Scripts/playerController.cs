@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] Transform playerExitLocation;
     [SerializeField] GameObject playerGrenade;
     [SerializeField] float playerGrenadeCooldown;
+    [SerializeField] GameObject playerMuzzleFlash;
 
     // Private Weapon Variables
     private int playerMaxAmmo;
@@ -77,12 +78,15 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void Update()
     {
-        Movement();
-        HandleSprintInput();
-        if (playerWeaponList.Count > 0)
+        if (!gameManager.instance.isPaused)
         {
-            selectWeapon();
-            Shoot(); 
+            Movement();
+            HandleSprintInput();
+            if (playerWeaponList.Count > 0)
+            {
+                selectWeapon();
+                Shoot();
+            } 
         }
     }
 
@@ -243,10 +247,13 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         isShooting = true;
         Instantiate(playerProjectile, playerExitLocation.position, Camera.main.transform.rotation);
+        playerMuzzleFlash.SetActive(true);
+        playerMuzzleFlash.transform.Rotate(0, 0, Random.Range(0, 180));
         playerPushBack -= Camera.main.transform.forward * playerWeaponKnockback;
         playerCurrentAmmo -= 1;
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         yield return new WaitForSeconds(playerFireRate);
+        playerMuzzleFlash.SetActive(false);
         isShooting = false;
     }
     void Shoot()
