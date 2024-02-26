@@ -19,6 +19,8 @@ public class WeaponSway : MonoBehaviour
         float mouseX = Input.GetAxisRaw("Mouse X") * sensitivityMultiplier;
         float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivityMultiplier;
 
+
+        // issue here 
         Quaternion rotationX = Quaternion.AngleAxis(-mouseY, Vector3.right);
         Quaternion rotationY = Quaternion.AngleAxis(mouseX, Vector3.up);
 

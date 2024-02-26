@@ -3567,6 +3567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6152368321629248147, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: cameraSensitivity
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

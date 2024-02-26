@@ -22,36 +22,35 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] NavMeshAgent enemyAgent;
     [SerializeField] GameObject enemyProjectile;
 
-    [Header("----- Patrol Points -----")]
-    [SerializeField] GameObject enemyPatrolPoint1;
-    [SerializeField] GameObject enemyPatrolPoint2;
+    [Header("----- Roam Settings -----")]
+    [SerializeField] bool isRoaming;
+    [SerializeField] float roamingRange;
+    [SerializeField] float roamPauseTime;
+
+    [Header("----- Animate -----")]
+    [SerializeField] Animator anim;
+    [SerializeField] int animSpeedTrans;
 
     [Header("----- Key -----")]
     [SerializeField] GameObject keyModel;
     [SerializeField] bool hasKey;
-   
+
     // Enemy States
     private bool isAggro; // this will make it so they go aggro when shot out of range - john
     private bool isShooting;
+    bool isRoamingCoroutineRunning;
+    private bool hasAnimator => anim != null;
 
     // Player Data
     private bool playerInRange;
     private Vector3 playerDirection;
-
-    // Patrol
-    private bool patrolswap;
-    private GameObject tempPatrolPoint;
-    private Vector3 patrolDestination;
 
     // Original Color
     private Color enemyOriginalColor;
 
     void Start()
     {
-        if (enemyPatrolPoint1 != null && enemyPatrolPoint2 != null)
-        {
-            patrolDestination = enemyPatrolPoint1.transform.position; 
-        }
+
         enemyOriginalColor = enemyModel.material.color;
         enemyAgent.speed = enemySpeed;
 
@@ -63,46 +62,74 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     }
     void Update()
     {
-        if (isAggro)
+        float animSpeed = enemyAgent.velocity.normalized.magnitude;
+
+        if (hasAnimator)
+        {
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
+        }
+
+
+
+        if (isRoaming)
+        {
+            Roam();
+        }
+        else if (isAggro)
         {
             MoveNShoot();
         }
-        else
+        else if (CheckForPlayer())
         {
-            if (CheckForPlayer())
-            {
-                isAggro = true;
-                MoveNShoot();
-            }
-            else if (enemyPatrolPoint1 != null && enemyPatrolPoint2 != null)
-            {
-                Patrol();
-            }
+            isAggro = true;
+            MoveNShoot();
         }
     }
     void MoveNShoot()
     {
         enemyAgent.stoppingDistance = enemyStoppingDistance;
         enemyAgent.SetDestination(gameManager.instance.player.transform.position);
-        if (!isShooting)
-            StartCoroutine(Shoot());
-        if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
-            SpinLikeAnIdiotUntilYoureFacingThePlayer();
-    }
-    void Patrol()
+
+         if (!isShooting)
     {
-        enemyAgent.stoppingDistance = 0;
-        if (new Vector3(transform.position.x, 0, transform.position.z) !=  new Vector3(patrolDestination.x, 0, patrolDestination.z))
-            enemyAgent.SetDestination(patrolDestination);
-        else
+        StartCoroutine(Shoot());
+    }
+
+        if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
         {
-            patrolswap = !patrolswap;
-            if (patrolswap)
-                patrolDestination = enemyPatrolPoint1.transform.position;
-            else 
-                patrolDestination = enemyPatrolPoint2.transform.position;
+            SpinLikeAnIdiotUntilYoureFacingThePlayer();
+        }
+
+    }
+    void Roam()
+    {
+        if (isRoaming && !isRoamingCoroutineRunning)
+        {
+            StartCoroutine(RoamCoroutine());
         }
     }
+
+    IEnumerator RoamCoroutine()
+    {
+        isRoamingCoroutineRunning = true;
+
+        if (!enemyAgent.hasPath || enemyAgent.remainingDistance < 1.0f)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * roamingRange;
+            randomDirection += transform.position;
+            NavMeshHit hit;
+
+            if (NavMesh.SamplePosition(randomDirection, out hit, roamingRange, 1))
+            {
+                enemyAgent.SetDestination(hit.position);
+            }
+        }
+
+        yield return new WaitForSeconds(roamPauseTime);
+
+        isRoamingCoroutineRunning = false;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -134,12 +161,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         //turnspeed should be either really high or really low for comedic effect
         Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.rotation.y, playerDirection.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, turn, Time.deltaTime * enemyTurnSpeed);
+
     }
     public void takeDamage(int amount)
     {
         if (!isAggro)
         {
-            isAggro = true; 
+            isAggro = true;
         }
 
 
@@ -152,7 +180,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 Instantiate(gameManager.instance.keyPickup, transform.position, transform.rotation);
                 if (keyModel != null)
                 {
-                    keyModel.SetActive(true); 
+                    keyModel.SetActive(true);
                 }
             }
             Destroy(gameObject);
@@ -160,11 +188,15 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     }
     public void pushInDirection(Vector3 dir)
     {
-        enemyAgent.velocity += dir/2;
+        enemyAgent.velocity += dir / 2;
     }
     IEnumerator Shoot()
     {
         isShooting = true;
+        if (hasAnimator)
+        {
+            anim.SetTrigger("Shoot");
+        }
         Instantiate(enemyProjectile, enemyExitPoint.transform.position, enemyExitPoint.transform.rotation);
         yield return new WaitForSeconds(enemyFireRate);
         isShooting = false;
