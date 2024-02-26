@@ -401,6 +401,10 @@ PrefabInstance:
       propertyPath: roamPauseTime
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 448639227498602463, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
+      propertyPath: roamingRadius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2357831325979938907, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.934511
@@ -608,7 +612,7 @@ Transform:
   m_GameObject: {fileID: 833595838}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.00000004470348, z: -0, w: 1}
-  m_LocalPosition: {x: -0.026, y: 1.244, z: 0.556}
+  m_LocalPosition: {x: 0.262, y: 0.768, z: 1.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2146,11 +2150,10 @@ MonoBehaviour:
   enemyExitPoint: {fileID: 833595838}
   enemyAgent: {fileID: 3560343177890098312}
   enemyProjectile: {fileID: 1145956548832756391, guid: b0af046188d5e1c4fb8e5fca6c6f9b93, type: 3}
-  isRoaming: 1
-  roamingRange: 4
-  roamPauseTime: 2
   anim: {fileID: 3476749228062258095}
-  animSpeedTrans: 5
+  animSpeedTrans: 1
+  isRoaming: 1
+  roamingRadius: 3
   keyModel: {fileID: 5393965799501683050, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
   hasKey: 0
 --- !u!135 &3560343177890098316
