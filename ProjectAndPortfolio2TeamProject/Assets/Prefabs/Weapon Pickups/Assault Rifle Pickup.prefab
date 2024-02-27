@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8807536769087594215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98361e9922bdc04085e7b9ffc24574f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6761ca927ab810c47a7f9a2994e7d38a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: 88b77ee0c39a1834da1f2c42b308197b, type: 2}
