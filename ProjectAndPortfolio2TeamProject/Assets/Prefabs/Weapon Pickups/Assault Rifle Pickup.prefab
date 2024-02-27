@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 580510513526220014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00073, y: -0.00095, z: -0.44767}
+  m_LocalPosition: {x: 0, y: 0, z: -0.4477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1951438582299938286}
   - component: {fileID: 6555476070271558607}
   - component: {fileID: 6488733297477529500}
-  - component: {fileID: 3557067631713870229}
+  - component: {fileID: 2652549469206696914}
   m_Layer: 0
   m_Name: Assault Rifle Pickup
   m_TagString: Untagged
@@ -59,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8807536769087594215}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9982821, z: -0, w: 0.058591705}
+  m_LocalRotation: {x: 0, y: 0.9982821, z: 0, w: 0.058592126}
   m_LocalPosition: {x: 18.091, y: 0.729, z: 4.3376274}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -131,7 +131,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3557067631713870229
+--- !u!135 &2652549469206696914
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

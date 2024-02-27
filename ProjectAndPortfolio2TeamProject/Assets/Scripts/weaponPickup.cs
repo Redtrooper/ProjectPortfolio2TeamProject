@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class weaponPickup : MonoBehaviour
@@ -10,7 +11,7 @@ public class weaponPickup : MonoBehaviour
 
     private void Start()
     {
-       weapon.weaponExitPointPos = weaponExitPoint.localPosition;
+        weapon.weaponExitPointPos = weaponExitPoint.localPosition;
     }
     private void Update()
     {
