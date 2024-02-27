@@ -7,11 +7,6 @@ public class healthPack : MonoBehaviour
 {
     [Header("----- Health To Gain -----")]
     [SerializeField] int healthGain;
-
-    private void Update()
-    {
-        transform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)

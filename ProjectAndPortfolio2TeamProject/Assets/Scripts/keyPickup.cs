@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class keyPickup : MonoBehaviour
 {
-    private void Update()
-    {
-        transform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
