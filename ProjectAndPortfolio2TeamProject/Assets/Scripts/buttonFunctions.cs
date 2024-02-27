@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+    public void nextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        resume();
+    }
     public void resume()
     {
         gameManager.instance.stateUnpaused();
