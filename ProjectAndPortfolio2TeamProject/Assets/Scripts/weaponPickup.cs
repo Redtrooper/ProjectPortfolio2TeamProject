@@ -10,7 +10,7 @@ public class weaponPickup : MonoBehaviour
 
     private void Start()
     {
-        weapon.weaponExitPointPos = weaponExitPoint.localPosition;
+       weapon.weaponExitPointPos = weaponExitPoint.localPosition;
     }
     private void Update()
     {
