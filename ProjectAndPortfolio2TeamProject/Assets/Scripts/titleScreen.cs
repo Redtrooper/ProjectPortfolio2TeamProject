@@ -7,6 +7,6 @@ public class titleScreen : MonoBehaviour
 {
     public void play()
     {
-        SceneManager.LoadScene("TutorialLevel");
+        SceneManager.LoadScene(1);
     }
 }
