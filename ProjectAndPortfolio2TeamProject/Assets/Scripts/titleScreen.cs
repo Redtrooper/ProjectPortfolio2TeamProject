@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class titleScreen : MonoBehaviour
 {
+    private void Start()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
     public void play()
     {
         SceneManager.LoadScene(1);
