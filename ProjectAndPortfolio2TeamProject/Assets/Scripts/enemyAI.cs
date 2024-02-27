@@ -26,9 +26,11 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] Animator anim;
     [SerializeField] int animSpeedTrans;
 
-    [Header("----- Patrol Points -----")]
-    [SerializeField] GameObject enemyPatrolPoint1;
-    [SerializeField] GameObject enemyPatrolPoint2;
+    [Header("----- Roaming -----")]
+    [SerializeField] bool isRoaming;
+    [SerializeField] float maxRoamingDistance;
+    private bool isWaiting;
+
 
     [Header("----- Key -----")]
     [SerializeField] GameObject keyModel;
@@ -37,6 +39,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     // Enemy States
     private bool isAggro; // this will make it so they go aggro when shot out of range - john
     private bool isShooting;
+    private Vector3 originalPosition;
     private bool hasAnimator => anim != null;
 
     // Player Data
@@ -44,25 +47,25 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     private Vector3 playerDirection;
 
     // Patrol
-    private bool patrolswap;
-    private GameObject tempPatrolPoint;
-    private Vector3 patrolDestination;
+
 
     // Original Color
     private Color enemyOriginalColor;
 
     void Start()
-    {
-        if (enemyPatrolPoint1 != null && enemyPatrolPoint2 != null)
-        {
-            patrolDestination = enemyPatrolPoint1.transform.position;
-        }
+    { 
         enemyOriginalColor = enemyModel.material.color;
         enemyAgent.speed = enemySpeed;
 
         if (keyModel != null)
         {
             keyModel.SetActive(hasKey);
+        }
+
+        if (isRoaming)
+        {
+            originalPosition = transform.position;
+            StartCoroutine(Roam());
         }
 
     }
@@ -86,10 +89,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 isAggro = true;
                 MoveNShoot();
             }
-            else if (enemyPatrolPoint1 != null && enemyPatrolPoint2 != null)
-            {
-                Patrol();
-            }
         }
     }
     void MoveNShoot()
@@ -109,23 +108,41 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
         if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
             SpinLikeAnIdiotUntilYoureFacingThePlayer();
-    }
 
 
-    void Patrol()
-    {
-        enemyAgent.stoppingDistance = 0;
-        if (new Vector3(transform.position.x, 0, transform.position.z) != new Vector3(patrolDestination.x, 0, patrolDestination.z))
-            enemyAgent.SetDestination(patrolDestination);
-        else
+        if (isRoaming && !isWaiting && enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
         {
-            patrolswap = !patrolswap;
-            if (patrolswap)
-                patrolDestination = enemyPatrolPoint1.transform.position;
-            else
-                patrolDestination = enemyPatrolPoint2.transform.position;
+            StartCoroutine(WaitBeforeNextRoam());
         }
     }
+
+    IEnumerator Roam()
+    {
+        while (isRoaming)
+        {
+            Vector3 randomPosition = GetRandomPosition();
+            enemyAgent.stoppingDistance = 0;
+            enemyAgent.SetDestination(randomPosition);
+
+            yield return new WaitForSeconds(1.0f); // this is how long they will stay at their destination b4 going to a new one
+        }
+    }
+
+    Vector3 GetRandomPosition()
+    {
+        float randomX = Random.Range(-maxRoamingDistance, maxRoamingDistance);
+        float randomZ = Random.Range(-maxRoamingDistance, maxRoamingDistance);
+        Vector3 randomPosition = originalPosition + new Vector3(randomX, 0f, randomZ);
+        return randomPosition;
+    }
+
+    IEnumerator WaitBeforeNextRoam()
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds(1.0f);
+        isWaiting = false;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

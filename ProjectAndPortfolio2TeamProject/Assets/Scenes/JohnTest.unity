@@ -405,6 +405,10 @@ PrefabInstance:
       propertyPath: roamingRadius
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 448639227498602463, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
+      propertyPath: maxRoamingDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2357831325979938907, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17.934511
@@ -2153,7 +2157,7 @@ MonoBehaviour:
   anim: {fileID: 3476749228062258095}
   animSpeedTrans: 1
   isRoaming: 1
-  roamingRadius: 3
+  maxRoamingDistance: 3
   keyModel: {fileID: 5393965799501683050, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
   hasKey: 0
 --- !u!135 &3560343177890098316
