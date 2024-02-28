@@ -552,8 +552,8 @@ MonoBehaviour:
   anim: {fileID: 0}
   animSpeedTrans: 0
   isRoaming: 0
-  maxRoamingDistance: 0
-  keyModel: {fileID: 5172137889564955080, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
+  maxRoamingDistance: 5
+  keyModel: {fileID: 5303044390305446811}
   hasKey: 0
 --- !u!195 &9122401505395916822
 NavMeshAgent:
@@ -785,5 +785,10 @@ PrefabInstance:
 --- !u!4 &4788180735224563968 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5488792582538322771, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
+  m_PrefabInstance: {fileID: 1035567086779443795}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5303044390305446811 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5172137889564955080, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
   m_PrefabInstance: {fileID: 1035567086779443795}
   m_PrefabAsset: {fileID: 0}

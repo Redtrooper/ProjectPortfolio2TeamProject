@@ -311,7 +311,7 @@ MonoBehaviour:
   animSpeedTrans: 0
   isRoaming: 0
   maxRoamingDistance: 0
-  keyModel: {fileID: 5172137889564955080, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
+  keyModel: {fileID: 8102013749928520793}
   hasKey: 0
 --- !u!195 &8998525051798973
 NavMeshAgent:
@@ -332,7 +332,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0.25
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!33 &3182010740758400136
@@ -790,6 +790,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
+--- !u!1 &8102013749928520793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5172137889564955080, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
+  m_PrefabInstance: {fileID: 4014680434700615057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8906740521371999938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5488792582538322771, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}

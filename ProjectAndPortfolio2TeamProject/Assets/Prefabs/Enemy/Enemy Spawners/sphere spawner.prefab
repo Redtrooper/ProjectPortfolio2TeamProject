@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 0}
-  numToSpawn: 2
-  spawnTimer: 1
+  numToSpawn: 4
+  spawnTimer: 3
   spawnPos:
   - {fileID: 8278740440212895363}
