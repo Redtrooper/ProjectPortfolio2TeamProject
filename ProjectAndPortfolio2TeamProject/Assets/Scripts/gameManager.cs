@@ -67,6 +67,7 @@ public class gameManager : MonoBehaviour
         {
             checkPoint.enabled = false;
         }
+        loadSettings();
     }
 
     void Update()
@@ -177,5 +178,19 @@ public class gameManager : MonoBehaviour
     public void toggleReloadIcon()
     {
         reloadText.enabled = !reloadText.enabled;
+    }
+
+    private void loadSettings()
+    {
+        if (PlayerPrefs.HasKey("Mouse Sensitivity"))
+            Camera.main.GetComponent<CameraController>().cameraSensitivity = PlayerPrefs.GetInt("Mouse Sensitivity");
+        if(PlayerPrefs.HasKey("Invert Y"))
+        {
+            int isEnabled = PlayerPrefs.GetInt("Invert Y");
+            if (isEnabled == 1)
+                Camera.main.GetComponent<CameraController>().cameraInvertY = true;
+            else
+                Camera.main.GetComponent<CameraController>().cameraInvertY = false;
+        }
     }
 }

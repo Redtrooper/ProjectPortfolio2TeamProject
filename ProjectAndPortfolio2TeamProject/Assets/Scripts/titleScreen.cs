@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class titleScreen : MonoBehaviour
 {
+    [SerializeField] GameObject optionsMenu;
     private void Start()
     {
         Cursor.visible = true;
@@ -14,4 +15,16 @@ public class titleScreen : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void quit()
+    {
+        Application.Quit();
+    }
+
+    public void openOptionsMenu()
+    {
+        optionsMenu.SetActive(true);
+    }
+
+
 }

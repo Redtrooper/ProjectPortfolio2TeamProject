@@ -5,9 +5,9 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [Header("----- Camera Settings -----")]
-    [SerializeField] float cameraSensitivity;
+    public float cameraSensitivity;
     [SerializeField] float cameraVerticalRotationLimit = 80f;
-    [SerializeField] bool cameraInvertY = false;
+    public bool cameraInvertY = false;
 
     // Horizontal Camera Rotation
     private float rotationX = 0f;
