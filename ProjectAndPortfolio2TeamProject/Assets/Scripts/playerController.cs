@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] Transform playerModel;
 
     // Private Player Variables
-    private Vector3 originalPlayerScale;
     private int playerOrigHP;
     private int playerKeys = 0;
     private int playerJumpCount;
@@ -42,7 +41,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private float playerReloadTime;
     private float playerFireRate;
     private int playerWeaponKnockback;
-    private Vector3 playerOriginalGunScale;
     private int playerSelectedWeapon;
     private List<weaponStats> playerWeaponList = new List<weaponStats>();
     private GameObject playerProjectile = null;
@@ -55,10 +53,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] float playerStaminaRecoveryDelay;
     [SerializeField] int playerJumpStaminaCost;
 
-    // Crouch Scaling Stuff
-    private Vector3 playerCrouchScale = new Vector3(1, 0.5f, 1);
-    private Vector3 playerScale = new Vector3(1, 1f, 1);
-
     // Player States
     private bool isShooting = false;
     private bool isReloading = false;
@@ -70,8 +64,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         playerOrigHP = playerHP;
         respawn();
-        originalPlayerScale = playerModel.localScale;
-        playerOriginalGunScale = playerWeaponModel.transform.localScale;
         playerCurrentAmmo = playerMaxAmmo;
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
     }
@@ -105,9 +97,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerJumpCount = 0;
         }
 
-       if (Input.GetKey(KeyCode.LeftControl))
+       if (Input.GetKeyDown(KeyCode.LeftControl))
             Crouch();
-       else
+       else if(Input.GetKeyUp(KeyCode.LeftControl))
             UnCrouch();
 
         float speed = isSprinting ? playerSprintSpeed : playerWalkSpeed;
@@ -280,18 +272,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     }
     void Crouch()
     {
-        playerModel.localScale = playerCrouchScale;
-        Camera.main.transform.localPosition = new Vector3(0f, -0.5f, 0f);
-
-        // this line here makes the gun scale stay the same when crouching - john
-        playerWeaponModel.transform.localScale = Vector3.Scale(playerOriginalGunScale, new Vector3(1f, 1f / playerCrouchScale.y, 1f));
-
+        playerController.height /= 2;
     }
     void UnCrouch()
     {
-        playerModel.localScale = playerScale;
-        Camera.main.transform.localPosition = new Vector3(0f, 0.5f, 0f);
-        playerWeaponModel.transform.localScale = playerOriginalGunScale; 
+        playerController.height *= 2;
     }
 
 
