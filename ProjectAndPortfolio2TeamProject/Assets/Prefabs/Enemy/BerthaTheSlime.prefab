@@ -551,7 +551,7 @@ MonoBehaviour:
   enemyProjectile: {fileID: 157687882469607331, guid: 824b29fca3dda614a80fe3ce63e558f0, type: 3}
   anim: {fileID: 0}
   animSpeedTrans: 0
-  isRoaming: 0
+  doRoam: 1
   maxRoamingDistance: 10
   keyModel: {fileID: 9037894017237237748}
   hasKey: 0

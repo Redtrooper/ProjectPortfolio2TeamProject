@@ -27,9 +27,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] int animSpeedTrans;
 
     [Header("----- Roaming -----")]
-    [SerializeField] bool isRoaming;
+    [SerializeField] bool doRoam;
     [SerializeField] float maxRoamingDistance;
-    private bool isWaiting;
+    private bool isRoaming;
 
 
     [Header("----- Key -----")]
@@ -62,11 +62,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             keyModel.SetActive(hasKey);
         }
 
-        if (isRoaming)
-        {
-            originalPosition = transform.position;
-            StartCoroutine(Roam());
-        }
+        originalPosition = transform.position;
 
     }
     void Update()
@@ -81,13 +77,18 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         if (isAggro)
         {
             MoveNShoot();
+            isAggro = false;
         }
         else
         {
+
             if (CheckForPlayer())
             {
-                isAggro = true;
                 MoveNShoot();
+            }
+            else if(doRoam && !isRoaming)
+            {
+                StartCoroutine(Roam());
             }
         }
     }
@@ -95,6 +96,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     {
         enemyAgent.stoppingDistance = enemyStoppingDistance;
         enemyAgent.SetDestination(gameManager.instance.player.transform.position);
+        StopCoroutine(Roam());
 
         if (!isShooting)
         {
@@ -103,28 +105,26 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 anim.SetTrigger("Shoot");
             }
 
-            StartCoroutine(Shoot());
+            if (CheckForPlayer())
+            {
+                StartCoroutine(Shoot()); 
+            }
         }
 
         if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
             SpinLikeAnIdiotUntilYoureFacingThePlayer();
-
-
-        if (isRoaming && !isWaiting && enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
-        {
-            StartCoroutine(WaitBeforeNextRoam());
-        }
     }
 
     IEnumerator Roam()
     {
-        while (isRoaming)
+        enemyAgent.stoppingDistance = 0;
+        if (enemyAgent.remainingDistance < 0.05f)
         {
-            Vector3 randomPosition = GetRandomPosition();
-            enemyAgent.stoppingDistance = 0;
-            enemyAgent.SetDestination(randomPosition);
-
+            isRoaming = true;
             yield return new WaitForSeconds(1.0f); // this is how long they will stay at their destination b4 going to a new one
+            Vector3 randomPosition = GetRandomPosition();
+            enemyAgent.SetDestination(randomPosition);
+            isRoaming = false; 
         }
     }
 
@@ -138,9 +138,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     IEnumerator WaitBeforeNextRoam()
     {
-        isWaiting = true;
-        yield return new WaitForSeconds(1.0f);
-        isWaiting = false;
+        Debug.Log("Waiting");
+        isRoaming = true;
+        yield return new WaitForSeconds(5.0f);
+        isRoaming = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -151,7 +152,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
+        { 
             playerInRange = false;
+            StartCoroutine(WaitBeforeNextRoam());
+        }
     }
     bool CheckForPlayer()
     {
@@ -172,7 +176,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     void SpinLikeAnIdiotUntilYoureFacingThePlayer()
     {
         //turnspeed should be either really high or really low for comedic effect
-        Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.rotation.y, playerDirection.z));
+        Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.position.y, playerDirection.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, turn, Time.deltaTime * enemyTurnSpeed);
     }
     public void takeDamage(int amount)

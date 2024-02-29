@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletRigidBody: {fileID: 7165689758049414525}
   bulletDamageAmount: 10
-  bulletSpeed: 25
+  bulletSpeed: 12
   bulletDestroyTime: 3
   bulletSourceIsFriendly: 0
 --- !u!33 &15055435291564982

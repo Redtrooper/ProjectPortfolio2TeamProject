@@ -123,6 +123,67 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: c167d07a716f51341a28af7aeaf8936d, type: 2}
+--- !u!1001 &69970326
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 448639227498602463, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: enemyStoppingDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.423605
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -30.598743
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357831325979938907, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7788244547781026972, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
+      propertyPath: m_Name
+      value: BerthaTheSlime
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0c5185aa2a15ed741b71c9ee9de2a284, type: 3}
 --- !u!1001 &152896818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -735,17 +796,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 448639227498602463, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
+      propertyPath: isRoaming
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2357831325979938907, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
       propertyPath: m_LocalPosition.x
       value: 18.339903
       objectReference: {fileID: 0}
     - target: {fileID: 2357831325979938907, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2357831325979938907, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.0894432
+      value: -28.2
       objectReference: {fileID: 0}
     - target: {fileID: 2357831325979938907, guid: 5c60bc08c3da2934ea41e8ecfcd9c588, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1581,3 +1646,4 @@ SceneRoots:
   - {fileID: 530784206}
   - {fileID: 414471946}
   - {fileID: 900938592}
+  - {fileID: 69970326}
