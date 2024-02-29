@@ -39,6 +39,12 @@ public class optionsMenu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void Cancel()
+    {
+        Start();
+        gameObject.SetActive(false);
+    }
+
     public void updateMouseSensitivityLabel()
     {
         mouseSensitivityLabel.text = mouseSensitivity.value.ToString();
