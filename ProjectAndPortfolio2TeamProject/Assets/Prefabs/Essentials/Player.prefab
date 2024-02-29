@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da9d80e8a42c8984d8a00ebffe6de20a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSensitivity: 300
+  cameraSensitivity: 200
   cameraVerticalRotationLimit: 80
   cameraInvertY: 0
 --- !u!20 &6832849431239489832
@@ -259,7 +259,7 @@ MonoBehaviour:
   playerMuzzleFlash: {fileID: 256095326126780810}
   playerMaxStamina: 1000
   playerCurrentStamina: 0
-  playerStaminaRecoveryRate: 1
+  playerStaminaRecoveryRate: 5
   playerStaminaRecoveryDelay: 0.0125
   playerJumpStaminaCost: 100
 --- !u!143 &840522430156782247

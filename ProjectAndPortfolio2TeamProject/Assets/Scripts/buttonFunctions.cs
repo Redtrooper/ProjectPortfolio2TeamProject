@@ -7,7 +7,7 @@ public class buttonFunctions : MonoBehaviour
 {
     public void nextLevel()
     {
-        if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCount)
+        if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
