@@ -7,7 +7,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 {
     [Header("----- Enemy Stats -----")]
     [SerializeField] int enemyHP;
-    [SerializeField] int enemyDamage;
     [SerializeField] int enemyTurnSpeed;
     [SerializeField] float enemySpeed;
     [SerializeField] float enemyFireRate;

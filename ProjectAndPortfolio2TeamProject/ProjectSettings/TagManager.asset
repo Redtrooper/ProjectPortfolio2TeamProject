@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player Spawn Position
   - Key
+  - Wall
   layers:
   - Default
   - TransparentFX
