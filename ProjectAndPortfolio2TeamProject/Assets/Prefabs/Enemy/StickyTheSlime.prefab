@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 4351308552710895587}
   serializedVersion: 2
   m_LocalRotation: {x: -0.25881815, y: -0, z: -0, w: 0.9659261}
-  m_LocalPosition: {x: 0, y: -0.00000023841858, z: 0.8500004}
+  m_LocalPosition: {x: 0, y: -0.00000023841858, z: 1.1000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,8 +299,8 @@ MonoBehaviour:
   enemyHP: 10
   enemyDamage: 3
   enemyTurnSpeed: 15
-  enemySpeed: 35
-  enemyFireRate: 0.15
+  enemySpeed: 25
+  enemyFireRate: 0.45
   enemyStoppingDistance: 5
   enemyModel: {fileID: 2144021012147270440}
   enemyEyes: {fileID: 7980148138439954693}
@@ -332,7 +332,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.25
+  m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!33 &3182010740758400136
