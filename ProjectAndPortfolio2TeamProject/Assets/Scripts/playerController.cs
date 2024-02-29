@@ -15,6 +15,20 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] int playerPushBackResolution;
     public Vector3 playerPushBack;
 
+    [Header("----- Audio -----")]
+    [SerializeField] AudioClip[] playerSteps;
+    [Range(0, 1)][SerializeField] float playerStepsVol;
+    [SerializeField] AudioClip[] soundHurt;
+    [Range(0, 1)][SerializeField] float soundHurtVol;
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] reloadSound;
+    [Range(0, 1)][SerializeField] float reloadSoundVol;
+    [SerializeField] AudioClip[] shootSound;
+    [Range(0, 1)][SerializeField] float shootSoundVol;
+
+
+    bool isPlayerSteps;
+
     [Header("----- Player Model & Transform -----")]
     [SerializeField] CharacterController playerController;
     [SerializeField] Transform playerModel;
@@ -78,12 +92,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             {
                 selectWeapon();
                 Shoot();
-            } 
+            }
         }
     }
 
     public void pushInDirection(Vector3 dir)
-    { 
+    {
         playerPushBack += dir;
     }
 
@@ -97,9 +111,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerJumpCount = 0;
         }
 
-       if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
             Crouch();
-       else if(Input.GetKeyUp(KeyCode.LeftControl))
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
             UnCrouch();
 
         float speed = isSprinting ? playerSprintSpeed : playerWalkSpeed;
@@ -115,7 +129,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerVel.y = playerJumpForce;
             playerJumpCount++;
         }
-
 
         playerVel.y += playerGravity * Time.deltaTime;
         playerController.Move((playerVel + playerPushBack) * Time.deltaTime);
@@ -133,11 +146,18 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             }
         }
 
+        // running audio
+        if (playerController.isGrounded && playerMove.normalized.magnitude > 0.3f && !isPlayerSteps)
+        {
+            StartCoroutine(playFootSteps());
+        }
+
     }
+
 
     void HandleSprintInput()
     {
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && playerCurrentStamina > 0 && !isExhausted; 
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && playerCurrentStamina > 0 && !isExhausted;
     }
 
     [ContextMenu("Use Max Stamina")]
@@ -151,7 +171,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         isRegeneratingStamina = true;
         playerCurrentStamina += playerStaminaRecoveryRate;
         UpdateStaminaBar();
-        if (isExhausted && playerCurrentStamina == playerMaxStamina) 
+        if (isExhausted && playerCurrentStamina == playerMaxStamina)
         {
             isExhausted = false;
             gameManager.instance.toggleExhaustedStaminaBar();
@@ -167,7 +187,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerCurrentStamina -= amount;
             UpdateStaminaBar();
             if (playerCurrentStamina <= 0)
-            { 
+            {
                 isExhausted = true;
                 gameManager.instance.toggleExhaustedStaminaBar();
             }
@@ -182,6 +202,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     public void takeDamage(int amount)
     {
         playerHP -= amount;
+        aud.PlayOneShot(soundHurt[Random.Range(0, soundHurt.Length)], soundHurtVol);
         UpdateHealthBar();
         StartCoroutine(flashDamage());
 
@@ -203,7 +224,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             if (playerHP + amount <= playerOrigHP)
             {
                 playerHP += amount;
-                UpdateHealthBar();  
+                UpdateHealthBar();
             }
             else
             {
@@ -248,16 +269,31 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerMuzzleFlash.SetActive(false);
         isShooting = false;
     }
+
+    void PlayShootSound()
+    {
+        aud.PlayOneShot(shootSound[Random.Range(0, shootSound.Length)], shootSoundVol);
+    }
+
+    void PlayReloadSound()
+    {
+        aud.PlayOneShot(reloadSound[Random.Range(0, reloadSound.Length)], reloadSoundVol);
+    }
+
     void Shoot()
     {
 
         if (Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo > 0 && !isReloading)
+        {
             StartCoroutine(ShootTimer());
+            PlayShootSound();
+        }
         else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
         {
             isReloading = true;
             gameManager.instance.toggleReloadIcon();
             Invoke("Reload", playerReloadTime);
+            PlayReloadSound();
         }
 
         ThrowGrenade();
@@ -265,11 +301,13 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void Reload()
     {
+
         playerCurrentAmmo = playerMaxAmmo;
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         gameManager.instance.toggleReloadIcon();
         isReloading = false;
     }
+
     void Crouch()
     {
         playerController.height /= 2;
@@ -280,7 +318,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     }
 
 
-        public void respawn()
+    public void respawn()
     {
         playerPushBack = Vector3.zero;
         playerHP = playerOrigHP;
@@ -292,13 +330,13 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             isExhausted = false;
             gameManager.instance.toggleExhaustedStaminaBar();
         }
-        
+
 
         if (gameManager.instance.playerSpawn != null)
         {
             playerController.enabled = false;
             transform.position = gameManager.instance.playerSpawn.transform.position;
-            playerController.enabled = true; 
+            playerController.enabled = true;
         }
     }
 
@@ -323,6 +361,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         return playerMaxAmmo;
     }
+
 
     public void addNewWeapon(weaponStats weapon)
     {
@@ -366,7 +405,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void selectWeapon()
     {
-        if(Input.GetAxis("Mouse ScrollWheel") > 0 && playerSelectedWeapon < playerWeaponList.Count - 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && playerSelectedWeapon < playerWeaponList.Count - 1)
         {
             playerSelectedWeapon++;
             changeWeapon();
@@ -377,15 +416,28 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             changeWeapon();
         }
     }
-    
+
     void ThrowGrenade()
     {
         playerCurrentGrenadeCooldown -= Time.deltaTime;
-        if(Input.GetButtonDown("Grenade") && playerCurrentGrenadeCooldown <= 0)
+        if (Input.GetButtonDown("Grenade") && playerCurrentGrenadeCooldown <= 0)
         {
             Instantiate(playerGrenade, transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
             playerCurrentGrenadeCooldown = playerGrenadeCooldown;
         }
     }
 
+    IEnumerator playFootSteps()
+    {
+        isPlayerSteps = true;
+        aud.PlayOneShot(playerSteps[Random.Range(0, playerSteps.Length)], playerStepsVol);
+
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else if (isSprinting)
+            yield return new WaitForSeconds(0.3f);
+
+        isPlayerSteps = false;
+
+    }
 }
