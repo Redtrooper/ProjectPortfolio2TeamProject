@@ -552,7 +552,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   animSpeedTrans: 0
   isRoaming: 0
-  maxRoamingDistance: 0
+  maxRoamingDistance: 10
   keyModel: {fileID: 9037894017237237748}
   hasKey: 0
 --- !u!195 &9122401505395916822
@@ -574,7 +574,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.25
+  m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!33 &7094303585544789744

@@ -5,7 +5,7 @@ using UnityEngine;
 public class checkpointGate : MonoBehaviour
 {
     [Header("Collider & Renderer")]
-    [SerializeField] BoxCollider gateCollider;
+    [SerializeField] Collider gateCollider;
     [SerializeField] MeshRenderer gateRenderer;
 
     // Door State
