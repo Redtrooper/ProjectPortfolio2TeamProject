@@ -67,9 +67,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     public float playerDamageMultiplier = 1;
     public float playerProjectileSpeedMultiplier = 1;
     public float playerLifeStealMultiplier = 1;
-    float playerFireRateMultiplier = 1;
-    float playerWeaponKnockbackMultiplier = 1;
-    float playerHealthRegenMultiplier = 1;
+    private float playerFireRateMultiplier = 1;
+    private float playerWeaponKnockbackMultiplier = 1;
+    private float playerHealthRegenMultiplier = 1;
+    private float playerAirDashSpeedMultiplier = 1;
 
     [Header("----- Stamina -----")]
     [SerializeField] int playerMaxStamina;
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private bool isSprinting = false;
     private bool isRegeneratingStamina = false;
     private bool isRegeneratingHealth = false;
+    private bool isAirDashing = false;
 
     // HP Regeneration
     [SerializeField] int playerHPRecoveryRate;
@@ -96,6 +98,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private bool playerCanRegenerate = true;
     public bool playerCanLifeSteal = false;
     public float playerLifeStealPercentage;
+
+    // AirDash
+    [SerializeField] float playerAirDashSpeed;
+    private bool canAirDash = false;
 
     void Start()
     {
@@ -141,6 +147,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         {
             playerVel = Vector3.zero;
             playerJumpCount = 0;
+            isAirDashing = false;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -182,6 +189,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         if (playerController.isGrounded && playerMove.normalized.magnitude > 0.3f && !isPlayerSteps)
         {
             StartCoroutine(playFootSteps());
+        }
+
+        if (!isAirDashing && canAirDash && !playerController.isGrounded && Input.GetButtonDown("Air Dash"))
+        {
+            airDash();
         }
 
     }
@@ -523,6 +535,15 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerMaxGrenades += item.grenadeCount;
             gameManager.instance.updateGrenadeCountUI(playerGrenadeCount); 
         }
+
+        if (item.airDash && !canAirDash)
+        {
+            canAirDash = true;
+        }
+        else
+        {
+            playerAirDashSpeedMultiplier = item.airDashSpeedMultiplier;
+        }
     }
 
     public bool canPlayerCrit()
@@ -534,5 +555,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         }
         else
             return false;
+    }
+
+    private void airDash()
+    {
+        isAirDashing = true;
+        playerVel = (Camera.main.GetComponent<CameraController>().transform.forward * playerAirDashSpeed) * playerAirDashSpeedMultiplier;
     }
 }
