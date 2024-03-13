@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class titleScreen : MonoBehaviour
 {
     [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject creditsScreen;
     private void Start()
     {
         Cursor.visible = true;
@@ -24,6 +25,16 @@ public class titleScreen : MonoBehaviour
     public void openOptionsMenu()
     {
         optionsMenu.SetActive(true);
+    }
+
+    public void showCredits()
+    {
+        creditsScreen.SetActive(true);
+    }
+
+    public void closeCredits()
+    {
+        creditsScreen.SetActive(false);
     }
 
 

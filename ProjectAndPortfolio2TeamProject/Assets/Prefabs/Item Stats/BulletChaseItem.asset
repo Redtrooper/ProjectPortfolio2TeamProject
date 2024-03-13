@@ -30,3 +30,4 @@ MonoBehaviour:
   bulletSpeedMultiplier: 1
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
+  itemRarity: 3

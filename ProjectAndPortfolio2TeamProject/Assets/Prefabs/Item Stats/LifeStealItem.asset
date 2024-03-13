@@ -21,7 +21,13 @@ MonoBehaviour:
   lifeStealMultiplier: 1.15
   maxStaminaMultiplier: 1
   staminaRecoveryRateMultiplier: 1
+  critChanceMultiplier: 1
+  grenadeCount: 0
+  airDash: 0
+  airDashSpeedMultiplier: 1
+  bulletChase: 0
   damageMultiplier: 1
   bulletSpeedMultiplier: 1
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
+  itemRarity: 2

@@ -25,7 +25,9 @@ MonoBehaviour:
   grenadeCount: 0
   airDash: 1
   airDashSpeedMultiplier: 1.5
+  bulletChase: 0
   damageMultiplier: 1
   bulletSpeedMultiplier: 1
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
+  itemRarity: 1

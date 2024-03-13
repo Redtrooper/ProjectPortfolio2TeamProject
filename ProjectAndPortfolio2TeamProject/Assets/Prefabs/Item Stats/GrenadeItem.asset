@@ -23,7 +23,11 @@ MonoBehaviour:
   staminaRecoveryRateMultiplier: 1
   critChanceMultiplier: 1
   grenadeCount: 1
+  airDash: 0
+  airDashSpeedMultiplier: 1
+  bulletChase: 0
   damageMultiplier: 1
   bulletSpeedMultiplier: 1
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
+  itemRarity: 1
