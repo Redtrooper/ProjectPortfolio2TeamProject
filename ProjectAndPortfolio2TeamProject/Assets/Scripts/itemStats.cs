@@ -27,4 +27,15 @@ public class itemStats : ScriptableObject
     public float bulletSpeedMultiplier = 1;
     public float fireRateMultiplier = 1;
     public float weaponRecoilMultiplier = 1;
+
+    [Header("----- Item Data -----")]
+    public Rarities itemRarity;
+}
+
+public enum Rarities
+{
+    Common,
+    Rare,
+    Legenday,
+    Wacky
 }

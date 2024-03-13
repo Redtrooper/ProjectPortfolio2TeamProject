@@ -13,4 +13,9 @@ public class itemPickup : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public int getItemRarity()
+    {
+        return (int)item.itemRarity;
+    }
 }

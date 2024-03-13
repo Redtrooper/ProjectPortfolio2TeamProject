@@ -550,7 +550,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         if (item.airDash && !canAirDash)
             canAirDash = true;
         else
-            playerAirDashSpeedMultiplier = item.airDashSpeedMultiplier;
+            playerAirDashSpeedMultiplier *= item.airDashSpeedMultiplier;
 
         if (item.bulletChase)
             playerBulletsChase = true;
