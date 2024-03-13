@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] AudioClip[] shootSound;
     [Range(0, 1)][SerializeField] float shootSoundVol;
 
-
     bool isPlayerSteps;
 
     [Header("----- Player Model & Transform -----")]
@@ -61,12 +60,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private float playerCurrentGrenadeCooldown = 0;
 
     // Multipliers
-    float playerDamageMultiplier = 1;
-    float playerProjectileSpeedMultiplier = 1;
+    public float playerDamageMultiplier = 1;
+    public float playerProjectileSpeedMultiplier = 1;
+    public float playerLifeStealMultiplier = 1;
     float playerFireRateMultiplier = 1;
     float playerWeaponKnockbackMultiplier = 1;
-
-
+    float playerHealthRegenMultiplier = 1;
 
     [Header("----- Stamina -----")]
     [SerializeField] int playerMaxStamina;
@@ -81,6 +80,18 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private bool isExhausted = false;
     private bool isSprinting = false;
     private bool isRegeneratingStamina = false;
+    private bool isRegeneratingHealth = false;
+
+    // HP Regeneration
+    [SerializeField] int playerHPRecoveryRate;
+    [SerializeField] float playerHPRecoveryDelay;
+    [SerializeField] float playerDamageRegenDelay;
+    private float playerOrigDamageRegenDelay;
+
+    private bool playerCanRegenerate = true;
+    public bool playerCanLifeSteal = false;
+
+    public float playerLifeStealPercentage;
 
     void Start()
     {
@@ -88,6 +99,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         respawn();
         playerCurrentAmmo = playerMaxAmmo;
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
+        playerOrigDamageRegenDelay = playerDamageRegenDelay;
+        playerDamageRegenDelay = 0;
     }
 
     void Update()
@@ -101,6 +114,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
                 selectWeapon();
                 Shoot();
             }
+            if (playerDamageRegenDelay > 0)
+                playerDamageRegenDelay -= Time.deltaTime;
+            else if (playerCanRegenerate && playerHP < playerOrigHP && !isRegeneratingHealth && playerDamageRegenDelay <= 0)
+                StartCoroutine(healthRegen());
         }
     }
 
@@ -188,6 +205,15 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         isRegeneratingStamina = false;
     }
 
+    IEnumerator healthRegen()
+    {
+        isRegeneratingHealth = true;
+        playerHP += playerHPRecoveryRate;
+        UpdateHealthBar();
+        yield return new WaitForSeconds(playerHPRecoveryDelay);
+        isRegeneratingHealth = false;
+    }
+
     public void UseStamina(int amount)
     {
         if (playerCurrentStamina - amount >= 0)
@@ -216,6 +242,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
         if (playerHP <= 0)
             gameManager.instance.youLose();
+
+        playerDamageRegenDelay = playerOrigDamageRegenDelay;
     }
 
     IEnumerator flashDamage() // just like in class
@@ -267,8 +295,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     IEnumerator ShootTimer()
     {
         isShooting = true;
-        playerProjectile.GetComponent<bullet>().bulletDamageAmount = (int)(playerProjectile.GetComponent<bullet>().bulletDamageAmount * playerDamageMultiplier);
-        playerProjectile.GetComponent<bullet>().bulletSpeed = (int)(playerProjectile.GetComponent<bullet>().bulletSpeed * playerProjectileSpeedMultiplier);
         Instantiate(playerProjectile, playerExitLocation.position, Camera.main.transform.rotation);
         playerMuzzleFlash.SetActive(true);
         playerMuzzleFlash.transform.Rotate(0, 0, Random.Range(0, 180));
@@ -327,7 +353,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerController.height *= 2;
     }
 
-
     public void respawn()
     {
         playerPushBack = Vector3.zero;
@@ -372,7 +397,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         return playerMaxAmmo;
     }
 
-
     public void addNewWeapon(weaponStats weapon)
     {
         gameManager.instance.toggleAmmunitionUI(weapon.weaponTakesAmmo);
@@ -387,8 +411,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerReloadTime = weapon.weaponReloadTime;
         playerWeaponKnockback = weapon.weaponKnockback;
         playerExitLocation.localPosition = weapon.weaponExitPointPos;
-
-        updateProjectileStats();
 
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
@@ -408,17 +430,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerWeaponKnockback = playerWeaponList[playerSelectedWeapon].weaponKnockback;
         playerExitLocation.localPosition = playerWeaponList[playerSelectedWeapon].weaponExitPointPos;
 
-        updateProjectileStats();
-
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
         playerWeaponModel.GetComponent<MeshFilter>().sharedMesh = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
         playerWeaponModel.GetComponent<MeshRenderer>().sharedMaterial = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
-    }
-    void updateProjectileStats()
-    {
-        playerProjectile.GetComponent<bullet>().bulletDamageAmount = (int)(playerProjectile.GetComponent<bullet>().bulletDamageAmount * playerDamageMultiplier);
-        playerProjectile.GetComponent<bullet>().bulletSpeed = (int)(playerProjectile.GetComponent<bullet>().bulletSpeed * playerProjectileSpeedMultiplier);
     }
     void selectWeapon()
     {
@@ -460,20 +475,26 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     public void addItem(itemStats item)
     {
-        playerHP = (int)(playerHP * item.healthMultiplier);
+        playerHP = (int)Mathf.Round(playerHP * item.healthMultiplier);
         playerWalkSpeed *= item.speedMultiplier;
         playerSprintSpeed *= item.speedMultiplier;
         playerJumpMax += item.extraJumps;
         playerJumpForce *= item.jumpForceMultiplier;
-        playerMaxStamina = (int)(playerMaxStamina * item.maxStaminaMultiplier);
-        playerStaminaRecoveryRate = (int)(playerStaminaRecoveryRate * item.staminaRecoveryRateMultiplier);
+        playerMaxStamina = (int)Mathf.Round(playerMaxStamina * item.maxStaminaMultiplier);
+        playerStaminaRecoveryRate = (int)Mathf.Round(playerStaminaRecoveryRate * item.staminaRecoveryRateMultiplier);
 
         playerDamageMultiplier *= item.damageMultiplier;
         playerProjectileSpeedMultiplier *= item.bulletSpeedMultiplier;
         playerFireRateMultiplier *= item.fireRateMultiplier;
         playerWeaponKnockbackMultiplier *= item.weaponRecoilMultiplier;
 
-        if (playerProjectile)
-            updateProjectileStats();
+        if (item.lifeSteal)
+        {
+            playerCanLifeSteal = true;
+            playerCanRegenerate = false;
+            playerLifeStealMultiplier *= item.lifeStealMultiplier;
+        }
+        if (!playerCanLifeSteal)
+            playerHealthRegenMultiplier *= item.healthRegenerationMultiplier;
     }
 }

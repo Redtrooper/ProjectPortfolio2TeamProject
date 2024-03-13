@@ -19,7 +19,7 @@ MonoBehaviour:
   healthRegeneration: 0
   lifeSteal: 0
   maxStaminaMultiplier: 1
-  staminaRecoveryRateMultiplier: 1
+  staminaRecoveryRateMultiplier: 100
   damageMultiplier: 1
   bulletSpeedMultiplier: 1
   fireRateMultiplier: 1

@@ -450,6 +450,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1999797228634821510, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: canLifesteal
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1999797228634821510, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: lifeStealPercentage
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 3213027782766320238, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -591,33 +599,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 96815889044245793, guid: d18075716a488504584d3ebe07ee13bc, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3419618236979042717, guid: d18075716a488504584d3ebe07ee13bc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 442932244}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d18075716a488504584d3ebe07ee13bc, type: 3}
---- !u!1 &442932240 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3419618236979042717, guid: d18075716a488504584d3ebe07ee13bc, type: 3}
-  m_PrefabInstance: {fileID: 414471946}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &442932244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442932240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08ceba073fc593c4cbda928fa69e8ad9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 1abe91f188007934a98c763c20cd33b1, type: 2}
 --- !u!1001 &445972339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -923,6 +909,18 @@ PrefabInstance:
       propertyPath: playerStepsVol
       value: 0.0125
       objectReference: {fileID: 0}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: playerHPRecoveryRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: playerHPRecoveryDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: playerDamageRegenDelay
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3932315587194361411, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1192,22 +1190,6 @@ PrefabInstance:
     - target: {fileID: 2024124652223046323, guid: e4fbe9df21480dc4a80cadba65f9f4eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030992482577400779, guid: e4fbe9df21480dc4a80cadba65f9f4eb, type: 3}
-      propertyPath: m_text
-      value: Max Stamina UP
-      objectReference: {fileID: 0}
-    - target: {fileID: 4689437792519931847, guid: e4fbe9df21480dc4a80cadba65f9f4eb, type: 3}
-      propertyPath: m_text
-      value: Max Stamina UP
-      objectReference: {fileID: 0}
-    - target: {fileID: 5240761475610954321, guid: e4fbe9df21480dc4a80cadba65f9f4eb, type: 3}
-      propertyPath: m_text
-      value: Max Stamina UP
-      objectReference: {fileID: 0}
-    - target: {fileID: 6049874005624360339, guid: e4fbe9df21480dc4a80cadba65f9f4eb, type: 3}
-      propertyPath: m_text
-      value: Max Stamina UP
       objectReference: {fileID: 0}
     - target: {fileID: 6715608233360270850, guid: e4fbe9df21480dc4a80cadba65f9f4eb, type: 3}
       propertyPath: m_Name
@@ -1843,6 +1825,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbb42c8a7a4be4d448bd37056c39b8c8, type: 3}
+--- !u!1001 &4481575260999684129
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.60000014
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188524120861669330, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502987612090543871, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: m_Name
+      value: Stamina Regeneration Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010629393291408486, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 570cda9bad9b8c141b550ab7024b24e7, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
 --- !u!1001 &4885901613486244138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1979,3 +2022,4 @@ SceneRoots:
   - {fileID: 491841358735356365}
   - {fileID: 466341472}
   - {fileID: 1225095881}
+  - {fileID: 4481575260999684129}

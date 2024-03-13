@@ -10,10 +10,12 @@ public class itemStats : ScriptableObject
     public float speedMultiplier = 1;
     public int extraJumps;
     public float jumpForceMultiplier = 1;
-    public bool healthRegeneration;
+    public float healthRegenerationMultiplier = 1;
     public bool lifeSteal;
+    public float lifeStealMultiplier = 1;
     public float maxStaminaMultiplier = 1;
     public float staminaRecoveryRateMultiplier = 1;
+
 
     [Header("----- Weapon Modifiers -----")]
     public float damageMultiplier = 1;
