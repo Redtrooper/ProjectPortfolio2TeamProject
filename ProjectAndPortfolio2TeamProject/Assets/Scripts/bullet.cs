@@ -8,8 +8,8 @@ public class bullet : MonoBehaviour
     [SerializeField] Rigidbody bulletRigidBody;
 
     [Header("----- Bullet Properties -----")]
-    [SerializeField] int bulletDamageAmount;
-    [SerializeField] int bulletSpeed;
+    public int bulletDamageAmount;
+    public int bulletSpeed;
     [SerializeField] int bulletDestroyTime;
     [SerializeField] bool bulletSourceIsFriendly;
     
