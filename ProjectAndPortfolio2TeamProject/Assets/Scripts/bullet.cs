@@ -34,8 +34,12 @@ public class bullet : MonoBehaviour
             int damageToApply = Mathf.RoundToInt(bulletDamageAmount * gameManager.instance.playerScript.playerDamageMultiplier);
 
             dmg.takeDamage(damageToApply);
-            if (gameManager.instance.playerScript.playerCanLifeSteal)
+            if (bulletSourceIsFriendly && gameManager.instance.playerScript.playerCanLifeSteal)
+            {
+                Debug.Log("DTA " + damageToApply);
+                Debug.Log((damageToApply * gameManager.instance.playerScript.playerLifeStealPercentage) * gameManager.instance.playerScript.playerLifeStealMultiplier);
                 gameManager.instance.playerScript.heal(Mathf.RoundToInt((damageToApply * gameManager.instance.playerScript.playerLifeStealPercentage) * gameManager.instance.playerScript.playerLifeStealMultiplier));
+            }
         }
 
         Destroy(gameObject);

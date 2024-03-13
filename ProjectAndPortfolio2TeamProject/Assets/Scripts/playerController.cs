@@ -179,7 +179,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     }
 
-
     void HandleSprintInput()
     {
         isSprinting = Input.GetKey(KeyCode.LeftShift) && playerCurrentStamina > 0 && !isExhausted;
@@ -208,7 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     IEnumerator healthRegen()
     {
         isRegeneratingHealth = true;
-        playerHP += playerHPRecoveryRate;
+        playerHP += Mathf.RoundToInt(playerHPRecoveryRate * playerHealthRegenMultiplier);
         UpdateHealthBar();
         yield return new WaitForSeconds(playerHPRecoveryDelay);
         isRegeneratingHealth = false;
@@ -231,7 +230,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             Debug.Log("Not enough stamina");
         }
     }
-
 
     public void takeDamage(int amount)
     {
@@ -435,6 +433,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerWeaponModel.GetComponent<MeshFilter>().sharedMesh = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
         playerWeaponModel.GetComponent<MeshRenderer>().sharedMaterial = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
+
     void selectWeapon()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && playerSelectedWeapon < playerWeaponList.Count - 1)
