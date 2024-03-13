@@ -261,7 +261,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0caadd60715768f41a3a4b11c8f5e276, type: 3}
   - {fileID: 8300000, guid: 78bf1d75b68026849832ae34154d11ed, type: 3}
   - {fileID: 8300000, guid: c666976bb5dc5c247ac94c68a72b2623, type: 3}
-  playerStepsVol: 0.1
+  playerStepsVol: 0.0125
   soundHurt:
   - {fileID: 8300000, guid: 92be6032b22788649a107444e408dfe6, type: 3}
   - {fileID: 8300000, guid: 1c35d950a2f82314b8a8b46399dcc728, type: 3}
@@ -283,12 +283,22 @@ MonoBehaviour:
   playerExitLocation: {fileID: 2187767920344405328}
   playerGrenade: {fileID: 3181190535467322343, guid: 413ca00d1af10cb469a0a0e8c1c22eee, type: 3}
   playerGrenadeCooldown: 5
+  playerGrenadeCount: 0
   playerMuzzleFlash: {fileID: 256095326126780810}
+  playerDamageMultiplier: 1
+  playerProjectileSpeedMultiplier: 1
+  playerLifeStealMultiplier: 1
   playerMaxStamina: 1000
   playerCurrentStamina: 0
   playerStaminaRecoveryRate: 5
   playerStaminaRecoveryDelay: 0.0125
   playerJumpStaminaCost: 100
+  playerHPRecoveryRate: 1
+  playerHPRecoveryDelay: 1
+  playerDamageRegenDelay: 5
+  playerCanLifeSteal: 0
+  playerLifeStealPercentage: 0.15
+  playerAirDashSpeed: 12
 --- !u!82 &267381164823176654
 AudioSource:
   m_ObjectHideFlags: 0

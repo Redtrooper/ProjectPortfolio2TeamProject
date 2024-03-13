@@ -61,6 +61,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             keyModel.SetActive(hasKey);
         }
 
+        gameManager.instance.enemyReportAlive(this.transform);
         originalPosition = transform.position;
 
     }
@@ -198,6 +199,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                     keyModel.SetActive(true);
                 }
             }
+            gameManager.instance.enemyReportDead(this.transform);
             Destroy(gameObject);
         }
     }

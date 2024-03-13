@@ -51,6 +51,7 @@ MonoBehaviour:
   bulletRigidBody: {fileID: 8498025904449480962}
   bulletDamageAmount: 5
   bulletSpeed: 35
+  bulletChaseSpeed: 5
   bulletDestroyTime: 5
   bulletSourceIsFriendly: 1
 --- !u!135 &6344711735835384744

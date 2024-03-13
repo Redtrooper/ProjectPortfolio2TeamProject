@@ -8,17 +8,30 @@ public class bullet : MonoBehaviour
     [SerializeField] Rigidbody bulletRigidBody;
 
     [Header("----- Bullet Properties -----")]
-    public int bulletDamageAmount;
-    public int bulletSpeed;
+    [SerializeField] int bulletDamageAmount;
+    [SerializeField] int bulletSpeed;
+    [SerializeField] int bulletChaseSpeed;
     [SerializeField] int bulletDestroyTime;
     [SerializeField] bool bulletSourceIsFriendly;
-    
+
+    private Transform bulletNearestEnemyTransform;
+
     void Start()
     {
         if (bulletSourceIsFriendly && gameManager.instance.playerScript.canPlayerCrit())
             bulletDamageAmount *= 2;
         bulletRigidBody.velocity = transform.forward * (bulletSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
+        if (bulletSourceIsFriendly && gameManager.instance.playerScript.canBulletChase())
+        {
+            bulletNearestEnemyTransform = gameManager.instance.findNearestEnemy();
+        }
         Destroy(gameObject, bulletDestroyTime);
+    }
+
+    private void Update()
+    {
+        if (bulletSourceIsFriendly && gameManager.instance.playerScript.canBulletChase() && bulletNearestEnemyTransform != null)
+            transform.position = Vector3.MoveTowards(this.transform.position, bulletNearestEnemyTransform.position, Time.deltaTime * bulletChaseSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
     }
 
     private void OnTriggerEnter(Collider other)

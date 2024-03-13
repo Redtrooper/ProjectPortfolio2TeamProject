@@ -19,6 +19,7 @@ public class itemStats : ScriptableObject
     public int grenadeCount = 0;
     public bool airDash;
     public float airDashSpeedMultiplier = 1;
+    public bool bulletChase;
 
 
     [Header("----- Weapon Modifiers -----")]

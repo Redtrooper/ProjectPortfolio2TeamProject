@@ -185,6 +185,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: 4e30e1ab0d54d394296ad0321673414e, type: 2}
   weaponExitPoint: {fileID: 6593114347705147541}
+  isBlank: 0
+  weaponModelMeshFilter: {fileID: 5883558034536664348}
+  weaponModelMeshRenderer: {fileID: 4049707505209246803}
 --- !u!135 &3614787694042548411
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -204,5 +207,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.38536298
+  m_Radius: 0.75
   m_Center: {x: -0.0017576701, y: -0.036212504, z: -0.06259714}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
@@ -51,6 +52,10 @@ public class gameManager : MonoBehaviour
 
     // Game Goal
     private int checkPointsLeft = 0;
+
+    // Enemy List
+    List<Transform> enemyTransforms = new List<Transform>();
+
 
     void Awake()
     {
@@ -200,5 +205,33 @@ public class gameManager : MonoBehaviour
     public void updateGrenadeCountUI(int amount)
     {
         grenadeCount.text = "x" + amount.ToString();
+    }
+
+    public void enemyReportAlive(Transform enemyTransform)
+    {
+        enemyTransforms.Add(enemyTransform);
+    }
+
+    public void enemyReportDead(Transform enemyTransform)
+    {
+        enemyTransforms.Remove(enemyTransform);
+    }
+
+    public Transform findNearestEnemy()
+    {
+        Transform closestEnemyTransform = null;
+        float closestEnemyDist = float.MaxValue;
+
+        foreach (Transform enemyTransform in enemyTransforms)
+        {
+            float distance = Vector3.Distance(player.transform.position, enemyTransform.position);
+            if (distance < closestEnemyDist)
+            {
+                closestEnemyTransform = enemyTransform;
+                closestEnemyDist = distance;
+            }
+        }
+        
+        return closestEnemyTransform;
     }
 }

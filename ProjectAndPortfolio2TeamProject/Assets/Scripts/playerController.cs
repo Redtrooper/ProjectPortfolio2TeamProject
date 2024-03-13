@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] float playerGrenadeCooldown;
     [SerializeField] int playerGrenadeCount;
     [SerializeField] GameObject playerMuzzleFlash;
+    [SerializeField] GameObject playerWeaponPickupBlank;
 
     // Private Weapon Variables
     private int playerMaxAmmo;
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private GameObject playerProjectile = null;
     private float playerCurrentGrenadeCooldown = 0;
     private int playerMaxGrenades;
+    private bool playerBulletsChase = false;
 
     // Multipliers
     public float playerDamageMultiplier = 1;
@@ -416,10 +418,19 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     public void addNewWeapon(weaponStats weapon)
     {
+        if (playerWeaponList.Count < 2)
+        {
+            playerWeaponList.Add(weapon);
+        }
+        else
+        {
+            GameObject weaponPickup = Instantiate(playerWeaponPickupBlank, transform.position + (Vector3.Scale(Camera.main.transform.forward.normalized, new Vector3(1,0,1)) * 3), transform.rotation);
+            weaponPickup.GetComponent<weaponPickup>().setWeaponData(playerWeaponList[playerSelectedWeapon], playerExitLocation);
+            playerWeaponList.RemoveAt(playerSelectedWeapon);
+            playerWeaponList.Insert(playerSelectedWeapon, weapon);
+        }
         gameManager.instance.toggleAmmunitionUI(weapon.weaponTakesAmmo);
         playerSelectedWeapon = playerWeaponList.Count - 1;
-
-        playerWeaponList.Add(weapon);
 
         playerFireRate = weapon.weaponFireRate;
         playerProjectile = weapon.weaponProjectile;
@@ -537,13 +548,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         }
 
         if (item.airDash && !canAirDash)
-        {
             canAirDash = true;
-        }
         else
-        {
             playerAirDashSpeedMultiplier = item.airDashSpeedMultiplier;
-        }
+
+        if (item.bulletChase)
+            playerBulletsChase = true;
     }
 
     public bool canPlayerCrit()
@@ -560,6 +570,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private void airDash()
     {
         isAirDashing = true;
-        playerVel = (Camera.main.GetComponent<CameraController>().transform.forward * playerAirDashSpeed) * playerAirDashSpeedMultiplier;
+        playerVel = (Camera.main.transform.forward * playerAirDashSpeed) * playerAirDashSpeedMultiplier;
+    }
+
+    public bool canBulletChase()
+    {
+        return playerBulletsChase;
     }
 }
