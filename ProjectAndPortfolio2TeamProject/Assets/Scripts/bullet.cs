@@ -15,6 +15,8 @@ public class bullet : MonoBehaviour
     
     void Start()
     {
+        if (gameManager.instance.playerScript.canPlayerCrit())
+            bulletDamageAmount *= 2;
         bulletRigidBody.velocity = transform.forward * (bulletSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
         Destroy(gameObject, bulletDestroyTime);
     }
@@ -31,13 +33,12 @@ public class bullet : MonoBehaviour
 
         if(dmg != null )
         {
+
             int damageToApply = Mathf.RoundToInt(bulletDamageAmount * gameManager.instance.playerScript.playerDamageMultiplier);
 
             dmg.takeDamage(damageToApply);
             if (bulletSourceIsFriendly && gameManager.instance.playerScript.playerCanLifeSteal)
             {
-                Debug.Log("DTA " + damageToApply);
-                Debug.Log((damageToApply * gameManager.instance.playerScript.playerLifeStealPercentage) * gameManager.instance.playerScript.playerLifeStealMultiplier);
                 gameManager.instance.playerScript.heal(Mathf.RoundToInt((damageToApply * gameManager.instance.playerScript.playerLifeStealPercentage) * gameManager.instance.playerScript.playerLifeStealMultiplier));
             }
         }

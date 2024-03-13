@@ -15,6 +15,7 @@ public class itemStats : ScriptableObject
     public float lifeStealMultiplier = 1;
     public float maxStaminaMultiplier = 1;
     public float staminaRecoveryRateMultiplier = 1;
+    public float critChanceMultiplier = 1;
 
 
     [Header("----- Weapon Modifiers -----")]

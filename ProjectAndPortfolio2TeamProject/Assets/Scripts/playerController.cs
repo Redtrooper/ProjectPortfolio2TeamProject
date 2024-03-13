@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] float playerGravity;
     [SerializeField] int playerPushBackResolution;
     public Vector3 playerPushBack;
+    private float playerCritChance = 0;
+    private bool playerCanCrit = false;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip[] playerSteps;
@@ -88,9 +90,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] float playerDamageRegenDelay;
     private float playerOrigDamageRegenDelay;
 
+    // LifeSteal/Regeneration
     private bool playerCanRegenerate = true;
     public bool playerCanLifeSteal = false;
-
     public float playerLifeStealPercentage;
 
     void Start()
@@ -293,6 +295,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     IEnumerator ShootTimer()
     {
         isShooting = true;
+        if (playerCritChance >= Random.value)
+            playerCanCrit = true;
         Instantiate(playerProjectile, playerExitLocation.position, Camera.main.transform.rotation);
         playerMuzzleFlash.SetActive(true);
         playerMuzzleFlash.transform.Rotate(0, 0, Random.Range(0, 180));
@@ -495,5 +499,20 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         }
         if (!playerCanLifeSteal)
             playerHealthRegenMultiplier *= item.healthRegenerationMultiplier;
+        if (playerCritChance == 0 && item.critChanceMultiplier > 0)
+            playerCritChance = item.critChanceMultiplier - 1;
+        else
+            playerCritChance *= item.critChanceMultiplier;
+    }
+
+    public bool canPlayerCrit()
+    {
+        if(playerCanCrit)
+        {
+            playerCanCrit = false;
+            return true;
+        }
+        else
+            return false;
     }
 }
