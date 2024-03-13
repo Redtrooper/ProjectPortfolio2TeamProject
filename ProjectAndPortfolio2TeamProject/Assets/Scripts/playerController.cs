@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] Transform playerExitLocation;
     [SerializeField] GameObject playerGrenade;
     [SerializeField] float playerGrenadeCooldown;
+    [SerializeField] int playerGrenadeCount;
     [SerializeField] GameObject playerMuzzleFlash;
 
     // Private Weapon Variables
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private List<weaponStats> playerWeaponList = new List<weaponStats>();
     private GameObject playerProjectile = null;
     private float playerCurrentGrenadeCooldown = 0;
+    private int playerMaxGrenades;
 
     // Multipliers
     public float playerDamageMultiplier = 1;
@@ -103,6 +105,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         playerOrigDamageRegenDelay = playerDamageRegenDelay;
         playerDamageRegenDelay = 0;
+        playerMaxGrenades = playerGrenadeCount;
+        playerCurrentGrenadeCooldown = playerGrenadeCooldown;
     }
 
     void Update()
@@ -111,6 +115,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         {
             Movement();
             HandleSprintInput();
+            ThrowGrenade();
             if (playerWeaponList.Count > 0)
             {
                 selectWeapon();
@@ -333,8 +338,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             Invoke("Reload", playerReloadTime);
             PlayReloadSound();
         }
-
-        ThrowGrenade();
     }
 
     void Reload()
@@ -454,11 +457,21 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void ThrowGrenade()
     {
-        playerCurrentGrenadeCooldown -= Time.deltaTime;
-        if (Input.GetButtonDown("Grenade") && playerCurrentGrenadeCooldown <= 0)
+        if(playerGrenadeCount < playerMaxGrenades)
+        {
+            playerCurrentGrenadeCooldown -= Time.deltaTime;
+            if(playerCurrentGrenadeCooldown <= 0)
+            {
+                playerCurrentGrenadeCooldown = playerGrenadeCooldown;
+                playerGrenadeCount += 1;
+                gameManager.instance.updateGrenadeCountUI(playerGrenadeCount);
+            }
+        }
+        if (Input.GetButtonDown("Grenade") && playerGrenadeCount > 0)
         {
             Instantiate(playerGrenade, transform.position + new Vector3(0, 1, 0), Camera.main.transform.rotation);
-            playerCurrentGrenadeCooldown = playerGrenadeCooldown;
+            playerGrenadeCount -= 1;
+            gameManager.instance.updateGrenadeCountUI(playerGrenadeCount);
         }
     }
 
@@ -503,6 +516,13 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerCritChance = item.critChanceMultiplier - 1;
         else
             playerCritChance *= item.critChanceMultiplier;
+
+        if (item.grenadeCount > 0)
+        {
+            playerGrenadeCount += item.grenadeCount;
+            playerMaxGrenades += item.grenadeCount;
+            gameManager.instance.updateGrenadeCountUI(playerGrenadeCount); 
+        }
     }
 
     public bool canPlayerCrit()

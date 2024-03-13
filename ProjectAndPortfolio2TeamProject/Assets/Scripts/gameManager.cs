@@ -46,6 +46,9 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text keyCount;
     public GameObject keyPickup;
 
+    [Header("----- Grenade -----")]
+    [SerializeField] TMP_Text grenadeCount;
+
     // Game Goal
     private int checkPointsLeft = 0;
 
@@ -192,5 +195,10 @@ public class gameManager : MonoBehaviour
             else
                 Camera.main.GetComponent<CameraController>().cameraInvertY = false;
         }
+    }
+
+    public void updateGrenadeCountUI(int amount)
+    {
+        grenadeCount.text = "x" + amount.ToString();
     }
 }
