@@ -15,7 +15,7 @@ public class bullet : MonoBehaviour
     
     void Start()
     {
-        if (gameManager.instance.playerScript.canPlayerCrit())
+        if (bulletSourceIsFriendly && gameManager.instance.playerScript.canPlayerCrit())
             bulletDamageAmount *= 2;
         bulletRigidBody.velocity = transform.forward * (bulletSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
         Destroy(gameObject, bulletDestroyTime);
