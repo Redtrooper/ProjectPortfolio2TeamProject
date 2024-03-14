@@ -6,43 +6,43 @@ using UnityEngine.AI;
 public class enemyAI : MonoBehaviour, IDamage, IPhysics
 {
     [Header("----- Enemy Stats -----")]
-    [SerializeField] int enemyHP;
-    [SerializeField] int enemyTurnSpeed;
-    [SerializeField] float enemySpeed;
-    [SerializeField] float enemyFireRate;
-    [SerializeField] int enemyStoppingDistance;
+    [SerializeField] protected int enemyHP;
+    [SerializeField] protected int enemyTurnSpeed;
+    [SerializeField] protected float enemySpeed;
+    [SerializeField] protected float enemyFireRate;
+    [SerializeField] protected int enemyStoppingDistance;
 
     [Header("----- Model -----")]
-    [SerializeField] Renderer enemyModel;
-    [SerializeField] GameObject enemyEyes;
-    [SerializeField] GameObject enemyExitPoint;
+    [SerializeField] protected Renderer enemyModel;
+    [SerializeField] protected GameObject enemyEyes;
+    [SerializeField] protected GameObject enemyExitPoint;
 
     [Header("----- Agent & Projectile -----")]
-    [SerializeField] NavMeshAgent enemyAgent;
-    [SerializeField] GameObject enemyProjectile;
+    [SerializeField] protected NavMeshAgent enemyAgent;
+    [SerializeField] protected GameObject enemyProjectile;
 
     [Header("----- Animate -----")]
-    [SerializeField] Animator anim;
-    [SerializeField] int animSpeedTrans;
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected int animSpeedTrans;
 
     [Header("----- Roaming -----")]
-    [SerializeField] bool doRoam;
-    [SerializeField] float maxRoamingDistance;
+    [SerializeField] protected bool doRoam;
+    [SerializeField] protected float maxRoamingDistance;
     private bool isRoaming;
 
 
     [Header("----- Key -----")]
-    [SerializeField] GameObject keyModel;
-    [SerializeField] bool hasKey;
+    [SerializeField] protected GameObject keyModel;
+    [SerializeField] protected bool hasKey;
 
     // Enemy States
     private bool isAggro; // this will make it so they go aggro when shot out of range - john
-    private bool isShooting;
+    protected bool isShooting;
     private Vector3 originalPosition;
     private bool hasAnimator => anim != null;
 
     // Player Data
-    private bool playerInRange;
+    protected bool playerInRange;
     private Vector3 playerDirection;
 
     // Patrol
@@ -52,7 +52,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     private Color enemyOriginalColor;
 
     void Start()
-    { 
+    {
         enemyOriginalColor = enemyModel.material.color;
         enemyAgent.speed = enemySpeed;
 
@@ -65,7 +65,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         originalPosition = transform.position;
 
     }
-    void Update()
+    protected void Update()
     {
         float animSpeed = enemyAgent.velocity.normalized.magnitude;
 
@@ -82,11 +82,11 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         else
         {
 
-            if (CheckForPlayer())
+            if (DetectPlayer())
             {
                 MoveNShoot();
             }
-            else if(doRoam && !isRoaming)
+            else if (doRoam && !isRoaming)
             {
                 StartCoroutine(Roam());
             }
@@ -105,17 +105,17 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 anim.SetTrigger("Shoot");
             }
 
-            if (CheckForPlayer())
+            if (DetectPlayer())
             {
-                StartCoroutine(Shoot()); 
+                StartCoroutine(Shoot());
             }
         }
 
         if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
-            SpinLikeAnIdiotUntilYoureFacingThePlayer();
+            RotateTorwards();
     }
 
-    IEnumerator Roam()
+    protected virtual IEnumerator Roam()
     {
         enemyAgent.stoppingDistance = 0;
         if (enemyAgent.remainingDistance < 0.05f)
@@ -124,7 +124,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             yield return new WaitForSeconds(1.0f); // this is how long they will stay at their destination b4 going to a new one
             Vector3 randomPosition = GetRandomPosition();
             enemyAgent.SetDestination(randomPosition);
-            isRoaming = false; 
+            isRoaming = false;
         }
     }
 
@@ -144,20 +144,20 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         isRoaming = false;
     }
 
-    void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
             playerInRange = true;
     }
-    void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
-        { 
+        {
             playerInRange = false;
             StartCoroutine(WaitBeforeNextRoam());
         }
     }
-    bool CheckForPlayer()
+    protected bool DetectPlayer()
     {
         if (playerInRange)
         {
@@ -173,7 +173,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
         return false;
     }
-    void SpinLikeAnIdiotUntilYoureFacingThePlayer()
+    void RotateTorwards()
     {
         //turnspeed should be either really high or really low for comedic effect
         Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.position.y, playerDirection.z));
@@ -207,7 +207,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     {
         enemyAgent.velocity += dir / 2;
     }
-    IEnumerator Shoot()
+    protected virtual IEnumerator Shoot()
     {
         isShooting = true;
 
@@ -228,7 +228,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     public void createBullet()
     {
-        Instantiate(enemyProjectile, enemyExitPoint.transform.position, enemyExitPoint.transform.rotation); 
+        Instantiate(enemyProjectile, enemyExitPoint.transform.position, enemyExitPoint.transform.rotation);
     }
 
     IEnumerator DamageFlash()

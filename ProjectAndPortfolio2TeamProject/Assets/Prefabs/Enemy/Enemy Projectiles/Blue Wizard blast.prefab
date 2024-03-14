@@ -53,7 +53,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1145956548832756391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -156,7 +156,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   bulletRigidBody: {fileID: 5961362388302885261}
   bulletDamageAmount: 10
   bulletSpeed: 10
+  bulletChaseSpeed: 0
   bulletDestroyTime: 3
   bulletSourceIsFriendly: 0
 --- !u!96 &9190943626171116141
