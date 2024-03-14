@@ -228,7 +228,15 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     public void createBullet()
     {
-        Instantiate(enemyProjectile, enemyExitPoint.transform.position, enemyExitPoint.transform.rotation);
+        GameObject player = gameManager.instance.player;
+
+        Collider playerCollider = player.GetComponent<Collider>();
+
+        Vector3 playerColliderPosition = playerCollider.bounds.center;
+        Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
+
+
+        Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
     }
 
     IEnumerator DamageFlash()
