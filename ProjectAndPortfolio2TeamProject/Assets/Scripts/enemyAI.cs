@@ -226,16 +226,17 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     protected virtual void CreateBullet()
     {
-        GameObject player = gameManager.instance.player;
+        if (enemyProjectile != null) // i do this here so they dont need a projectile so the brawler still workls
+        {
+            GameObject player = gameManager.instance.player;
+            Collider playerCollider = player.GetComponent<Collider>();
+            Vector3 playerColliderPosition = playerCollider.bounds.center;
+            Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
 
-        Collider playerCollider = player.GetComponent<Collider>();
-
-        Vector3 playerColliderPosition = playerCollider.bounds.center;
-        Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
-
-
-        Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
+            Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
+        }
     }
+
 
     protected virtual IEnumerator DamageFlash()
     {

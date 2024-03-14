@@ -140,7 +140,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         playerPushBack += dir;
     }
-
     void Movement()
     {
         playerPushBack = Vector3.Lerp(playerPushBack, Vector3.zero, Time.deltaTime * playerPushBackResolution);
@@ -251,6 +250,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             Debug.Log("Not enough stamina");
         }
     }
+
 
     public void takeDamage(int amount)
     {
