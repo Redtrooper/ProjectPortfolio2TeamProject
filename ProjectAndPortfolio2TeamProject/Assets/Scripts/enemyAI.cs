@@ -36,22 +36,20 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] protected bool hasKey;
 
     // Enemy States
-    private bool isAggro; // this will make it so they go aggro when shot out of range - john
+    protected bool isAggro; // this will make it so they go aggro when shot out of range - john
     protected bool isShooting;
     private Vector3 originalPosition;
-    private bool hasAnimator => anim != null;
+    protected bool hasAnimator => anim != null;
 
     // Player Data
     protected bool playerInRange;
-    private Vector3 playerDirection;
-
-    // Patrol
+    protected Vector3 playerDirection;
 
 
     // Original Color
     private Color enemyOriginalColor;
 
-    void Start()
+    protected virtual void Start()
     {
         enemyOriginalColor = enemyModel.material.color;
         enemyAgent.speed = enemySpeed;
@@ -65,7 +63,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         originalPosition = transform.position;
 
     }
-    protected void Update()
+    protected virtual void Update()
     {
         float animSpeed = enemyAgent.velocity.normalized.magnitude;
 
@@ -92,7 +90,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             }
         }
     }
-    void MoveNShoot()
+    protected virtual void MoveNShoot()
     {
         enemyAgent.stoppingDistance = enemyStoppingDistance;
         enemyAgent.SetDestination(gameManager.instance.player.transform.position);
@@ -128,7 +126,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
     }
 
-    Vector3 GetRandomPosition()
+    protected virtual Vector3 GetRandomPosition()
     {
         float randomX = Random.Range(-maxRoamingDistance, maxRoamingDistance);
         float randomZ = Random.Range(-maxRoamingDistance, maxRoamingDistance);
@@ -136,7 +134,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         return randomPosition;
     }
 
-    IEnumerator WaitBeforeNextRoam()
+    protected virtual IEnumerator WaitBeforeNextRoam()
     {
         Debug.Log("Waiting");
         isRoaming = true;
@@ -144,12 +142,12 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         isRoaming = false;
     }
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
             playerInRange = true;
     }
-    protected void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -157,7 +155,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             StartCoroutine(WaitBeforeNextRoam());
         }
     }
-    protected bool DetectPlayer()
+    protected virtual bool DetectPlayer()
     {
         if (playerInRange)
         {
@@ -173,7 +171,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
         return false;
     }
-    void RotateTorwards()
+    protected virtual void RotateTorwards()
     {
         //turnspeed should be either really high or really low for comedic effect
         Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.position.y, playerDirection.z));
@@ -220,13 +218,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
         else
         {
-            createBullet();
+            CreateBullet();
         }
 
         isShooting = false;
     }
 
-    public void createBullet()
+    protected virtual void CreateBullet()
     {
         GameObject player = gameManager.instance.player;
 
@@ -239,7 +237,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
     }
 
-    IEnumerator DamageFlash()
+    protected virtual IEnumerator DamageFlash()
     {
         enemyModel.material.color = Color.red;
         yield return new WaitForSeconds(.15f);

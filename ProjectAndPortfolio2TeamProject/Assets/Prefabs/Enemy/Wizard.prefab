@@ -1478,9 +1478,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1505582205733816660}
+  - component: {fileID: 3604669304546300205}
   - component: {fileID: 7894668566773330948}
   - component: {fileID: 7392664316496692201}
-  - component: {fileID: 3899297567093298153}
   - component: {fileID: 9093495349080646515}
   - component: {fileID: 7993341629692768435}
   m_Layer: 0
@@ -1509,6 +1509,35 @@ Transform:
   - {fileID: 2366245613170451700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3604669304546300205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5270764925599516232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999f6229376d0ea43adbd8da7963801e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyHP: 10
+  enemyTurnSpeed: 300
+  enemySpeed: 3
+  enemyFireRate: 1
+  enemyStoppingDistance: 9
+  enemyModel: {fileID: 2738343721558851319}
+  enemyEyes: {fileID: 6044074137163242317}
+  enemyExitPoint: {fileID: 1492989017435832097}
+  enemyAgent: {fileID: 9093495349080646515}
+  enemyProjectile: {fileID: 1145956548832756391, guid: b0af046188d5e1c4fb8e5fca6c6f9b93, type: 3}
+  anim: {fileID: 0}
+  animSpeedTrans: 0
+  doRoam: 0
+  maxRoamingDistance: 0
+  keyModel: {fileID: 0}
+  hasKey: 0
+  bulletSpeed: 10
 --- !u!95 &7894668566773330948
 Animator:
   serializedVersion: 5
@@ -1553,35 +1582,6 @@ CapsuleCollider:
   m_Height: 1.882848
   m_Direction: 1
   m_Center: {x: 0, y: 0.98, z: 0}
---- !u!114 &3899297567093298153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5270764925599516232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a54127659e8e8941bd9e3c4a5180e4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyHP: 25
-  enemyDamage: 10
-  enemyTurnSpeed: 3
-  enemySpeed: 5
-  enemyFireRate: 1
-  enemyStoppingDistance: 3
-  enemyModel: {fileID: 2738343721558851319}
-  enemyEyes: {fileID: 6044074137163242317}
-  enemyExitPoint: {fileID: 1492989017435832097}
-  enemyAgent: {fileID: 9093495349080646515}
-  enemyProjectile: {fileID: 1145956548832756391, guid: b0af046188d5e1c4fb8e5fca6c6f9b93, type: 3}
-  anim: {fileID: 7894668566773330948}
-  animSpeedTrans: 1
-  isRoaming: 1
-  maxRoamingDistance: 3
-  keyModel: {fileID: 5393965799501683050, guid: 43da7da8e9514fc4793a9360a0ca6395, type: 3}
-  hasKey: 0
 --- !u!195 &9093495349080646515
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1623,7 +1623,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 20
+  m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5384801293099654654
 GameObject:
