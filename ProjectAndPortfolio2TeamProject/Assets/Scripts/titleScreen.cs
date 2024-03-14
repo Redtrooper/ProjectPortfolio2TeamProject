@@ -10,6 +10,18 @@ public class titleScreen : MonoBehaviour
     [SerializeField] GameObject optionsMenu;
     [SerializeField] GameObject creditsScreen;
 
+    IEnumerator PlayAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(1);
+    }
+
+    IEnumerator QuitAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        Application.Quit();
+    }
+
     private void Start()
     {
         Cursor.visible = true;
@@ -18,12 +30,12 @@ public class titleScreen : MonoBehaviour
 
     public void play()
     {
-        SceneManager.LoadScene(1);
+        StartCoroutine(PlayAfterDelay());
     }
 
     public void quit()
     {
-        Application.Quit();
+        StartCoroutine(QuitAfterDelay());
     }
 
     public void openOptionsMenu()
