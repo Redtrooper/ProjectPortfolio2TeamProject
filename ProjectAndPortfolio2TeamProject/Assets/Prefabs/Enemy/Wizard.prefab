@@ -1530,7 +1530,7 @@ MonoBehaviour:
   enemyEyes: {fileID: 6044074137163242317}
   enemyExitPoint: {fileID: 1492989017435832097}
   enemyAgent: {fileID: 9093495349080646515}
-  enemyProjectile: {fileID: 1145956548832756391, guid: b0af046188d5e1c4fb8e5fca6c6f9b93, type: 3}
+  enemyProjectile: {fileID: 157687882469607331, guid: d4ac02f8837d7a64c97c50e9ffef5fc5, type: 3}
   anim: {fileID: 0}
   animSpeedTrans: 0
   doRoam: 0
