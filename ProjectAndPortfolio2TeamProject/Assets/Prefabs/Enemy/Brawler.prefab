@@ -88,8 +88,8 @@ MonoBehaviour:
   enemyFireRate: 1
   enemyStoppingDistance: 2
   enemyModel: {fileID: 7831685111562325118}
-  enemyEyes: {fileID: 0}
-  enemyExitPoint: {fileID: 0}
+  enemyEyes: {fileID: 3377360777991931500}
+  enemyExitPoint: {fileID: 7966507139569199891}
   enemyAgent: {fileID: 2982689460602091200}
   enemyProjectile: {fileID: 0}
   anim: {fileID: 0}
