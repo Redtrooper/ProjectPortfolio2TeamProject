@@ -13,7 +13,11 @@ public class buttonFunctions : MonoBehaviour
     IEnumerator NextLevelAfterDelay()
     {
         float timer = 0f;
-        float delay = 1f; 
+        float delay = 1f;
+
+        gameManager.instance.playerShouldLoadStats = true;
+        PlayerPrefs.SetInt("Player ShouldLoadStats",gameManager.instance.playerShouldLoadStats ? 1 : 0);
+        gameManager.instance.playerScript.savePlayerData();
 
         while (timer < delay)
         {
@@ -76,5 +80,10 @@ public class buttonFunctions : MonoBehaviour
     {
         gameManager.instance.playerScript.respawn();
         resume();
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Player ShouldLoadStats", 0);
     }
 }

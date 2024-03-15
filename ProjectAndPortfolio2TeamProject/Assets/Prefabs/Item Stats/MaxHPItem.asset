@@ -12,15 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a286e460238bc4788aa7a26a6cf01c, type: 3}
   m_Name: MaxHPItem
   m_EditorClassIdentifier: 
-  healthMultiplier: 1.1
+  maxHealthMultiplier: 1.25
   speedMultiplier: 1
   extraJumps: 0
   jumpForceMultiplier: 1
-  healthRegeneration: 0
+  healthRegenerationMultiplier: 1
   lifeSteal: 0
+  lifeStealMultiplier: 1
   maxStaminaMultiplier: 1
   staminaRecoveryRateMultiplier: 1
+  critChanceMultiplier: 1
+  grenadeCount: 0
+  airDash: 0
+  airDashSpeedMultiplier: 1
+  bulletChase: 0
   damageMultiplier: 1
   bulletSpeedMultiplier: 1
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
+  itemRarity: 0

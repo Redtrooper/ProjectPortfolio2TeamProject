@@ -20,7 +20,10 @@ public class bullet : MonoBehaviour
     {
         if (bulletSourceIsFriendly && gameManager.instance.playerScript.canPlayerCrit())
             bulletDamageAmount *= 2;
-        bulletRigidBody.velocity = transform.forward * (bulletSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
+        if (bulletSourceIsFriendly)
+            bulletRigidBody.velocity = transform.forward * (bulletSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
+        else
+            bulletRigidBody.velocity = transform.forward * bulletSpeed;
         if (bulletSourceIsFriendly && gameManager.instance.playerScript.canBulletChase())
         {
             bulletNearestEnemyTransform = gameManager.instance.findNearestEnemy();

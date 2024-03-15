@@ -15,6 +15,8 @@ public class optionsMenu : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Mouse Sensitivity"))
             mouseSensitivity.value = PlayerPrefs.GetInt("Mouse Sensitivity");
+        else
+            mouseSensitivity.value = mouseSensitivity.minValue;
         if (PlayerPrefs.HasKey("Invert Y"))
         {
             int isEnabled = PlayerPrefs.GetInt("Invert Y");
@@ -23,19 +25,19 @@ public class optionsMenu : MonoBehaviour
             else
                 invertY.isOn = false;
         }
+        else
+        {
+            invertY.isOn = false;
+        }
     }
 
     public void Apply()
     {
-        if (PlayerPrefs.HasKey("Mouse Sensitivity"))
-            PlayerPrefs.SetInt("Mouse Sensitivity", (int) mouseSensitivity.value);
-        if (PlayerPrefs.HasKey("Invert Y"))
-        {
-            if (invertY.isOn)
-                PlayerPrefs.SetInt("Invert Y", 1);
-            else
-                PlayerPrefs.SetInt("Invert Y", 0);
-        }
+        PlayerPrefs.SetInt("Mouse Sensitivity", (int) mouseSensitivity.value);
+        if (invertY.isOn)
+            PlayerPrefs.SetInt("Invert Y", 1);
+        else
+            PlayerPrefs.SetInt("Invert Y", 0);
         gameObject.SetActive(false);
         GetComponentInParent<menuControls>().freezeInput = false;
     }

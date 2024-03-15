@@ -49,12 +49,9 @@ public class itemSpawner : MonoBehaviour
         {
             if (!isOpen && Input.GetButtonDown("Pickup"))
             {
-                for (int i = 0; i < 100; i++)
-                {
-                    StartCoroutine(flashInteract());
-                    Instantiate(getRandomItem(), itemSpawnPos.position, transform.rotation);
-                    // isOpen = true; 
-                }
+                StartCoroutine(flashInteract());
+                Instantiate(getRandomItem(), itemSpawnPos.position, transform.rotation);
+                isOpen = true; 
             }
         }
     }

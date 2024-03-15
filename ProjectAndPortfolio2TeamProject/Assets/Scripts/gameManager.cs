@@ -37,8 +37,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text reloadText;
 
     // Private HUD Variables
-    private int origHP;
-    private int origStamina;
+    private int maxHP;
+    private int maxStamina;
     private Color staminaBarColor;
     private int checkpointInitial;
     private int currentCheckpoint;
@@ -56,16 +56,24 @@ public class gameManager : MonoBehaviour
     // Enemy List
     List<Transform> enemyTransforms = new List<Transform>();
 
+    // Weapons List
+    public List<weaponPickup> playerWeapons = new List<weaponPickup>();
+
+    // Player Stat Loading
+    public bool playerShouldLoadStats = false;
+
 
     void Awake()
     {
+        if (PlayerPrefs.HasKey("Player ShouldLoadStats"))
+            playerShouldLoadStats = PlayerPrefs.GetInt("Player ShouldLoadStats") == 1 ? true : false; 
         instance = this;
         timeScale = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Player Spawn Position");
-        origHP = playerScript.getHP();
-        origStamina = playerScript.getMaxStamina();
+        maxHP = playerScript.getHP();
+        maxStamina = playerScript.getMaxStamina();
         staminaBarColor = staminaBar.color;
         maxAmmo.text = playerScript.getMaxAmmo().ToString();
         currentAmmo.text = maxAmmo.text;
@@ -117,12 +125,24 @@ public class gameManager : MonoBehaviour
 
     public void updateHealthBar(int newHP)
     {
-        healthBar.fillAmount = (float)newHP / origHP;
+        healthBar.fillAmount = (float)newHP / maxHP;
+    }
+
+    public void updateHealthBarMax(int currentPlayerHP,int newMaxHP)
+    {
+        maxHP = newMaxHP;
+        updateHealthBar(currentPlayerHP);
     }
 
     public void updateStaminaBar(int newStamina)
     {
-        staminaBar.fillAmount = (float)newStamina / origStamina;
+        staminaBar.fillAmount = (float)newStamina / maxStamina;
+    }
+
+    public void updateStaminaBarMax(int currentPlayerStamina, int newMaxStamina)
+    {
+        maxStamina = newMaxStamina;
+        updateStaminaBar(currentPlayerStamina);
     }
 
     public void toggleExhaustedStaminaBar()

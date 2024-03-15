@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a286e460238bc4788aa7a26a6cf01c, type: 3}
   m_Name: BulletChaseItem
   m_EditorClassIdentifier: 
-  healthMultiplier: 1
+  maxHealthMultiplier: 1
   speedMultiplier: 1
   extraJumps: 0
   jumpForceMultiplier: 1
@@ -27,7 +27,7 @@ MonoBehaviour:
   airDashSpeedMultiplier: 1
   bulletChase: 1
   damageMultiplier: 1
-  bulletSpeedMultiplier: 1
+  bulletSpeedMultiplier: 5
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
   itemRarity: 3

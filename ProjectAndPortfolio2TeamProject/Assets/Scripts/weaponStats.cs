@@ -19,4 +19,14 @@ public class weaponStats : ScriptableObject
     [Header("----- Weapon Model & Exit Point -----")]
     public GameObject weaponModel;
     public Vector3 weaponExitPointPos;
+
+    [Header("----- Weapon Information -----")]
+    public Weapon weaponType;
 }
+
+public enum Weapon
+{
+    Rifle,
+    Shotgun
+}
+

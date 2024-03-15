@@ -6,7 +6,7 @@ using UnityEngine;
 public class itemStats : ScriptableObject
 {
     [Header("----- Player Stat Modifiers -----")]
-    public float healthMultiplier = 1;
+    public float maxHealthMultiplier = 1;
     public float speedMultiplier = 1;
     public int extraJumps;
     public float jumpForceMultiplier = 1;

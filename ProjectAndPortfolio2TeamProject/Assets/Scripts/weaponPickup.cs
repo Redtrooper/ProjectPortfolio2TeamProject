@@ -53,4 +53,10 @@ public class weaponPickup : MonoBehaviour
         if (other.CompareTag("Player"))
             playerInRange = false;
     }
+
+    public void givePlayerWeapon()
+    {
+        weapon.weaponExitPointPos = weaponExitPoint.localPosition;
+        gameManager.instance.playerScript.addNewWeapon(weapon);
+    }
 }
