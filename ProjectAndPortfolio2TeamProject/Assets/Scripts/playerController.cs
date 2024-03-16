@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerDamageRegenDelay = 0;
         playerGrenadeCount = playerMaxGrenades;
         playerCurrentGrenadeCooldown = playerGrenadeCooldown;
+        gameManager.instance.updateHealthBarMax(playerHP, playerMaxHP);
     }
 
     void Update()
@@ -369,6 +370,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         playerController.height /= 2;
     }
+
     void UnCrouch()
     {
         playerController.height *= 2;

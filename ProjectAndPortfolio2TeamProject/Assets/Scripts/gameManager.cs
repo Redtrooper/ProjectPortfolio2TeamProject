@@ -24,6 +24,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject winScreen;
     [SerializeField] GameObject lossScreen;
+    public GameObject optionsMenu;
     private GameObject activeMenu;
 
     [Header("----- HUD Elements -----")]
@@ -208,7 +209,7 @@ public class gameManager : MonoBehaviour
         reloadText.enabled = !reloadText.enabled;
     }
 
-    private void loadSettings()
+    public void loadSettings()
     {
         if (PlayerPrefs.HasKey("Mouse Sensitivity"))
             Camera.main.GetComponent<CameraController>().cameraSensitivity = PlayerPrefs.GetInt("Mouse Sensitivity");
@@ -253,5 +254,10 @@ public class gameManager : MonoBehaviour
         }
         
         return closestEnemyTransform;
+    }
+
+    public GameObject getActiveMenu()
+    {
+        return activeMenu;
     }
 }

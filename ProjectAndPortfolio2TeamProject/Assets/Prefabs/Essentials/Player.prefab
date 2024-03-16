@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b706dbc88fdc87149bf7da3c9fc2a235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHP: 100
+  playerMaxHP: 100
   playerWalkSpeed: 6
   playerSprintSpeed: 12
   playerJumpMax: 2
@@ -283,8 +283,9 @@ MonoBehaviour:
   playerExitLocation: {fileID: 2187767920344405328}
   playerGrenade: {fileID: 3181190535467322343, guid: 413ca00d1af10cb469a0a0e8c1c22eee, type: 3}
   playerGrenadeCooldown: 5
-  playerGrenadeCount: 0
+  playerMaxGrenades: 0
   playerMuzzleFlash: {fileID: 256095326126780810}
+  playerWeaponPickupBlank: {fileID: 3152205385378924855, guid: 2b509d5ce66b3ee44a5f48c187aa3bc5, type: 3}
   playerDamageMultiplier: 1
   playerProjectileSpeedMultiplier: 1
   playerLifeStealMultiplier: 1

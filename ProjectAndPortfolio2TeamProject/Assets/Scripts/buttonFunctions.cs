@@ -82,6 +82,12 @@ public class buttonFunctions : MonoBehaviour
         resume();
     }
 
+    public void openOptionsMenu()
+    {
+        gameManager.instance.optionsMenu.SetActive(true);
+        gameManager.instance.getActiveMenu().GetComponent<menuControls>().freezeInput = true;
+    }
+
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt("Player ShouldLoadStats", 0);

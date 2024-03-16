@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using TMPro;
 
 public class SoundManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioMixer _mixer;
     [SerializeField] float _multiplier = 30f;
     [SerializeField] Slider SFXSlider;
+    [SerializeField] TMP_Text SFXLabel;
 
     private void Start()
     {
@@ -29,6 +31,7 @@ public class SoundManager : MonoBehaviour
 
     private void HandleSliderValueChanged(float value)
     {
+        SFXLabel.text = value.ToString("0.00");
         SetVolume(value);
     }
 
@@ -37,6 +40,7 @@ public class SoundManager : MonoBehaviour
         if (value <= 0f)
         {
             _mixer.SetFloat(_volumeParameter, -80f); // -80 is mute
+            Debug.Log("Sound muted");
         }
         else
         {

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class itemSpawner : MonoBehaviour
 {
+    [SerializeField] bool getsDisabledOnUse = true;
     [SerializeField] List<itemPickup> itemList = new List<itemPickup>();
     private bool playerInRange = false;
     [SerializeField] Renderer model;
@@ -51,7 +52,8 @@ public class itemSpawner : MonoBehaviour
             {
                 StartCoroutine(flashInteract());
                 Instantiate(getRandomItem(), itemSpawnPos.position, transform.rotation);
-                isOpen = true; 
+                if (getsDisabledOnUse)
+                    isOpen = true;
             }
         }
     }
@@ -110,6 +112,9 @@ public class itemSpawner : MonoBehaviour
     {
         model.material.color = Color.green;
         yield return new WaitForSeconds(.15f);
-        model.material.color = Color.black;
+        if (getsDisabledOnUse)
+            model.material.color = Color.black;
+        else
+            model.material.color = originalColor;
     }
 }

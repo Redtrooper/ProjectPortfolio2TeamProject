@@ -40,6 +40,8 @@ public class optionsMenu : MonoBehaviour
             PlayerPrefs.SetInt("Invert Y", 0);
         gameObject.SetActive(false);
         GetComponentInParent<menuControls>().freezeInput = false;
+        if (gameManager.instance != null)
+            gameManager.instance.loadSettings();
     }
 
     public void Cancel()
