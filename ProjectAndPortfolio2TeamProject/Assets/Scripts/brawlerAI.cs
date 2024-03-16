@@ -20,7 +20,7 @@ public class brawlerAI : enemyAI
         }
         else if (isAggro)
         {
-            MoveNShoot();
+            EngageTarget();
         }
     }
 
@@ -48,7 +48,7 @@ public class brawlerAI : enemyAI
         yield return null;
     }
 
-    protected override void MoveNShoot()
+    protected override void EngageTarget()
     {
         if (gameManager.instance.player != null)
         {

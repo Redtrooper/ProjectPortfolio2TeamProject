@@ -74,7 +74,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
         if (isAggro)
         {
-            MoveNShoot();
+            EngageTarget();
             isAggro = false;
         }
         else
@@ -82,7 +82,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
             if (DetectPlayer())
             {
-                MoveNShoot();
+                EngageTarget();
             }
             else if (doRoam && !isRoaming)
             {
@@ -90,7 +90,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             }
         }
     }
-    protected virtual void MoveNShoot()
+    protected virtual void EngageTarget()
     {
         enemyAgent.stoppingDistance = enemyStoppingDistance;
         enemyAgent.SetDestination(gameManager.instance.player.transform.position);
