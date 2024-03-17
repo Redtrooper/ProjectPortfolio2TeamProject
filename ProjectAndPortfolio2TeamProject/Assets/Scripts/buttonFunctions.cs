@@ -83,7 +83,15 @@ public class buttonFunctions : MonoBehaviour
 
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSeconds(1f);
+        float timer = 0f;
+        float delay = 1f;
+
+        while (timer < delay)
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
         Application.Quit();
     }
 

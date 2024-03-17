@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletRigidBody: {fileID: 1821191713179428981}
-  bulletDamageAmount: 0
+  bulletDamageAmount: 3
   bulletSpeed: 10
   bulletChaseSpeed: 5
   bulletDestroyTime: 5
