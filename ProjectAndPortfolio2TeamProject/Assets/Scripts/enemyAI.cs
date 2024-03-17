@@ -177,7 +177,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.position.y, playerDirection.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, turn, Time.deltaTime * enemyTurnSpeed);
     }
-    public void takeDamage(int amount)
+    public virtual void takeDamage(int amount)
     {
         if (!isAggro)
         {
@@ -207,22 +207,25 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     }
     protected virtual IEnumerator Shoot()
     {
-        isShooting = true;
-
-        yield return new WaitForSeconds(enemyFireRate);
-
-
-        if (hasAnimator)
+        if (!isShooting) 
         {
-            anim.ResetTrigger("Shoot");
-        }
-        else
-        {
-            CreateBullet();
-        }
+            isShooting = true;
 
-        isShooting = false;
+            yield return new WaitForSeconds(enemyFireRate);
+
+            if (hasAnimator)
+            {
+                anim.ResetTrigger("Shoot");
+            }
+            else
+            {
+                CreateBullet();
+            }
+
+            isShooting = false;
+        }
     }
+
 
     protected virtual void CreateBullet()
     {
