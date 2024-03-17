@@ -67,7 +67,10 @@ public class buttonFunctions : MonoBehaviour
             yield return null; 
         }
 
-        SceneManager.LoadScene(2);
+        if (SceneManager.GetActiveScene().buildIndex != 1)
+            SceneManager.LoadScene(2); 
+        else
+            SceneManager.LoadScene(1);
         gameManager.instance.stateUnpaused();
     }
 

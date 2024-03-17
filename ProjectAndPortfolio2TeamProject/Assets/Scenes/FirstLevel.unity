@@ -20737,7 +20737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2960128008214433309, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2960128008214433309, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
       propertyPath: m_LocalRotation.x
@@ -20745,7 +20745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2960128008214433309, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2960128008214433309, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
       propertyPath: m_LocalRotation.z
@@ -20757,11 +20757,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2960128008214433309, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 2960128008214433309, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318507249429305412, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
+      propertyPath: enemyHP
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318507249429305412, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
+      propertyPath: enemyFireRate
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318507249429305412, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
+      propertyPath: enemyProjectile
+      value: 
+      objectReference: {fileID: 83928320416578806, guid: e780d3187d652954aad5b86017813188, type: 3}
+    - target: {fileID: 3318507249429305412, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
+      propertyPath: specialAttackCooldown
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4416916728716702237, guid: e1e4873ade3ebed4788aab1795efccf9, type: 3}
       propertyPath: m_Name
