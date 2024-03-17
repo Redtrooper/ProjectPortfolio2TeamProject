@@ -13,7 +13,7 @@ public class titleScreen : MonoBehaviour
     IEnumerator PlayAfterDelay()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     IEnumerator QuitAfterDelay()
