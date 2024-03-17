@@ -585,6 +585,8 @@ MonoBehaviour:
   maxRoamingDistance: 10
   keyModel: {fileID: 9037894017237237748}
   hasKey: 0
+  checkPointToInstantiate: {fileID: 2639123383217257370, guid: cf52799399887df42bf885674bdf4fbd, type: 3}
+  instantiateCheckpoint: 0
 --- !u!195 &9122401505395916822
 NavMeshAgent:
   m_ObjectHideFlags: 0

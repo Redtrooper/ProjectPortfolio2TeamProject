@@ -98,6 +98,8 @@ MonoBehaviour:
   maxRoamingDistance: 0
   keyModel: {fileID: 0}
   hasKey: 0
+  checkPointToInstantiate: {fileID: 2639123383217257370, guid: cf52799399887df42bf885674bdf4fbd, type: 3}
+  instantiateCheckpoint: 0
   meleeRange: 2.5
   meleeDamage: 1
   desiredDistance: 2.5

@@ -35,6 +35,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] protected GameObject keyModel;
     [SerializeField] protected bool hasKey;
 
+    [Header("----- Checkpoint -----")]
+    [SerializeField] protected GameObject checkPointToInstantiate;
+    [SerializeField] protected bool instantiateCheckpoint = false;
+
     // Enemy States
     protected bool isAggro; // this will make it so they go aggro when shot out of range - john
     protected bool isShooting;
@@ -197,6 +201,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                     keyModel.SetActive(true);
                 }
             }
+            if (instantiateCheckpoint)
+                Instantiate(checkPointToInstantiate, transform.position, new Quaternion(0, 0, 0, 0));
             gameManager.instance.enemyReportDead(this.transform);
             Destroy(gameObject);
         }

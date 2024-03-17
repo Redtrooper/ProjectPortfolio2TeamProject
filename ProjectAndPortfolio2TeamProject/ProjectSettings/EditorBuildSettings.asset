@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: 527b3bfebccb03d4a96a4716ae6f787e
   - enabled: 1
-    path: Assets/Scenes/TutorialLevel.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/PracticeLvl.unity
+    guid: c294a1cf5758c314ebc2907db2878962
   - enabled: 1
-    path: Assets/Scenes/Dungeon lvl.unity
-    guid: 7f9f3bbe2c0978443824dcbaf24976a6
+    path: Assets/Scenes/FirstLevel.unity
+    guid: c5c26bafa733b0248ae47ca92acbada2
   m_configObjects: {}

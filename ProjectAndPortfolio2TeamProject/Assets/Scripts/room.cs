@@ -17,35 +17,38 @@ public class room : MonoBehaviour
     {
         posX = (int)(transform.position.x/50) + 25;
         posZ = (int)(transform.position.z / 50) + 25;
-        int openDoors = (doorAOpen ? 1 : 0) + (doorBOpen ? 1 : 0) + (doorCOpen ? 1 : 0) + (doorDOpen ? 1 : 0);
-        if (openDoors > 1 || !levelManager.instance.firstRoomGenerated)
+        if (levelManager.instance != null)
         {
-            // If there are open doors, generate neighboring rooms on each of them.
-            if (doorAOpen)
+            int openDoors = (doorAOpen ? 1 : 0) + (doorBOpen ? 1 : 0) + (doorCOpen ? 1 : 0) + (doorDOpen ? 1 : 0);
+            if (openDoors > 1 || !levelManager.instance.firstRoomGenerated)
             {
-                levelManager.instance.currentPosX = posX - 1;
-                levelManager.instance.currentPosZ = posZ;
-                levelManager.instance.generateRoom(roomType.C); 
-            }
-            if (doorBOpen)
-            {
-                levelManager.instance.currentPosX = posX;
-                levelManager.instance.currentPosZ = posZ + 1;
-                levelManager.instance.generateRoom(roomType.D);
-            }
-            if (doorCOpen)
-            {
-                levelManager.instance.currentPosX = posX + 1;
-                levelManager.instance.currentPosZ = posZ;
-                levelManager.instance.generateRoom(roomType.A);
-            }
-            if (doorDOpen)
-            {
-                levelManager.instance.currentPosX = posX;
-                levelManager.instance.currentPosZ = posZ - 1;
-                levelManager.instance.generateRoom(roomType.B); 
-            }
+                // If there are open doors, generate neighboring rooms on each of them.
+                if (doorAOpen)
+                {
+                    levelManager.instance.currentPosX = posX - 1;
+                    levelManager.instance.currentPosZ = posZ;
+                    levelManager.instance.generateRoom(roomType.C);
+                }
+                if (doorBOpen)
+                {
+                    levelManager.instance.currentPosX = posX;
+                    levelManager.instance.currentPosZ = posZ + 1;
+                    levelManager.instance.generateRoom(roomType.D);
+                }
+                if (doorCOpen)
+                {
+                    levelManager.instance.currentPosX = posX + 1;
+                    levelManager.instance.currentPosZ = posZ;
+                    levelManager.instance.generateRoom(roomType.A);
+                }
+                if (doorDOpen)
+                {
+                    levelManager.instance.currentPosX = posX;
+                    levelManager.instance.currentPosZ = posZ - 1;
+                    levelManager.instance.generateRoom(roomType.B);
+                }
 
+            } 
         }
     }
 
@@ -56,6 +59,7 @@ public class room : MonoBehaviour
         doorBOpen = neighbors[1];
         doorCOpen = neighbors[2];
         doorDOpen = neighbors[3];
+        Debug.Log(doorAOpen + " " + doorBOpen + doorCOpen + " " + doorDOpen + " " + this.gameObject.name);
         GameObject roomToGenerate = null;
         foreach(GameObject roomObject in levelManager.instance.roomPrefabs)
         {
@@ -73,7 +77,7 @@ public class room : MonoBehaviour
             Destroy(this.gameObject);
         }
         else
-            Debug.Log("Room could not be regenerated.");
+            Debug.Log("Room could not be regenerated." + posX + " , " + posZ);
     }
 }
 

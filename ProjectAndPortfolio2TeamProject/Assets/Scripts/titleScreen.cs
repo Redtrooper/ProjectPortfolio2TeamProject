@@ -22,6 +22,12 @@ public class titleScreen : MonoBehaviour
         Application.Quit();
     }
 
+    IEnumerator PracticeAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(1);
+    }
+
     private void Start()
     {
         Cursor.visible = true;
@@ -54,5 +60,10 @@ public class titleScreen : MonoBehaviour
     {
         creditsScreen.SetActive(false);
         this.GetComponent<menuControls>().freezeInput = false;
+    }
+
+    public void practice()
+    {
+        StartCoroutine(PracticeAfterDelay());
     }
 }

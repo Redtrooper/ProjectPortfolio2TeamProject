@@ -162,6 +162,8 @@ MonoBehaviour:
   maxRoamingDistance: 0
   keyModel: {fileID: 0}
   hasKey: 0
+  checkPointToInstantiate: {fileID: 2639123383217257370, guid: cf52799399887df42bf885674bdf4fbd, type: 3}
+  instantiateCheckpoint: 1
   specialAttackCooldown: 10
   specialAttackFireRate: 0.1
   specialAttackProjectile: {fileID: 873634463115791209, guid: 5dac403ada9920342951d1656a60140d, type: 3}

@@ -16,13 +16,19 @@ public class buttonFunctions : MonoBehaviour
         float delay = 1f;
 
         gameManager.instance.playerShouldLoadStats = true;
-        PlayerPrefs.SetInt("Player ShouldLoadStats",gameManager.instance.playerShouldLoadStats ? 1 : 0);
+        PlayerPrefs.SetInt("Player ShouldLoadStats", gameManager.instance.playerShouldLoadStats ? 1 : 0);
         gameManager.instance.playerScript.savePlayerData();
 
         while (timer < delay)
         {
-            timer += Time.unscaledDeltaTime; 
-            yield return null; 
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 1) 
+        {
+            gameManager.instance.playerShouldLoadStats = false;
+            PlayerPrefs.SetInt("Player ShouldLoadStats", gameManager.instance.playerShouldLoadStats ? 1 : 0);
         }
 
         if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
@@ -31,7 +37,7 @@ public class buttonFunctions : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(2);
         }
 
         resume();
@@ -45,6 +51,8 @@ public class buttonFunctions : MonoBehaviour
 
     public void restart()
     {
+        gameManager.instance.playerShouldLoadStats = false;
+        PlayerPrefs.SetInt("Player ShouldLoadStats", gameManager.instance.playerShouldLoadStats ? 1 : 0);
         StartCoroutine(RestartAfterDelay());
     }
 
@@ -59,7 +67,7 @@ public class buttonFunctions : MonoBehaviour
             yield return null; 
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(2);
         gameManager.instance.stateUnpaused();
     }
 

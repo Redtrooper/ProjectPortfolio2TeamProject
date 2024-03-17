@@ -17,7 +17,7 @@ MonoBehaviour:
   weaponReloadTime: 3
   weaponAmmoCurr: 8
   weaponAmmoMax: 8
-  weaponKnockback: 35
+  weaponKnockback: 25
   weaponTakesAmmo: 1
   weaponModel: {fileID: 100000, guid: bf2593fe0c804b84688e307cfb1ddfae, type: 3}
   weaponExitPointPos: {x: -0.00037, y: -0.001, z: -0.47874}

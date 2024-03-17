@@ -13,6 +13,7 @@ public class bullet : MonoBehaviour
     [SerializeField] int bulletChaseSpeed;
     [SerializeField] int bulletDestroyTime;
     [SerializeField] bool bulletSourceIsFriendly;
+    [SerializeField] bool chasePlayer = false;
 
     private Transform bulletNearestEnemyTransform;
 
@@ -35,6 +36,8 @@ public class bullet : MonoBehaviour
     {
         if (bulletSourceIsFriendly && gameManager.instance.playerScript.canBulletChase() && bulletNearestEnemyTransform != null)
             transform.position = Vector3.MoveTowards(this.transform.position, bulletNearestEnemyTransform.position, Time.deltaTime * bulletChaseSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
+        if(chasePlayer)
+            transform.position = Vector3.MoveTowards(this.transform.position, gameManager.instance.player.transform.position, Time.deltaTime * bulletSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
