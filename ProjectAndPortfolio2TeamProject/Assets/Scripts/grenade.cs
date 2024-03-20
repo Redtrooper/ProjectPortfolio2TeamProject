@@ -10,18 +10,11 @@ public class grenade : MonoBehaviour
     [SerializeField] int destroyTime;
 
     [SerializeField] GameObject explosion;
-    [SerializeField] GameObject explosionParticleFX;
     void Start()
     {
         rb.velocity = (transform.forward + new Vector3(0, yVel, 0)) * speed;
 
         StartCoroutine(destroyObject());
-    }
-
-    // Update is called once per frsame
-    void Update()
-    {
-
     }
 
     IEnumerator destroyObject()
@@ -30,10 +23,6 @@ public class grenade : MonoBehaviour
         if (explosion)
         {
             Instantiate(explosion, transform.position, transform.rotation);
-        }
-        if (explosionParticleFX)
-        {
-            Instantiate(explosionParticleFX, transform.position, transform.rotation);
         }
         Destroy(gameObject);
     }

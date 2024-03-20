@@ -15,9 +15,10 @@ MonoBehaviour:
   weaponProjectile: {fileID: 523656449581014684, guid: c32570ddd7bd8624291fa57b9e973815, type: 3}
   weaponFireRate: 0.5
   weaponReloadTime: 2.5
-  weaponAmmoCurr: 30
+  weaponAmmoCurr: 27
   weaponAmmoMax: 30
   weaponKnockback: 0
   weaponTakesAmmo: 1
-  weaponModel: {fileID: 100000, guid: 6f966b9a7c817ed49973b4a8762cbbdf, type: 3}
-  weaponExitPointPos: {x: 0, y: 0, z: -0.4477}
+  weaponModel: {fileID: 1487774384131766, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
+  weaponExitPointPos: {x: 0, y: 0, z: -0.44771454}
+  weaponType: 0

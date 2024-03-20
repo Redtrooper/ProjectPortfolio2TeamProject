@@ -7,19 +7,21 @@ public class weaponPickup : MonoBehaviour
 {
     [Header("----- Weapon Data -----")]
     [SerializeField] weaponStats weapon;
-    [SerializeField] Transform weaponExitPoint;
+    [SerializeField] GameObject weaponExitPoint;
     [SerializeField] bool isBlank;
-    [SerializeField] MeshFilter weaponModelMeshFilter;
-    [SerializeField] MeshRenderer weaponModelMeshRenderer;
+    [SerializeField] GameObject parentObject;
 
     private bool playerInRange;
 
     private void Start()
     {
+
         if (weaponExitPoint)
         {
-            weapon.weaponExitPointPos = weaponExitPoint.localPosition; 
+            weapon.weaponExitPointPos = weaponExitPoint.transform.localPosition; 
         }
+        setWeaponModel();
+
     }
 
     private void Update()
@@ -37,9 +39,8 @@ public class weaponPickup : MonoBehaviour
     public void setWeaponData(weaponStats weaponToSet, Transform weaponExitPointToSet)
     {
         weapon = weaponToSet;
-        weaponExitPoint = weaponExitPointToSet;
-        weaponModelMeshFilter.sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        weaponModelMeshRenderer.sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        weaponExitPoint.transform.localPosition = weaponExitPointToSet.localPosition;
+        setWeaponModel();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,7 +57,19 @@ public class weaponPickup : MonoBehaviour
 
     public void givePlayerWeapon()
     {
-        weapon.weaponExitPointPos = weaponExitPoint.localPosition;
+        weapon.weaponExitPointPos = weaponExitPoint.transform.localPosition;
         gameManager.instance.playerScript.addNewWeapon(weapon);
+    }
+
+    private void setWeaponModel()
+    {
+        MeshFilter[] childFilters = weapon.weaponModel.GetComponentsInChildren<MeshFilter>();
+        foreach (MeshFilter meshfilter in childFilters)
+        {
+            GameObject blankMesh = Instantiate(gameManager.instance.emptyMesh, parentObject.transform);
+            blankMesh.transform.localPosition = meshfilter.transform.localPosition;
+            blankMesh.GetComponent<MeshFilter>().sharedMesh = meshfilter.sharedMesh;
+            blankMesh.GetComponent<MeshRenderer>().sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        }
     }
 }

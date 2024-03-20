@@ -63,6 +63,9 @@ public class gameManager : MonoBehaviour
     // Player Stat Loading
     public bool playerShouldLoadStats = false;
 
+    // Empty Mesh For Gun Models
+    public GameObject emptyMesh;
+
 
     void Awake()
     {

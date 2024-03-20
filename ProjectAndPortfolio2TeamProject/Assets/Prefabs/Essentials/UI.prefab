@@ -1487,7 +1487,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1381105698217900923
@@ -1964,7 +1964,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1909584630014700863
@@ -4961,7 +4961,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &5288460482622812404
@@ -5731,6 +5731,7 @@ MonoBehaviour:
   - {fileID: 1951438582299938286, guid: f8f3425821150544eaf0741d05117a75, type: 3}
   - {fileID: 4269379623961303108, guid: 32a656cf6f7638f438c86ea1503e826a, type: 3}
   playerShouldLoadStats: 0
+  emptyMesh: {fileID: 3330784429291013766, guid: c9ae1dbc900649a4eae3dc68f6a94e54, type: 3}
 --- !u!114 &4356258682515539575
 MonoBehaviour:
   m_ObjectHideFlags: 0

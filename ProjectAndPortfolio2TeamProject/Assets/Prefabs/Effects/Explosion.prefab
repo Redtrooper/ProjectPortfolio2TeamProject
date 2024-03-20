@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 25
   pushForce: 20
+  explosionParticleFX: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
 --- !u!54 &-3204052175226112196
 Rigidbody:
   m_ObjectHideFlags: 0

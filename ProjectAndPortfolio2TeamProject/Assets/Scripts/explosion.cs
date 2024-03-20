@@ -7,12 +7,16 @@ public class explosion : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] int damageAmount;
     [SerializeField] int pushForce;
-
+    [SerializeField] GameObject explosionParticleFX;
 
     IEnumerator Start()
     {
         yield return new WaitForSeconds(.15f);
         Destroy(gameObject);
+        if (explosionParticleFX)
+        {
+            Instantiate(explosionParticleFX, transform.position, new Quaternion(0, 0, 0, 0));
+        }
     }
 
     private void OnTriggerEnter(Collider other)

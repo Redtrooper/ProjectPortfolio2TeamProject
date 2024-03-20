@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private float playerCurrentGrenadeCooldown = 0;
     private int playerGrenadeCount;
     private bool playerBulletsChase = false;
+    private List<GameObject> playerWeaponModelParts = new List<GameObject>();
 
     // Multipliers
     public float playerDamageMultiplier = 1;
@@ -454,8 +456,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
-        playerWeaponModel.GetComponent<MeshFilter>().sharedMesh = weapon.weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        playerWeaponModel.GetComponent<MeshRenderer>().sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        changePlayerWeaponModel(weapon);
     }
 
     public void changeWeapon()
@@ -474,8 +475,28 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
-        playerWeaponModel.GetComponent<MeshFilter>().sharedMesh = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        playerWeaponModel.GetComponent<MeshRenderer>().sharedMaterial = playerWeaponList[playerSelectedWeapon].weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        changePlayerWeaponModel(playerWeaponList[playerSelectedWeapon]);
+    }
+
+    void changePlayerWeaponModel(weaponStats weapon)
+    {
+        if (playerWeaponModelParts.Count > 0)
+        {
+            for(int i = 0; i < playerWeaponModelParts.Count; i++)
+            {
+                Destroy(playerWeaponModelParts[i]);
+            }
+            playerWeaponModelParts.Clear();
+        }
+        MeshFilter[] childFilters = weapon.weaponModel.GetComponentsInChildren<MeshFilter>();
+        foreach (MeshFilter meshfilter in childFilters)
+        {
+            GameObject blankMesh = Instantiate(gameManager.instance.emptyMesh, playerWeaponModel.transform);
+            playerWeaponModelParts.Add(blankMesh);
+            blankMesh.transform.localPosition = meshfilter.transform.localPosition;
+            blankMesh.GetComponent<MeshFilter>().sharedMesh = meshfilter.sharedMesh;
+            blankMesh.GetComponent<MeshRenderer>().sharedMaterial = weapon.weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
+        }
     }
 
     void selectWeapon()
