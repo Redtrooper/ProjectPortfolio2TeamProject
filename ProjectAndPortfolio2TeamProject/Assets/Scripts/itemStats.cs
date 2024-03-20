@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu]
 public class itemStats : ScriptableObject
@@ -30,6 +31,9 @@ public class itemStats : ScriptableObject
 
     [Header("----- Item Data -----")]
     public Rarities itemRarity;
+    public string itemName;
+    public string itemDescription;
+    public Sprite itemSprite;
 }
 
 public enum Rarities

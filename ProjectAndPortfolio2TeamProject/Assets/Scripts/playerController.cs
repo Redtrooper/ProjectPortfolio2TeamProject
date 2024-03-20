@@ -599,6 +599,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
         if (item.bulletChase)
             playerBulletsChase = true;
+
+        gameManager.instance.updateItemUI(item);
     }
 
     public bool canPlayerCrit()
@@ -625,30 +627,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     public void savePlayerData()
     {
-        // Player Stats That Need To Be Stored
-        PlayerPrefs.SetInt("Player MaxHP", playerMaxHP);
-        PlayerPrefs.SetFloat("Player WalkSpeed", playerWalkSpeed);
-        PlayerPrefs.SetFloat("Player SprintSpeed", playerSprintSpeed);
-        PlayerPrefs.SetInt("Player JumpMax", playerJumpMax);
-        PlayerPrefs.SetFloat("Player JumpForce", playerJumpForce);
-        PlayerPrefs.SetFloat("Player CritChance", playerCritChance);
-
+        // Grenade Stats To Save
         PlayerPrefs.SetInt("Player MaxGrenades", playerMaxGrenades);
-        PlayerPrefs.SetInt("Player BulletsChase", playerBulletsChase ? 1 : 0);
-
-        PlayerPrefs.SetFloat("Player DamageMult", playerDamageMultiplier);
-        PlayerPrefs.SetFloat("Player ProjectileSpeedMult", playerProjectileSpeedMultiplier);
-        PlayerPrefs.SetFloat("Player LifeStealMult", playerLifeStealMultiplier);
-        PlayerPrefs.SetFloat("Player FireRateMult", playerFireRateMultiplier);
-        PlayerPrefs.SetFloat("Player WeaponKnockbackMult", playerWeaponKnockbackMultiplier);
-        PlayerPrefs.SetFloat("Player HealthRegenMult", playerHealthRegenMultiplier);
-        PlayerPrefs.SetFloat("Player AirDashSpeedMult", playerAirDashSpeedMultiplier);
-
-        PlayerPrefs.SetInt("Player MaxStamina", playerMaxStamina);
-
-        PlayerPrefs.SetInt("Player CanRegenerate", playerCanRegenerate ? 1 : 0);
-        PlayerPrefs.SetInt("Player CanLifeSteal", playerCanLifeSteal ? 1 : 0);
-        PlayerPrefs.SetInt("Player CanAirDash", playerCanAirDash ? 1 : 0);
 
         // Player Weapon Data
         if (playerWeaponList.Count == 2)
@@ -671,59 +651,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     public void loadPlayerData()
     {
-        // Player Stats That Need To Be Loaded
-        if (PlayerPrefs.HasKey("Player MaxHP"))
+        // Load Grenade Stats
+        if (PlayerPrefs.HasKey("Player MaxGrenades"))
         {
-            playerMaxHP = PlayerPrefs.GetInt("Player MaxHP");
-            gameManager.instance.updateHealthBarMax(playerMaxHP, playerMaxHP);
-        }
-        
-        if (PlayerPrefs.HasKey("Player WalkSpeed"))
-            playerWalkSpeed = PlayerPrefs.GetFloat("Player WalkSpeed");
-        if (PlayerPrefs.HasKey("Player SprintSpeed"))
-            playerSprintSpeed = PlayerPrefs.GetFloat("Player SprintSpeed");
-        if (PlayerPrefs.HasKey("Player JumpMax"))
-            playerJumpMax = PlayerPrefs.GetInt("Player JumpMax");
-        if (PlayerPrefs.HasKey("Player JumpForce"))
-            playerJumpForce = PlayerPrefs.GetFloat("Player JumpForce");
-        if (PlayerPrefs.HasKey("Player CritChance"))
-            playerCritChance = PlayerPrefs.GetFloat("Player CritChance");
-
-        if (PlayerPrefs.HasKey("Player MaxGrenades")) 
-        { 
             playerMaxGrenades = PlayerPrefs.GetInt("Player MaxGrenades");
             gameManager.instance.updateGrenadeCountUI(playerMaxGrenades);
         }
-        if (PlayerPrefs.HasKey("Player BulletsChase"))
-            playerBulletsChase = PlayerPrefs.GetInt("Player BulletsChase") == 1 ? true : false;
-
-        if (PlayerPrefs.HasKey("Player DamageMult"))
-            playerDamageMultiplier = PlayerPrefs.GetFloat("Player DamageMult");
-        if (PlayerPrefs.HasKey("Player ProjectileSpeedMult"))
-            playerProjectileSpeedMultiplier = PlayerPrefs.GetFloat("Player ProjectileSpeedMult");
-        if (PlayerPrefs.HasKey("Player LifeStealMult"))
-            playerLifeStealMultiplier = PlayerPrefs.GetFloat("Player LifeStealMult");
-        if (PlayerPrefs.HasKey("Player FireRateMult"))
-            playerFireRateMultiplier = PlayerPrefs.GetFloat("Player FireRateMult");
-        if (PlayerPrefs.HasKey("Player WeaponKnockbackMult"))
-            playerWeaponKnockbackMultiplier = PlayerPrefs.GetFloat("Player WeaponKnockbackMult");
-        if (PlayerPrefs.HasKey("Player HealthRegenMult"))
-            playerHealthRegenMultiplier = PlayerPrefs.GetFloat("Player HealthRegenMult");
-        if (PlayerPrefs.HasKey("Player AirDashSpeedMult"))
-            playerAirDashSpeedMultiplier = PlayerPrefs.GetFloat("Player AirDashSpeedMult");
-
-        if (PlayerPrefs.HasKey("Player MaxStamina"))
-        {
-            playerMaxStamina = PlayerPrefs.GetInt("Player MaxStamina");
-            gameManager.instance.updateStaminaBarMax(playerMaxStamina, playerMaxStamina);
-        }
-
-        if (PlayerPrefs.HasKey("Player CanRegenerate"))
-            playerCanRegenerate = PlayerPrefs.GetInt("Player CanRegenerate") == 1 ? true : false;
-        if (PlayerPrefs.HasKey("Player CanLifeSteal"))
-            playerCanLifeSteal = PlayerPrefs.GetInt("Player CanLifeSteal") == 1 ? true : false;
-        if (PlayerPrefs.HasKey("Player CanAirDash"))
-            playerCanAirDash = PlayerPrefs.GetInt("Player CanAirDash") == 1 ? true : false;
 
         // Load In Weapons
         if (PlayerPrefs.HasKey("Player WeaponOne"))

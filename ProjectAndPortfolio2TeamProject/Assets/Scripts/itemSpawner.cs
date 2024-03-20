@@ -6,7 +6,6 @@ using UnityEngine;
 public class itemSpawner : MonoBehaviour
 {
     [SerializeField] bool getsDisabledOnUse = true;
-    [SerializeField] List<itemPickup> itemList = new List<itemPickup>();
     private bool playerInRange = false;
     [SerializeField] Renderer model;
     [SerializeField] Transform itemSpawnPos;
@@ -23,7 +22,7 @@ public class itemSpawner : MonoBehaviour
     private void Start()
     {
         originalColor = model.material.color;
-        foreach(itemPickup item in itemList)
+        foreach(itemPickup item in gameManager.instance.itemsList)
         {
             switch (item.getItemRarity())
             {

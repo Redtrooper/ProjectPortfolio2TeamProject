@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a286e460238bc4788aa7a26a6cf01c, type: 3}
   m_Name: LifeStealItem
   m_EditorClassIdentifier: 
-  healthMultiplier: 1
+  maxHealthMultiplier: 1
   speedMultiplier: 1
   extraJumps: 0
   jumpForceMultiplier: 1
@@ -31,3 +31,6 @@ MonoBehaviour:
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
   itemRarity: 2
+  itemName: Life Steal
+  itemDescription: Replaces health regeneration with lifesteal
+  itemSprite: {fileID: 21300000, guid: 87a3412da2ba5544ebbbc1396dd49425, type: 3}

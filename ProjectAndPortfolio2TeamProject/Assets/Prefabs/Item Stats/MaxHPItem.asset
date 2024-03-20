@@ -31,3 +31,6 @@ MonoBehaviour:
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
   itemRarity: 0
+  itemName: Max HP
+  itemDescription: Increases Max HP
+  itemSprite: {fileID: 21300000, guid: 834c2e46720dc5048ad3cddd85e03dcc, type: 3}

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyPickup : MonoBehaviour
+public class key
+    : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {

@@ -15,7 +15,7 @@ public class explosion : MonoBehaviour
         Destroy(gameObject);
         if (explosionParticleFX)
         {
-            Instantiate(explosionParticleFX, transform.position, new Quaternion(0, 0, 0, 0));
+            Instantiate(explosionParticleFX, transform.position, new Quaternion(0,0,0,0));
         }
     }
 

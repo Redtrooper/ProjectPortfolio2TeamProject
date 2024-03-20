@@ -9,6 +9,7 @@ public class optionsMenu : MonoBehaviour
     [SerializeField] Slider mouseSensitivity;
     [SerializeField] TMP_Text mouseSensitivityLabel;
     [SerializeField] Toggle invertY;
+    [SerializeField] Toggle firstTimeItemUI;
 
     // When the options menu opens set all the fields in it according to player prefs
     private void Start()
@@ -26,18 +27,24 @@ public class optionsMenu : MonoBehaviour
                 invertY.isOn = false;
         }
         else
-        {
             invertY.isOn = false;
+        if(PlayerPrefs.HasKey("First Time Item UI"))
+        {
+            int isEnabled = PlayerPrefs.GetInt("First Time Item UI");
+            if (isEnabled == 1)
+                firstTimeItemUI.isOn = true;
+            else
+                firstTimeItemUI.isOn = false;
         }
+        else
+            firstTimeItemUI.isOn = true;
     }
 
     public void Apply()
     {
         PlayerPrefs.SetInt("Mouse Sensitivity", (int) mouseSensitivity.value);
-        if (invertY.isOn)
-            PlayerPrefs.SetInt("Invert Y", 1);
-        else
-            PlayerPrefs.SetInt("Invert Y", 0);
+        PlayerPrefs.SetInt("Invert Y", invertY.isOn ? 1 : 0);
+        PlayerPrefs.SetInt("First Time Item UI", firstTimeItemUI.isOn ? 1 : 0);
         gameObject.SetActive(false);
         GetComponentInParent<menuControls>().freezeInput = false;
         if (gameManager.instance != null)

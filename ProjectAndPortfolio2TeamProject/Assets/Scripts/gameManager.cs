@@ -1,9 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
+using static UnityEngine.ParticleSystem;
 
 public class gameManager : MonoBehaviour
 {
@@ -66,16 +71,29 @@ public class gameManager : MonoBehaviour
     // Empty Mesh For Gun Models
     public GameObject emptyMesh;
 
+    [Header("----- Item UI -----")]
+    [SerializeField] Canvas itemCanvas;
+    [SerializeField] GameObject emptyItemUI;
+    [SerializeField] Canvas newItemUICanvas;
+    [SerializeField] GameObject newItemUI;
+    public List<itemPickup> itemsList = new List<itemPickup>();
+    private List<GameObject> itemUIs = new List<GameObject>();
+    private int differentItemsCollected;
+    private GameObject currentNewItemUI = null;
+    private bool useFirstTimeItemUI = false;
 
     void Awake()
     {
+        Debug.Log(PlayerPrefs.GetString("Item UI"));
         if (PlayerPrefs.HasKey("Player ShouldLoadStats"))
-            playerShouldLoadStats = PlayerPrefs.GetInt("Player ShouldLoadStats") == 1 ? true : false; 
+            playerShouldLoadStats = PlayerPrefs.GetInt("Player ShouldLoadStats") == 1 ? true : false;
         instance = this;
         timeScale = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Player Spawn Position");
+        if (playerShouldLoadStats)
+            loadUIData();
         maxHP = playerScript.getHP();
         maxStamina = playerScript.getMaxStamina();
         staminaBarColor = staminaBar.color;
@@ -88,6 +106,8 @@ public class gameManager : MonoBehaviour
             checkPoint.enabled = false;
         }
         loadSettings();
+        giveTextOutline(keyCount);
+        giveTextOutline(grenadeCount);
     }
 
     void Update()
@@ -190,13 +210,15 @@ public class gameManager : MonoBehaviour
 
     public void updateKeyCountUI(int amount)
     {
-        keyCount.text = "x" + amount.ToString();
+        keyCount.text = "x" + amount;
     }
 
     public void updateAmmoCountUI(int amount)
     {
         currentAmmo.text = amount.ToString("00");
         maxAmmo.text = playerScript.getMaxAmmo().ToString("00");
+        giveTextOutline(currentAmmo);
+        giveTextOutline(maxAmmo);
     }
 
     public void toggleAmmunitionUI(bool toggle)
@@ -224,11 +246,20 @@ public class gameManager : MonoBehaviour
             else
                 Camera.main.GetComponent<CameraController>().cameraInvertY = false;
         }
+        if(PlayerPrefs.HasKey("First Time Item UI"))
+        {
+            int isEnabled = PlayerPrefs.GetInt("First Time Item UI");
+            if (isEnabled == 1)
+                useFirstTimeItemUI = true;
+            else
+                useFirstTimeItemUI = false;
+
+        }
     }
 
     public void updateGrenadeCountUI(int amount)
     {
-        grenadeCount.text = "x" + amount.ToString();
+        grenadeCount.text = "x" + amount;
     }
 
     public void enemyReportAlive(Transform enemyTransform)
@@ -262,5 +293,102 @@ public class gameManager : MonoBehaviour
     public GameObject getActiveMenu()
     {
         return activeMenu;
+    }
+
+    private void giveTextOutline(TMP_Text textToOutline)
+    {
+        textToOutline.outlineColor = Color.black;
+        textToOutline.outlineWidth = 0.2f;
+    }
+
+    public void updateItemUI(itemStats item)
+    {
+        bool itemCollected = false;
+        foreach (GameObject itemUIToCheck in itemUIs)
+        {
+            if (itemUIToCheck.GetComponentInChildren<Image>().sprite == item.itemSprite)
+            {
+                itemCollected = true;
+                if (item.itemName != "Grenade")
+                {
+                    int itemCount = ++itemUIToCheck.GetComponent<ItemUI>().itemCount;
+                    itemUIToCheck.GetComponentInChildren<TMP_Text>().text = "x" + itemCount;
+                }
+            }
+        }
+
+        if (!itemCollected)
+        {
+            if (useFirstTimeItemUI)
+            {
+                if (currentNewItemUI)
+                    Destroy(currentNewItemUI);
+                currentNewItemUI = Instantiate(newItemUI, newItemUICanvas.transform);
+                Image[] newItemImages = currentNewItemUI.GetComponentsInChildren<Image>();
+                newItemImages[1].sprite = item.itemSprite;
+                TMP_Text[] newItemText = currentNewItemUI.GetComponentsInChildren<TMP_Text>();
+                newItemText[0].text = item.itemName;
+                newItemText[1].text = item.itemDescription; 
+            }
+            if (item.itemName != "Grenade")
+            {
+                GameObject tempItemUI = Instantiate(emptyItemUI, itemCanvas.transform);
+                itemUIs.Add(tempItemUI);
+                tempItemUI.transform.localPosition += Vector3.left * (-85 * differentItemsCollected);
+                tempItemUI.GetComponent<ItemUI>().item = item;
+                tempItemUI.GetComponentInChildren<Image>().sprite = item.itemSprite;
+                differentItemsCollected++;
+            }
+        }
+    }
+
+    public void saveUIData()
+    {
+        string itemDataToSave = "";
+        foreach(GameObject itemUI in itemUIs)
+        {
+            for(int i = 0; i < itemsList.Count; i++)
+            {
+                if (itemUI.GetComponent<ItemUI>().item == itemsList[i].item)
+                { 
+                    itemDataToSave += (i.ToString() + '/');
+                    itemDataToSave += (itemUI.GetComponent<ItemUI>().itemCount.ToString() + '.');
+                }
+            }
+        }
+        PlayerPrefs.SetString("Item UI", itemDataToSave.ToString());
+    }
+
+    public void loadUIData()
+    {
+        char[] itemUIToLoad = PlayerPrefs.GetString("Item UI").ToCharArray();
+        string itemIndexStr = "";
+        int itemIndex = 0;
+        string itemCountStr = "";
+        int itemCount = 0;
+        char lastOperator = '.';
+        for(int i = 0; i < itemUIToLoad.Length; i++)
+        {
+            char currentChar = itemUIToLoad[i];
+            if (currentChar == '.')
+            {
+                if (Int32.TryParse(itemIndexStr, out itemIndex) && Int32.TryParse(itemCountStr, out itemCount))
+                {
+                    for (; itemCount > 0; itemCount--)
+                    {
+                        playerScript.addItem(itemsList[itemIndex].item);
+                    }
+                }
+                itemIndexStr = "";
+                itemCountStr = "";
+                lastOperator = '.';
+            }
+            else if (currentChar == '/')
+                lastOperator = '/';
+            else if(lastOperator == '.')
+                itemIndexStr += currentChar;
+            else if(lastOperator == '/')
+                itemCountStr += currentChar;
+        }
     }
 }

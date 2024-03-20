@@ -18,6 +18,7 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.playerShouldLoadStats = true;
         PlayerPrefs.SetInt("Player ShouldLoadStats", gameManager.instance.playerShouldLoadStats ? 1 : 0);
         gameManager.instance.playerScript.savePlayerData();
+        gameManager.instance.saveUIData();
 
         while (timer < delay)
         {

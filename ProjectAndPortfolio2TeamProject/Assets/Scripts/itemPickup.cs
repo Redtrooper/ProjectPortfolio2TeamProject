@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class itemPickup : MonoBehaviour
 {
-    [SerializeField] itemStats item;
+    public itemStats item;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

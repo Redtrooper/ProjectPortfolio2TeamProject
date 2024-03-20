@@ -27,7 +27,10 @@ MonoBehaviour:
   airDashSpeedMultiplier: 1
   bulletChase: 1
   damageMultiplier: 1
-  bulletSpeedMultiplier: 5
+  bulletSpeedMultiplier: 1
   fireRateMultiplier: 1
   weaponRecoilMultiplier: 1
   itemRarity: 3
+  itemName: Bullet Chase
+  itemDescription: makes bullet chase enemies
+  itemSprite: {fileID: 21300000, guid: 061c06e40cd8b484c8285becc2783261, type: 3}
