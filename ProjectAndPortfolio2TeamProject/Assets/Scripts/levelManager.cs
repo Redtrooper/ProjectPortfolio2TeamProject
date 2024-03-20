@@ -84,7 +84,6 @@ public class levelManager : MonoBehaviour
             if((int) listToUse == 0)
             {
                 roomIndex = Random.Range(0, roomPrefabs.Count - 1);
-                Debug.Log(roomIndex + " " + roomPrefabs.Count);
                 roomToGenerate = roomPrefabs[roomIndex];
             }
             else

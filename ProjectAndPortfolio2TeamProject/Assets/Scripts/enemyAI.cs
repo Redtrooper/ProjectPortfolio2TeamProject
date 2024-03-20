@@ -140,7 +140,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     protected virtual IEnumerator WaitBeforeNextRoam()
     {
-        Debug.Log("Waiting");
         isRoaming = true;
         yield return new WaitForSeconds(5.0f);
         isRoaming = false;

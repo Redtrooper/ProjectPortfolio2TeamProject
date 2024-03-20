@@ -84,7 +84,6 @@ public class gameManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log(PlayerPrefs.GetString("Item UI"));
         if (PlayerPrefs.HasKey("Player ShouldLoadStats"))
             playerShouldLoadStats = PlayerPrefs.GetInt("Player ShouldLoadStats") == 1 ? true : false;
         instance = this;

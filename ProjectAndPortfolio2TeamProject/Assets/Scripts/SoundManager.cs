@@ -41,7 +41,6 @@ public class SoundManager : MonoBehaviour
         if (value <= 0f)
         {
             _mixer.SetFloat(_volumeParameter, -80f); // -80 is mute
-            Debug.Log("Sound muted");
         }
         else
         {

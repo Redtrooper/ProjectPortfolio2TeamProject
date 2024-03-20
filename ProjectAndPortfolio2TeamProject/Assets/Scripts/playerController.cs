@@ -250,10 +250,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
                 gameManager.instance.toggleExhaustedStaminaBar();
             }
         }
-        else
-        {
-            Debug.Log("Not enough stamina");
-        }
     }
 
 

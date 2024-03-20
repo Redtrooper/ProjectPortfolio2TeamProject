@@ -66,28 +66,24 @@ public class itemSpawner : MonoBehaviour
         if (randomDropChance <= wackyDropChance)
         {
             // Roll Wacky Items
-            Debug.Log("Wacky Spawn");
             randomItemIndex = Random.Range(0, wackyItemList.Count);
             itemToReturn = wackyItemList[randomItemIndex];
         }
         else if (randomDropChance <= legendaryDropChance)
         {
             // Roll Legendary Items
-            Debug.Log("Legendary Spawn");
             randomItemIndex = Random.Range(0, legendaryItemList.Count);
             itemToReturn = legendaryItemList[randomItemIndex];
         }
         else if (randomDropChance <= rareDropChance)
         {
             // Roll Rare Items
-            Debug.Log("Rare Spawn");
             randomItemIndex = Random.Range(0, rareItemList.Count);
             itemToReturn = rareItemList[randomItemIndex];
         }
         else if (randomDropChance > rareDropChance)
         {
             // Roll Common Items
-            Debug.Log("Common Spawn");
             randomItemIndex = Random.Range(0, commonItemList.Count);
             itemToReturn = commonItemList[randomItemIndex];
         }

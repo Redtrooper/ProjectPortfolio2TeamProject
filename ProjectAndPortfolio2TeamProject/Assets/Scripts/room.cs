@@ -59,7 +59,6 @@ public class room : MonoBehaviour
         doorBOpen = neighbors[1];
         doorCOpen = neighbors[2];
         doorDOpen = neighbors[3];
-        Debug.Log(doorAOpen + " " + doorBOpen + doorCOpen + " " + doorDOpen + " " + this.gameObject.name);
         GameObject roomToGenerate = null;
         foreach(GameObject roomObject in levelManager.instance.roomPrefabs)
         {
@@ -76,8 +75,6 @@ public class room : MonoBehaviour
             Instantiate(roomToGenerate, this.transform.position, this.transform.rotation);
             Destroy(this.gameObject);
         }
-        else
-            Debug.Log("Room could not be regenerated." + posX + " , " + posZ);
     }
 }
 

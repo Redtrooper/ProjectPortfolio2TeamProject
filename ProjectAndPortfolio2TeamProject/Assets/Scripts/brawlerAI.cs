@@ -81,7 +81,6 @@ public class brawlerAI : enemyAI
     {
         int damageDealt = meleeDamage;
         gameManager.instance.playerScript.takeDamage(damageDealt);
-        Debug.Log("Brawler dealt " + damageDealt + " damage to the player.");
 
         canAttack = false;
         Invoke("ResetAttack", attackCooldownDuration);
