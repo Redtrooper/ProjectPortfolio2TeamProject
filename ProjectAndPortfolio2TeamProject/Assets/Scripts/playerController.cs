@@ -320,14 +320,20 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         if (playerCritChance >= Random.value)
             playerCanCrit = true;
         Instantiate(playerProjectile, playerExitLocation.position, Camera.main.transform.rotation);
-        playerMuzzleFlash.SetActive(true);
-        playerMuzzleFlash.transform.Rotate(0, 0, Random.Range(0, 180));
+        StartCoroutine(MuzzleFlash());
         playerPushBack -= Camera.main.transform.forward * (playerWeaponKnockback * playerWeaponKnockbackMultiplier);
         playerCurrentAmmo -= 1;
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         yield return new WaitForSeconds(playerFireRate * playerFireRateMultiplier);
-        playerMuzzleFlash.SetActive(false);
         isShooting = false;
+    }
+
+    IEnumerator MuzzleFlash()
+    {
+        playerMuzzleFlash.SetActive(true);
+        playerMuzzleFlash.transform.Rotate(Random.Range(0, 180), 0, 0);
+        yield return new WaitForSeconds(0.15f);
+        playerMuzzleFlash.SetActive(false);
     }
 
     void PlayShootSound()
@@ -443,6 +449,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerReloadTime = weapon.weaponReloadTime;
         playerWeaponKnockback = weapon.weaponKnockback;
         playerExitLocation.localPosition = weapon.weaponExitPointPos;
+        playerMuzzleFlash.transform.position = playerExitLocation.position;
+        playerMuzzleFlash.transform.localPosition += Vector3.forward * .07f;
 
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
@@ -461,6 +469,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerReloadTime = playerWeaponList[playerSelectedWeapon].weaponReloadTime;
         playerWeaponKnockback = playerWeaponList[playerSelectedWeapon].weaponKnockback;
         playerExitLocation.localPosition = playerWeaponList[playerSelectedWeapon].weaponExitPointPos;
+        playerMuzzleFlash.transform.position = playerExitLocation.position;
+        playerMuzzleFlash.transform.localPosition += Vector3.forward * .07f;
 
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
 
@@ -472,11 +482,13 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && playerSelectedWeapon < playerWeaponList.Count - 1)
         {
+            playerWeaponList[playerSelectedWeapon].weaponAmmoCurr = playerCurrentAmmo;
             playerSelectedWeapon++;
             changeWeapon();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && playerSelectedWeapon > 0)
         {
+            playerWeaponList[playerSelectedWeapon].weaponAmmoCurr = playerCurrentAmmo;
             playerSelectedWeapon--;
             changeWeapon();
         }
