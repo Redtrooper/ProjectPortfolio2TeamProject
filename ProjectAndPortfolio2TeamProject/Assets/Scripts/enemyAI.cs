@@ -71,6 +71,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         if (isAggro)
         {
             EngageTarget();
+            UpdateAnimationSpeed();
             isAggro = false;
         }
         else
@@ -86,6 +87,15 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
     }
 
+
+    protected virtual void UpdateAnimationSpeed()
+    {
+        if (enemyAgent != null && anim != null)
+        {
+            float animSpeed = enemyAgent.velocity.normalized.magnitude;
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
+        }
+    }
     protected virtual void RotateTowardsPlayer()
     {
         if (gameManager.instance.player != null && !isDying)
@@ -231,24 +241,15 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 {
                     if (anim)
                         anim.SetTrigger("Death");
-                    StartCoroutine(DisableColliderAndDestroy());
+                    StartCoroutine(DestroyAfterAnimation());
                 }
             }
         }
     }
 
-    private IEnumerator DisableColliderAndDestroy()
+    private IEnumerator DestroyAfterAnimation()
     {
-       
-        Collider enemyCollider = GetComponent<Collider>();
-        if (enemyCollider != null)
-        {
-            enemyCollider.enabled = false;
-        }
-
-        yield return new WaitForSeconds(3f); 
-
-        
+        yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
 
@@ -264,12 +265,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         {
             isShooting = true;
 
-            if (anim != null)
-            {
-                anim.SetTrigger("Shoot");
-            }
             yield return new WaitForSeconds(enemyFireRate);
 
+            FireProjectile();
 
             isShooting = false;
         }

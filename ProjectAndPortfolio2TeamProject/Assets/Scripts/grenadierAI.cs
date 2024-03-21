@@ -22,5 +22,12 @@ public class grenadierAI : enemyAI
                 grenadeRigidbody.velocity = directionToPlayer * grenadeSpeed;
             }
         }
+
+        Collider grenadierCollider = GetComponent<Collider>();
+        Collider grenadeCollider = grenadeObject.GetComponent<Collider>();
+        if (grenadierCollider != null && grenadeCollider != null)
+        {
+            Physics.IgnoreCollision(grenadeCollider, grenadierCollider);
+        }
     }
 }

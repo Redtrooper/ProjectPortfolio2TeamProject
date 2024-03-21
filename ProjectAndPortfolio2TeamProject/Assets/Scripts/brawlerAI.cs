@@ -44,6 +44,12 @@ public class brawlerAI : enemyAI
         }
     }
 
+    private IEnumerator DestroyAfterAnimation()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
+    }
+
 
 
     private void AttackPlayer()
