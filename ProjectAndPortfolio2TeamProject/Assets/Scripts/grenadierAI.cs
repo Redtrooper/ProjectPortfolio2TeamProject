@@ -3,18 +3,24 @@ using UnityEngine;
 
 public class grenadierAI : enemyAI
 {
-    protected override void CreateBullet()
+    [Header("----- Grenadier -----")]
+    [SerializeField] private float grenadeSpeed = 10f;
+
+    protected override void FireProjectile()
     {
-        base.CreateBullet();
+        base.FireProjectile();
 
         GameObject grenadeObject = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.identity);
 
-        Vector3 directionToPlayer = (gameManager.instance.player.transform.position - transform.position).normalized;
-
-        Rigidbody grenadeRigidbody = grenadeObject.GetComponent<Rigidbody>();
-        if (grenadeRigidbody != null)
+        if (gameManager.instance.player != null && !isDying)
         {
-            grenadeRigidbody.velocity = directionToPlayer * 10f; 
+            Vector3 directionToPlayer = (gameManager.instance.player.transform.position - transform.position).normalized;
+
+            Rigidbody grenadeRigidbody = grenadeObject.GetComponent<Rigidbody>();
+            if (grenadeRigidbody != null)
+            {
+                grenadeRigidbody.velocity = directionToPlayer * grenadeSpeed;
+            }
         }
     }
 }

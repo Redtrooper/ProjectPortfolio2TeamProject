@@ -3,65 +3,25 @@ using UnityEngine;
 
 public class wizardAI : enemyAI
 {
-    [Header("----- Wizard -----")]
-    [SerializeField] private float bulletSpeed;
-    private readonly float chaseUpdateInterval = 0f; // i may update this in the future 
-    
-
-    protected override void CreateBullet()
-    {
-        GameObject player = gameManager.instance.player;
-
-        if (player != null && !isDying)
-        {
-            Collider playerCollider = player.GetComponent<Collider>();
-            if (playerCollider != null)
-            {
-                Vector3 playerColliderPosition = playerCollider.bounds.center;
-                Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
-
-                directionToPlayer.Normalize();
-
-                anim.SetTrigger("Shoot");
-
-                GameObject bullet = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.identity);
-       
-                Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
-
-                if (bulletRB != null)
-                {
-                    StartCoroutine(ChasePlayer(bulletRB, directionToPlayer));
-                }
-            }
-        }
-    }
-
-    protected override void EngageTarget()
-    {
-        if (!isDying)
-        {
-            base.EngageTarget();
-
-            float animSpeed = enemyAgent.velocity.normalized.magnitude;
-            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans)); // walk 1 animation here ------------
-        }
-
-    }
-
+    private readonly float chaseUpdateInterval = 0f; 
 
     protected override IEnumerator Shoot()
     {
         if (!isShooting && !isDying)
         {
             isShooting = true;
+            if (anim != null)
+            {
+                anim.SetTrigger("Shoot");
+            }
             yield return new WaitForSeconds(enemyFireRate);
-            CreateBullet();
             isShooting = false;
         }
     }
 
-    private IEnumerator ChasePlayer(Rigidbody bulletRB, Vector3 directionToPlayer)
+    private IEnumerator ChasePlayer(GameObject bullet, Vector3 directionToPlayer)
     {
+        Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
 
         while (true)
         {
@@ -73,7 +33,7 @@ public class wizardAI : enemyAI
                 if (playerCollider != null)
                 {
                     Vector3 playerColliderPosition = playerCollider.bounds.center;
-                    Vector3 newDirectionToPlayer = playerColliderPosition - bulletRB.position;
+                    Vector3 newDirectionToPlayer = playerColliderPosition - bullet.transform.position;
 
                     newDirectionToPlayer.Normalize();
                     bulletRB.velocity = newDirectionToPlayer * bulletSpeed;
@@ -86,11 +46,19 @@ public class wizardAI : enemyAI
 
             yield return new WaitForSeconds(chaseUpdateInterval);
 
-            if (bulletRB == null || !bulletRB.gameObject.activeInHierarchy)
+            if (bullet == null || !bullet.activeInHierarchy)
             {
                 break;
             }
         }
     }
 
+    protected override void FireProjectile()
+    {
+        if (enemyProjectile != null && !isDying)
+        {
+            GameObject bullet = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.identity);
+            StartCoroutine(ChasePlayer(bullet, Vector3.zero));
+        }
+    }
 }

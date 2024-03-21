@@ -16,29 +16,15 @@ public class brawlerAI : enemyAI
 
         if (IsPlayerInRange(meleeRange) && canAttack && !isDying)
         {
-            Debug.Log("ATtack anim trigger");
+            Debug.Log("Attack anim trigger");
             anim.SetTrigger("Attack");
-            AttackPlayer();
+            
         }
         else if (isAggro && !isDying)
         {
             EngageTarget();
         }
     }
-
-    protected override void RotateTorwards()
-    {
-        if (gameManager.instance.player != null && !isDying)
-        {
-            Vector3 playerDirection = gameManager.instance.player.transform.position - transform.position;
-            playerDirection.y = 0f;
-
-            Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
-
-            transform.rotation = targetRotation;
-        }
-    }
-
 
     protected override void EngageTarget()
     {
@@ -51,28 +37,14 @@ public class brawlerAI : enemyAI
             enemyAgent.SetDestination(gameManager.instance.player.transform.position);
             StopCoroutine(Roam());
 
-            if (!isShooting)
-            {
-
-
-
-                if (anim)
-                    anim.SetTrigger("Attack");
-
-
-                if (DetectPlayer())
-                {
-                    StartCoroutine(Shoot());
-                }
-            }
-
-
             if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
             {
-                RotateTorwards();
+                RotateTowardsPlayer(); // Call the method to rotate towards the player
             }
         }
     }
+
+
 
     private void AttackPlayer()
     {
@@ -80,7 +52,6 @@ public class brawlerAI : enemyAI
         {
             int damageDealt = meleeDamage;
             gameManager.instance.playerScript.takeDamage(damageDealt);
-
 
             canAttack = false;
             Invoke("ResetAttack", attackCooldownDuration);

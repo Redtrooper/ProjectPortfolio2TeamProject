@@ -18,11 +18,12 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     [Header("----- Animate -----")]
     [SerializeField] protected Animator anim;
-    [SerializeField] protected int animSpeedTrans; 
+    [SerializeField] protected int animSpeedTrans;
 
     [Header("----- Agent & Projectile -----")]
     [SerializeField] protected NavMeshAgent enemyAgent;
     [SerializeField] protected GameObject enemyProjectile;
+    [SerializeField] protected float bulletSpeed;
 
     [Header("----- Roaming -----")]
     [SerializeField] protected bool doRoam;
@@ -85,20 +86,46 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
     }
 
+    protected virtual void RotateTowardsPlayer()
+    {
+        if (gameManager.instance.player != null && !isDying)
+        {
+            Vector3 playerDirection = gameManager.instance.player.transform.position - transform.position;
+            playerDirection.y = 0f;
+
+            Quaternion targetRotation = Quaternion.LookRotation(playerDirection);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * enemyTurnSpeed);
+        }
+    }
+
+
     protected virtual void EngageTarget()
     {
-        enemyAgent.stoppingDistance = enemyStoppingDistance;
-        enemyAgent.SetDestination(gameManager.instance.player.transform.position);
-        StopCoroutine(Roam());
-
-        if (!isShooting)
+        if (gameManager.instance.player != null && !isDying)
         {
-            StartCoroutine(Shoot());
-        }
+            enemyAgent.stoppingDistance = enemyStoppingDistance;
+            float animSpeed = enemyAgent.velocity.normalized.magnitude;
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
 
-        if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
-            RotateTorwards();
+            enemyAgent.SetDestination(gameManager.instance.player.transform.position);
+            StopCoroutine(Roam());
+
+            if (!isShooting)
+            {
+                if (DetectPlayer())
+                {
+                    StartCoroutine(Shoot());
+                }
+            }
+
+            if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
+            {
+                RotateTowardsPlayer();
+            }
+        }
     }
+
 
     protected virtual IEnumerator Roam()
     {
@@ -160,14 +187,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         return false;
     }
 
-    protected virtual void RotateTorwards()
+    protected virtual void RotateTowards()
     {
         Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.position.y, playerDirection.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, turn, Time.deltaTime * enemyTurnSpeed);
     }
 
     //-------------------------------------------------
-   public virtual bool IsDead
+    public virtual bool IsDead
     {
         get
         {
@@ -186,9 +213,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         StartCoroutine(DamageFlash());
         if (enemyHP <= 0)
         {
-            if (!isDying) 
+            if (!isDying)
             {
-                isDying = true; 
+                isDying = true;
                 if (hasKey)
                 {
                     Instantiate(gameManager.instance.keyPickup, transform.position, transform.rotation);
@@ -202,24 +229,30 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 gameManager.instance.enemyReportDead(this.transform);
                 if (IsDead)
                 {
-                    if(anim)
+                    if (anim)
                         anim.SetTrigger("Death");
-                    StartCoroutine(DestroyAfterAnimation());
+                    StartCoroutine(DisableColliderAndDestroy());
                 }
             }
         }
     }
 
-    private IEnumerator DestroyAfterAnimation()
+    private IEnumerator DisableColliderAndDestroy()
     {
-     
+       
+        Collider enemyCollider = GetComponent<Collider>();
+        if (enemyCollider != null)
+        {
+            enemyCollider.enabled = false;
+        }
+
         yield return new WaitForSeconds(3f); 
-     
+
+        
         Destroy(gameObject);
     }
 
     //-------------------------------------------------
-
     public void pushInDirection(Vector3 dir)
     {
         enemyAgent.velocity += dir / 2;
@@ -231,26 +264,43 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         {
             isShooting = true;
 
+            if (anim != null)
+            {
+                anim.SetTrigger("Shoot");
+            }
             yield return new WaitForSeconds(enemyFireRate);
 
-            CreateBullet();
 
             isShooting = false;
         }
     }
 
-    protected virtual void CreateBullet()
+   protected virtual void FireProjectile()
+{
+    if (enemyProjectile != null && !isDying)
     {
-        if (enemyProjectile != null && !isDying)
+        GameObject player = gameManager.instance.player;
+        if (player != null)
         {
-            GameObject player = gameManager.instance.player;
             Collider playerCollider = player.GetComponent<Collider>();
-            Vector3 playerColliderPosition = playerCollider.bounds.center;
-            Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
+            if (playerCollider != null)
+            {
+                Vector3 playerColliderPosition = playerCollider.bounds.center;
+                Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
+                directionToPlayer.Normalize();
 
-            Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
+                GameObject bullet = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
+                Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
+
+                if (bulletRB != null)
+                {
+                    bulletRB.velocity = directionToPlayer * bulletSpeed;
+                }
+            }
         }
     }
+}
+
 
     protected virtual IEnumerator DamageFlash()
     {
