@@ -14,11 +14,13 @@ public class brawlerAI : enemyAI
     {
         base.Update();
 
-        if (IsPlayerInRange(meleeRange) && canAttack)
+        if (IsPlayerInRange(meleeRange) && canAttack && !isDying)
         {
+            Debug.Log("ATtack anim trigger");
+            anim.SetTrigger("Attack");
             AttackPlayer();
         }
-        else if (isAggro)
+        else if (isAggro && !isDying)
         {
             EngageTarget();
         }
@@ -26,7 +28,7 @@ public class brawlerAI : enemyAI
 
     protected override void RotateTorwards()
     {
-        if (gameManager.instance.player != null)
+        if (gameManager.instance.player != null && !isDying)
         {
             Vector3 playerDirection = gameManager.instance.player.transform.position - transform.position;
             playerDirection.y = 0f;
@@ -37,22 +39,14 @@ public class brawlerAI : enemyAI
         }
     }
 
-    protected override IEnumerator Shoot()
-    {
-        isShooting = true;
-
-        // Ill add animation here for hitting 
-
-        isShooting = false;
-
-        yield return null;
-    }
 
     protected override void EngageTarget()
     {
-        if (gameManager.instance.player != null)
+        if (gameManager.instance.player != null && !isDying)
         {
             enemyAgent.stoppingDistance = desiredDistance;
+            float animSpeed = enemyAgent.velocity.normalized.magnitude;
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
 
             enemyAgent.SetDestination(gameManager.instance.player.transform.position);
             StopCoroutine(Roam());
@@ -63,7 +57,7 @@ public class brawlerAI : enemyAI
 
 
                 if (anim)
-                    anim.SetTrigger("Shoot");
+                    anim.SetTrigger("Attack");
 
 
                 if (DetectPlayer())
@@ -71,6 +65,7 @@ public class brawlerAI : enemyAI
                     StartCoroutine(Shoot());
                 }
             }
+
 
             if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
             {
@@ -81,11 +76,15 @@ public class brawlerAI : enemyAI
 
     private void AttackPlayer()
     {
-        int damageDealt = meleeDamage;
-        gameManager.instance.playerScript.takeDamage(damageDealt);
+        if (!isDying)
+        {
+            int damageDealt = meleeDamage;
+            gameManager.instance.playerScript.takeDamage(damageDealt);
 
-        canAttack = false;
-        Invoke("ResetAttack", attackCooldownDuration);
+
+            canAttack = false;
+            Invoke("ResetAttack", attackCooldownDuration);
+        }
     }
 
     private void ResetAttack()
