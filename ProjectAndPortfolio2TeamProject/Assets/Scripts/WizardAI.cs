@@ -6,12 +6,13 @@ public class wizardAI : enemyAI
     [Header("----- Wizard -----")]
     [SerializeField] private float bulletSpeed;
     private readonly float chaseUpdateInterval = 0f; // i may update this in the future 
+    
 
     protected override void CreateBullet()
     {
         GameObject player = gameManager.instance.player;
 
-        if (player != null)
+        if (player != null && !isDying)
         {
             Collider playerCollider = player.GetComponent<Collider>();
             if (playerCollider != null)
@@ -21,8 +22,10 @@ public class wizardAI : enemyAI
 
                 directionToPlayer.Normalize();
 
-                GameObject bullet = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.identity);
+                anim.SetTrigger("Shoot");
 
+                GameObject bullet = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.identity);
+       
                 Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
 
                 if (bulletRB != null)
@@ -30,6 +33,30 @@ public class wizardAI : enemyAI
                     StartCoroutine(ChasePlayer(bulletRB, directionToPlayer));
                 }
             }
+        }
+    }
+
+    protected override void EngageTarget()
+    {
+        if (!isDying)
+        {
+            base.EngageTarget();
+
+            float animSpeed = enemyAgent.velocity.normalized.magnitude;
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans)); // walk 1 animation here ------------
+        }
+
+    }
+
+
+    protected override IEnumerator Shoot()
+    {
+        if (!isShooting && !isDying)
+        {
+            isShooting = true;
+            yield return new WaitForSeconds(enemyFireRate);
+            CreateBullet();
+            isShooting = false;
         }
     }
 

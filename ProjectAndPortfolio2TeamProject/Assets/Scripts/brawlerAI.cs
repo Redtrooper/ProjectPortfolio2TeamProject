@@ -59,10 +59,11 @@ public class brawlerAI : enemyAI
 
             if (!isShooting)
             {
-                if (hasAnimator)
-                {
-                    anim.SetTrigger("Shoot");
-                }
+
+
+
+                anim.SetTrigger("Shoot");
+
 
                 if (DetectPlayer())
                 {

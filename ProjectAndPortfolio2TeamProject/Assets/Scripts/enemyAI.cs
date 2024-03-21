@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,19 +16,18 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] protected GameObject enemyEyes;
     [SerializeField] protected GameObject enemyExitPoint;
 
+    [Header("----- Animate -----")]
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected int animSpeedTrans; 
+
     [Header("----- Agent & Projectile -----")]
     [SerializeField] protected NavMeshAgent enemyAgent;
     [SerializeField] protected GameObject enemyProjectile;
-
-    [Header("----- Animate -----")]
-    [SerializeField] protected Animator anim;
-    [SerializeField] protected int animSpeedTrans;
 
     [Header("----- Roaming -----")]
     [SerializeField] protected bool doRoam;
     [SerializeField] protected float maxRoamingDistance;
     private bool isRoaming;
-
 
     [Header("----- Key -----")]
     [SerializeField] protected GameObject keyModel;
@@ -40,15 +38,15 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] protected bool instantiateCheckpoint = false;
 
     // Enemy States
-    protected bool isAggro; // this will make it so they go aggro when shot out of range - john
+    protected bool isAggro;
     protected bool isShooting;
     private Vector3 originalPosition;
-    protected bool hasAnimator => anim != null;
+    public bool isDead = false;
+    protected bool isDying = false;
 
     // Player Data
     protected bool playerInRange;
     protected Vector3 playerDirection;
-
 
     // Original Color
     private Color enemyOriginalColor;
@@ -65,17 +63,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
         gameManager.instance.enemyReportAlive(this.transform);
         originalPosition = transform.position;
-
     }
+
     protected virtual void Update()
     {
-        float animSpeed = enemyAgent.velocity.normalized.magnitude;
-
-        if (hasAnimator)
-        {
-            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
-        }
-
         if (isAggro)
         {
             EngageTarget();
@@ -83,7 +74,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
         else
         {
-
             if (DetectPlayer())
             {
                 EngageTarget();
@@ -94,6 +84,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             }
         }
     }
+
     protected virtual void EngageTarget()
     {
         enemyAgent.stoppingDistance = enemyStoppingDistance;
@@ -102,15 +93,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
         if (!isShooting)
         {
-            if (hasAnimator)
-            {
-                anim.SetTrigger("Shoot");
-            }
-
-            if (DetectPlayer())
-            {
-                StartCoroutine(Shoot());
-            }
+            StartCoroutine(Shoot());
         }
 
         if (enemyAgent.remainingDistance <= enemyAgent.stoppingDistance)
@@ -120,10 +103,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     protected virtual IEnumerator Roam()
     {
         enemyAgent.stoppingDistance = 0;
-        if (enemyAgent.remainingDistance < 0.05f)
+        if (enemyAgent.remainingDistance < 0.05f && !isDying)
         {
             isRoaming = true;
-            yield return new WaitForSeconds(1.0f); // this is how long they will stay at their destination b4 going to a new one
+            yield return new WaitForSeconds(1.0f);
             Vector3 randomPosition = GetRandomPosition();
             enemyAgent.SetDestination(randomPosition);
             isRoaming = false;
@@ -150,6 +133,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         if (other.CompareTag("Player"))
             playerInRange = true;
     }
+
     protected virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -158,9 +142,10 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             StartCoroutine(WaitBeforeNextRoam());
         }
     }
+
     protected virtual bool DetectPlayer()
     {
-        if (playerInRange)
+        if (playerInRange && !isDying)
         {
             playerDirection = gameManager.instance.player.transform.position - enemyEyes.transform.position;
             RaycastHit playerRay;
@@ -174,12 +159,22 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
         return false;
     }
+
     protected virtual void RotateTorwards()
     {
-        //turnspeed should be either really high or really low for comedic effect
         Quaternion turn = Quaternion.LookRotation(new Vector3(playerDirection.x, transform.position.y, playerDirection.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, turn, Time.deltaTime * enemyTurnSpeed);
     }
+
+    //-------------------------------------------------
+   public virtual bool IsDead
+    {
+        get
+        {
+            return enemyHP == 0;
+        }
+    }
+
     public virtual void takeDamage(int amount)
     {
         if (!isAggro)
@@ -187,54 +182,65 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             isAggro = true;
         }
 
-
         enemyHP -= amount;
         StartCoroutine(DamageFlash());
         if (enemyHP <= 0)
         {
-            if (hasKey)
+            if (!isDying) 
             {
-                Instantiate(gameManager.instance.keyPickup, transform.position, transform.rotation);
-                if (keyModel != null)
+                isDying = true; 
+                if (hasKey)
                 {
-                    keyModel.SetActive(true);
+                    Instantiate(gameManager.instance.keyPickup, transform.position, transform.rotation);
+                    if (keyModel != null)
+                    {
+                        keyModel.SetActive(true);
+                    }
+                }
+                if (instantiateCheckpoint)
+                    Instantiate(checkPointToInstantiate, transform.position, new Quaternion(0, 0, 0, 0));
+                gameManager.instance.enemyReportDead(this.transform);
+                if (IsDead)
+                {
+                    anim.SetTrigger("Death");
+                    StartCoroutine(DestroyAfterAnimation());
                 }
             }
-            if (instantiateCheckpoint)
-                Instantiate(checkPointToInstantiate, transform.position, new Quaternion(0, 0, 0, 0));
-            gameManager.instance.enemyReportDead(this.transform);
-            Destroy(gameObject);
         }
     }
+
+    private IEnumerator DestroyAfterAnimation()
+    {
+     
+        yield return new WaitForSeconds(3f); 
+     
+        Destroy(gameObject);
+    }
+
+    //-------------------------------------------------
+
     public void pushInDirection(Vector3 dir)
     {
         enemyAgent.velocity += dir / 2;
     }
+
     protected virtual IEnumerator Shoot()
     {
-        if (!isShooting) 
+        if (!isShooting && !isDying)
         {
             isShooting = true;
 
             yield return new WaitForSeconds(enemyFireRate);
 
-            if (hasAnimator)
-            {
-                anim.ResetTrigger("Shoot");
-            }
-            else
-            {
-                CreateBullet();
-            }
+            CreateBullet();
 
             isShooting = false;
         }
     }
 
-
     protected virtual void CreateBullet()
     {
-        if (enemyProjectile != null) // i do this here so they dont need a projectile so the brawler still workls
+        if (enemyProjectile != null && !isDying)
         {
             GameObject player = gameManager.instance.player;
             Collider playerCollider = player.GetComponent<Collider>();
@@ -245,11 +251,13 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
     }
 
-
     protected virtual IEnumerator DamageFlash()
     {
-        enemyModel.material.color = Color.red;
-        yield return new WaitForSeconds(.15f);
-        enemyModel.material.color = enemyOriginalColor;
+        if (!isDying)
+        {
+            enemyModel.material.color = Color.red;
+            yield return new WaitForSeconds(.15f);
+            enemyModel.material.color = enemyOriginalColor;
+        }
     }
 }
