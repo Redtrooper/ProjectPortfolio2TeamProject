@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         isRegeneratingStamina = true;
         playerCurrentStamina += playerStaminaRecoveryRate;
         UpdateStaminaBar();
-        if (isExhausted && playerCurrentStamina == playerMaxStamina)
+        if (isExhausted && playerCurrentStamina >= playerMaxStamina)
         {
             isExhausted = false;
             gameManager.instance.toggleExhaustedStaminaBar();

@@ -202,7 +202,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 gameManager.instance.enemyReportDead(this.transform);
                 if (IsDead)
                 {
-                    anim.SetTrigger("Death");
+                    if(anim)
+                        anim.SetTrigger("Death");
                     StartCoroutine(DestroyAfterAnimation());
                 }
             }

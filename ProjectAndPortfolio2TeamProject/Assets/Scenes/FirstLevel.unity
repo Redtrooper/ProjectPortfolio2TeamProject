@@ -9309,6 +9309,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 2012193924}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (8)
@@ -9318,6 +9322,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+--- !u!95 &383137242 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 862800658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &385588757
 GameObject:
   m_ObjectHideFlags: 0
@@ -14265,6 +14274,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9393a55ed92b654f84a4b06ea9cbe98, type: 3}
+--- !u!95 &663561162 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 690178162}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &665971712
 GameObject:
   m_ObjectHideFlags: 0
@@ -16098,6 +16112,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 663561162}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (5)
@@ -18013,6 +18031,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad9dfc3378b722542b21ee3f9b661f62, type: 3}
+--- !u!95 &779038282 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 2047509884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &781386028
 Mesh:
   m_ObjectHideFlags: 0
@@ -19610,6 +19633,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 383137242}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (10)
@@ -26246,6 +26273,11 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!95 &1286042845 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 1856126978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1286396429
 Mesh:
   m_ObjectHideFlags: 0
@@ -30473,6 +30505,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1554540135}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (2)
@@ -31295,6 +31331,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!95 &1554540135 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 1503425047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1587696433
 GameObject:
   m_ObjectHideFlags: 0
@@ -32253,6 +32294,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1625534294}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (9)
@@ -32262,6 +32307,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+--- !u!95 &1625534294 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 1621005390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1649367031
 GameObject:
   m_ObjectHideFlags: 0
@@ -36585,6 +36635,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1286042845}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (7)
@@ -36864,6 +36918,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 2111432854}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard
@@ -38083,6 +38141,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2024124652223046323, guid: a84c7aaf1f0673841bd38576960b181b, type: 3}
   m_PrefabInstance: {fileID: 1591222245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1925310985 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 2056415558}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1931103168
 PrefabInstance:
@@ -41208,6 +41271,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!95 &2012193924 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 380347756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2012378001
 GameObject:
   m_ObjectHideFlags: 0
@@ -43175,6 +43243,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 779038282}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (6)
@@ -43642,6 +43714,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3604669304546300205, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1925310985}
     - target: {fileID: 5270764925599516232, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
       propertyPath: m_Name
       value: Wizard (3)
@@ -44687,6 +44763,11 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!95 &2111432854 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7894668566773330948, guid: 8cbbe33107b2d1746841955888c31ab7, type: 3}
+  m_PrefabInstance: {fileID: 1869975070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2124783531 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3495217428736760548, guid: ad9dfc3378b722542b21ee3f9b661f62, type: 3}
