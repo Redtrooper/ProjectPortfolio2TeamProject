@@ -79,10 +79,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     protected virtual void InitializeEnemy()
     {
-        // Initialize the list to store original colors
         enemyOriginalColors = new List<Color>();
 
-        // Store original colors
         foreach (Renderer renderer in enemyModel)
         {
             enemyOriginalColors.Add(renderer.material.color);
@@ -139,13 +137,11 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             renderer.enabled = false;
         }
 
-        // Play the spawn effect particle system
         if (spawnEffect != null && !hasSpawnEffectOccurred)
         {
             if (spawnFXPosition != null)
             {
                 GameObject effectInstance = Instantiate(spawnEffect, spawnFXPosition.position, Quaternion.identity);
-                // Adjust rotation to make the effect play upright
                 effectInstance.transform.up = spawnFXPosition.up;
                 hasSpawnEffectOccurred = true;
             }
@@ -154,17 +150,14 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 Debug.LogError("Spawn FX position not assigned for spawn effect!");
             }
         }
-
-        // Wait for the spawn delay
+    
         yield return new WaitForSeconds(spawnDelay);
 
-        // Enable the enemy model
         foreach (Renderer renderer in enemyModel)
         {
             renderer.enabled = true;
         }
 
-        // Enable the NavMeshAgent component
         enemyAgent.enabled = true;
 
         isSpawning = false;
@@ -306,7 +299,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     {
         get
         {
-            return enemyHP == 0;
+            return enemyHP <= 0;
         }
     }
 
@@ -363,9 +356,12 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         {
             isShooting = true;
 
-            yield return new WaitForSeconds(enemyFireRate);
+            if (anim != null)
+            {
+                anim.SetTrigger("Shoot");
+            }
 
-            FireProjectile();
+            yield return new WaitForSeconds(enemyFireRate);
 
             isShooting = false;
         }
@@ -402,17 +398,17 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     {
         if (!isDying)
         {
-            // Store the original colors before changing them
+           
             List<Color> originalColors = new List<Color>();
             foreach (Renderer renderer in enemyModel)
             {
                 originalColors.Add(renderer.material.color);
-                renderer.material.color = Color.red; // Flash to red
+                renderer.material.color = Color.red; 
             }
 
             yield return new WaitForSeconds(.15f);
 
-            // Restore the original color for each renderer
+          
             for (int i = 0; i < enemyModel.Count; i++)
             {
                 enemyModel[i].material.color = originalColors[i];
