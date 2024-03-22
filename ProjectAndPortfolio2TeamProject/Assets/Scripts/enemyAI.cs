@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
+
 
 public class enemyAI : MonoBehaviour, IDamage, IPhysics
 {
@@ -12,13 +14,18 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] protected int enemyStoppingDistance;
 
     [Header("----- Model -----")]
-    [SerializeField] protected Renderer enemyModel;
+    [SerializeField] protected List<Renderer> enemyModel;
     [SerializeField] protected GameObject enemyEyes;
     [SerializeField] protected GameObject enemyExitPoint;
 
     [Header("----- Animate -----")]
     [SerializeField] protected Animator anim;
     [SerializeField] protected int animSpeedTrans;
+
+    [Header("----- Spawn Effect -----")]
+    [SerializeField] protected GameObject spawnEffect;
+    [SerializeField] protected float spawnDelay = 1.0f;
+    [SerializeField] protected Transform spawnFXPosition;
 
     [Header("----- Agent & Projectile -----")]
     [SerializeField] protected NavMeshAgent enemyAgent;
@@ -44,7 +51,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     private Vector3 originalPosition;
     public bool isDead = false;
     protected bool isDying = false;
-
+    protected bool isSpawning = true;
+    protected bool hasSpawnEffectOccurred = false;
+    protected List<Color> enemyOriginalColors;
     // Player Data
     protected bool playerInRange;
     protected Vector3 playerDirection;
@@ -54,7 +63,31 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     protected virtual void Start()
     {
-        enemyOriginalColor = enemyModel.material.color;
+        if (spawnEffect != null)
+        {
+            StartCoroutine(SpawnSequence());
+        }
+        else
+        {
+            InitializeEnemy();
+        }
+    }
+    protected virtual IEnumerator SpawnSequence()
+    {
+        yield return StartCoroutine(SpawnEnemy());
+    }
+
+    protected virtual void InitializeEnemy()
+    {
+        // Initialize the list to store original colors
+        enemyOriginalColors = new List<Color>();
+
+        // Store original colors
+        foreach (Renderer renderer in enemyModel)
+        {
+            enemyOriginalColors.Add(renderer.material.color);
+        }
+
         enemyAgent.speed = enemySpeed;
 
         if (keyModel != null)
@@ -68,22 +101,88 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     protected virtual void Update()
     {
-        if (isAggro)
+        if (!isSpawning)
         {
-            EngageTarget();
-            UpdateAnimationSpeed();
-            isAggro = false;
+            if (isAggro)
+            {
+                EngageTarget();
+                UpdateAnimationSpeed();
+                isAggro = false;
+            }
+            else
+            {
+                if (DetectPlayer())
+                {
+                    EngageTarget();
+                }
+                else if (doRoam && !isRoaming)
+                {
+                    StartCoroutine(Roam());
+                }
+            }
         }
         else
         {
-            if (DetectPlayer())
+            // Enemy is still spawning, disable model and functionality
+            foreach (Renderer renderer in enemyModel)
             {
-                EngageTarget();
+                renderer.enabled = false;
             }
-            else if (doRoam && !isRoaming)
+            enemyAgent.enabled = false;
+        }
+    }
+
+    protected virtual IEnumerator SpawnEnemy()
+    {
+        foreach (Renderer renderer in enemyModel)
+        {
+            renderer.enabled = false;
+        }
+
+        // Play the spawn effect particle system
+        if (spawnEffect != null && !hasSpawnEffectOccurred)
+        {
+            if (spawnFXPosition != null)
             {
-                StartCoroutine(Roam());
+                GameObject effectInstance = Instantiate(spawnEffect, spawnFXPosition.position, Quaternion.identity);
+                // Adjust rotation to make the effect play upright
+                effectInstance.transform.up = spawnFXPosition.up;
+                hasSpawnEffectOccurred = true;
             }
+            else
+            {
+                Debug.LogError("Spawn FX position not assigned for spawn effect!");
+            }
+        }
+
+        // Wait for the spawn delay
+        yield return new WaitForSeconds(spawnDelay);
+
+        // Enable the enemy model
+        foreach (Renderer renderer in enemyModel)
+        {
+            renderer.enabled = true;
+        }
+
+        // Enable the NavMeshAgent component
+        enemyAgent.enabled = true;
+
+        isSpawning = false;
+    }
+
+
+
+
+    protected virtual void OnSpawnEffectFinished()
+    {
+        Debug.Log("Spawn effect finished playing.");
+    }
+
+    protected virtual void SpawnEffect()
+    {
+        if (spawnEffect != null)
+        {
+            Instantiate(spawnEffect, transform.position, Quaternion.identity);
         }
     }
 
@@ -96,6 +195,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
         }
     }
+
     protected virtual void RotateTowardsPlayer()
     {
         if (gameManager.instance.player != null && !isDying)
@@ -108,7 +208,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * enemyTurnSpeed);
         }
     }
-
 
     protected virtual void EngageTarget()
     {
@@ -135,7 +234,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             }
         }
     }
-
 
     protected virtual IEnumerator Roam()
     {
@@ -273,40 +371,54 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         }
     }
 
-   protected virtual void FireProjectile()
-{
-    if (enemyProjectile != null && !isDying)
+    protected virtual void FireProjectile()
     {
-        GameObject player = gameManager.instance.player;
-        if (player != null)
+        if (enemyProjectile != null && !isDying)
         {
-            Collider playerCollider = player.GetComponent<Collider>();
-            if (playerCollider != null)
+            GameObject player = gameManager.instance.player;
+            if (player != null)
             {
-                Vector3 playerColliderPosition = playerCollider.bounds.center;
-                Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
-                directionToPlayer.Normalize();
-
-                GameObject bullet = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
-                Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
-
-                if (bulletRB != null)
+                Collider playerCollider = player.GetComponent<Collider>();
+                if (playerCollider != null)
                 {
-                    bulletRB.velocity = directionToPlayer * bulletSpeed;
+                    Vector3 playerColliderPosition = playerCollider.bounds.center;
+                    Vector3 directionToPlayer = playerColliderPosition - enemyExitPoint.transform.position;
+                    directionToPlayer.Normalize();
+
+                    GameObject bullet = Instantiate(enemyProjectile, enemyExitPoint.transform.position, Quaternion.LookRotation(directionToPlayer));
+                    Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
+
+                    if (bulletRB != null)
+                    {
+                        bulletRB.velocity = directionToPlayer * bulletSpeed;
+                    }
                 }
             }
         }
     }
-}
 
 
     protected virtual IEnumerator DamageFlash()
     {
         if (!isDying)
         {
-            enemyModel.material.color = Color.red;
+            // Store the original colors before changing them
+            List<Color> originalColors = new List<Color>();
+            foreach (Renderer renderer in enemyModel)
+            {
+                originalColors.Add(renderer.material.color);
+                renderer.material.color = Color.red; // Flash to red
+            }
+
             yield return new WaitForSeconds(.15f);
-            enemyModel.material.color = enemyOriginalColor;
+
+            // Restore the original color for each renderer
+            for (int i = 0; i < enemyModel.Count; i++)
+            {
+                enemyModel[i].material.color = originalColors[i];
+            }
         }
     }
+
+
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class grenadierAI : enemyAI
 {
