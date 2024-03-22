@@ -51,9 +51,9 @@ MonoBehaviour:
   bulletRigidBody: {fileID: 5112653748255582426}
   bulletDamageAmount: 10
   bulletSpeed: 20
-  bulletChaseSpeed: 0
   bulletDestroyTime: 10
   bulletSourceIsFriendly: 0
+  chasePlayer: 0
 --- !u!33 &4003310653047852367
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3b2c9c43df0c21c4b8ee993c3da09f9f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

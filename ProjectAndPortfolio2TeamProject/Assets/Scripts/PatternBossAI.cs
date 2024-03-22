@@ -4,7 +4,7 @@ using UnityEngine;
 public class PatternBoss : enemyAI
 {
     [Header("----- Boss Settings -----")]
-    [SerializeField] private float specialAttackCooldown;
+    [SerializeField] private int specialAttackCooldown;
     [SerializeField] private float specialAttackFireRate;
     [SerializeField] private GameObject specialAttackProjectile;
     [SerializeField] private Transform[] specialAttackExitPoints;
@@ -26,13 +26,15 @@ public class PatternBoss : enemyAI
 
     private IEnumerator SpecialAttack()
     {
-        if (specialAttackProjectile != null)
+        if (specialAttackProjectile != null && specialAttackExitPoints.Length > 0)
         {
-            foreach (Transform exitPoint in specialAttackExitPoints)
-            {
-                Instantiate(specialAttackProjectile, exitPoint.position, exitPoint.rotation);
-                yield return new WaitForSeconds(specialAttackFireRate);
-            }
+           
+            int randomIndex = Random.Range(0, specialAttackExitPoints.Length);
+            Transform selectedExitPoint = specialAttackExitPoints[randomIndex];
+
+            Instantiate(specialAttackProjectile, selectedExitPoint.position, selectedExitPoint.rotation);
+
+            yield return new WaitForSeconds(specialAttackFireRate);
         }
     }
 
