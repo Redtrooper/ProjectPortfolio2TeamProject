@@ -21,13 +21,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [Header("----- Audio -----")]
     [SerializeField] AudioClip[] playerSteps;
     [Range(0, 1)][SerializeField] float playerStepsVol;
-    [SerializeField] AudioClip[] soundHurt;
-    [Range(0, 1)][SerializeField] float soundHurtVol;
-    [SerializeField] AudioSource aud;
-    [SerializeField] AudioClip[] reloadSound;
-    [Range(0, 1)][SerializeField] float reloadSoundVol;
-    [SerializeField] AudioClip[] shootSound;
-    [Range(0, 1)][SerializeField] float shootSoundVol;
+    [SerializeField] AudioClip[] playerSoundHurt;
+    [Range(0, 1)][SerializeField] float playerSoundHurtVol;
+    [SerializeField] AudioSource playerAud;
+    [SerializeField] AudioClip[] playerReloadSound;
+    [Range(0, 1)][SerializeField] float playerReloadSoundVol;
+    [SerializeField] AudioClip[] playerShootSound;
+    [Range(0, 1)][SerializeField] float playerShootSoundVol;
+    [SerializeField] AudioClip[] playerEmptyShootSound;
+    [Range(0, 1)][SerializeField] float playerEmptyShootSoundVol;
+    bool isPlayingEmptyShootSound = false;
 
     bool isPlayerSteps;
 
@@ -50,6 +53,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] GameObject playerGrenade;
     [SerializeField] float playerGrenadeCooldown;
     [SerializeField] int playerMaxGrenades;
+    [SerializeField] Animator playerWeaponAnimator;
+    [SerializeField] GameObject playerReloadAnimFX;
 
     [SerializeField] GameObject playerMuzzleFlash;
     [SerializeField] GameObject playerWeaponPickupBlank;
@@ -256,7 +261,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     public void takeDamage(int amount)
     {
         playerHP -= amount;
-        aud.PlayOneShot(soundHurt[Random.Range(0, soundHurt.Length)], soundHurtVol);
+        playerAud.PlayOneShot(playerSoundHurt[Random.Range(0, playerSoundHurt.Length)], playerSoundHurtVol);
         UpdateHealthBar();
         StartCoroutine(flashDamage());
 
@@ -336,12 +341,20 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void PlayShootSound()
     {
-        aud.PlayOneShot(shootSound[Random.Range(0, shootSound.Length)], shootSoundVol);
+        playerAud.PlayOneShot(playerShootSound[Random.Range(0, playerShootSound.Length)], playerShootSoundVol);
     }
 
     void PlayReloadSound()
     {
-        aud.PlayOneShot(reloadSound[Random.Range(0, reloadSound.Length)], reloadSoundVol);
+        playerAud.PlayOneShot(playerReloadSound[Random.Range(0, playerReloadSound.Length)], playerReloadSoundVol);
+    }
+
+    IEnumerator PlayEmptyShootSound()
+    {
+        isPlayingEmptyShootSound = true;
+        playerAud.PlayOneShot(playerEmptyShootSound[Random.Range(0, playerEmptyShootSound.Length)], playerEmptyShootSoundVol);
+        yield return new WaitForSeconds(playerFireRate * playerFireRateMultiplier);
+        isPlayingEmptyShootSound = false;
     }
 
     void Shoot()
@@ -352,10 +365,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             StartCoroutine(ShootTimer());
             PlayShootSound();
         }
+        else if(Input.GetButton("Shoot") && playerCurrentAmmo <= 0 && !isReloading && !isPlayingEmptyShootSound)
+        {
+            StartCoroutine(PlayEmptyShootSound());
+        }
         else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
         {
             isReloading = true;
             gameManager.instance.toggleReloadIcon();
+            playerWeaponAnimator.SetFloat("ReloadTime", 1 / playerReloadTime);
+            playerReloadAnimFX.SetActive(true);
             Invoke("Reload", playerReloadTime);
             PlayReloadSound();
         }
@@ -368,6 +387,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         gameManager.instance.toggleReloadIcon();
         isReloading = false;
+        playerWeaponAnimator.SetFloat("ReloadTime", 1); 
+        playerReloadAnimFX.SetActive(false);
     }
 
     void Crouch()
@@ -534,7 +555,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     IEnumerator playFootSteps()
     {
         isPlayerSteps = true;
-        aud.PlayOneShot(playerSteps[Random.Range(0, playerSteps.Length)], playerStepsVol);
+        playerAud.PlayOneShot(playerSteps[Random.Range(0, playerSteps.Length)], playerStepsVol);
 
         if (!isSprinting)
             yield return new WaitForSeconds(0.5f);
