@@ -1,16 +1,15 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Audio;
-using TMPro;
+using System.Collections.Generic;
+
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] string _volumeParameter = "SFX Volume";
-    [SerializeField] AudioMixer _mixer;
-    [SerializeField] float _multiplier = 30f;
-    [SerializeField] Slider SFXSlider;
-    [SerializeField] TMP_Text SFXLabel;
+    public static SoundManager instance;
+    public Sound[] musicSounds; // Array of music sounds
+    public Sound[] SFXSounds; // Array of SFX sounds
 
+<<<<<<< Updated upstream
     private void Start()
     {
         // Load volume from PlayerPrefs
@@ -19,32 +18,78 @@ public class SoundManager : MonoBehaviour
         SFXLabel.text = SFXSlider.value.ToString();
         SetVolume(savedVolume);
     }
+=======
+    public AudioSource musicSource; // AudioSource for music
+    public AudioSource SFXSource; // AudioSource for SFX
+>>>>>>> Stashed changes
 
-    private void OnDisable()
-    {
-        PlayerPrefs.SetFloat(_volumeParameter, SFXSlider.value);
-    }
 
-    private void Awake()
+    void Awake()
     {
-        SFXSlider.onValueChanged.AddListener(HandleSliderValueChanged);
-    }
-
-    private void HandleSliderValueChanged(float value)
-    {
-        SFXLabel.text = value.ToString("0.00");
-        SetVolume(value);
-    }
-
-    private void SetVolume(float value)
-    {
-        if (value <= 0f)
+        if (instance == null)
         {
-            _mixer.SetFloat(_volumeParameter, -80f); // -80 is mute
+            instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            _mixer.SetFloat(_volumeParameter, Mathf.Log10(value) * _multiplier);
+            Destroy(gameObject);
+            return;
+        }
+
+        musicSource = gameObject.AddComponent<AudioSource>();
+        SFXSource = gameObject.AddComponent<AudioSource>();
+
+        // Play music on start if available
+        if (musicSounds.Length > 0)
+        {
+            Sound music = musicSounds[Random.Range(0, musicSounds.Length)];
+            AudioClip clip = music.clips[Random.Range(0, music.clips.Length)];
+            musicSource.clip = clip;
+            musicSource.volume = music.volume;
+            musicSource.loop = true;
+            musicSource.Play();
+        }
+    }
+
+
+    void Start()
+    {
+        // Initialize AudioSource if not set
+        if (musicSource == null)
+            musicSource = gameObject.AddComponent<AudioSource>();
+
+        if (SFXSource == null)
+            SFXSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    // Play a random music sound
+    public void PlayRandomMusic()
+    {
+        if (musicSounds.Length > 0)
+        {
+            Sound music = musicSounds[Random.Range(0, musicSounds.Length)];
+            AudioClip clip = music.clips[Random.Range(0, music.clips.Length)];
+            musicSource.PlayOneShot(clip, music.volume);
+        }
+        else
+        {
+            Debug.LogWarning("No music clips found in the array.");
+        }
+    }
+
+    // Play a random SFX sound
+    public void PlayRandomSFX()
+    {
+        if (SFXSounds.Length > 0)
+        {
+            Sound SFX = SFXSounds[Random.Range(0, SFXSounds.Length)];
+            AudioClip clip = SFX.clips[Random.Range(0, SFX.clips.Length)];
+            SFXSource.PlayOneShot(clip, SFX.volume);
+        }
+        else
+        {
+            Debug.LogWarning("No SFX clips found in the array.");
         }
     }
 }
