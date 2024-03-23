@@ -10,6 +10,7 @@ public class optionsMenu : MonoBehaviour
     [SerializeField] TMP_Text mouseSensitivityLabel;
     [SerializeField] Toggle invertY;
     [SerializeField] Toggle firstTimeItemUI;
+    [SerializeField] Animator animController;
 
     // When the options menu opens set all the fields in it according to player prefs
     private void Start()
@@ -42,20 +43,47 @@ public class optionsMenu : MonoBehaviour
 
     public void Apply()
     {
-        PlayerPrefs.SetInt("Mouse Sensitivity", (int) mouseSensitivity.value);
-        PlayerPrefs.SetInt("Invert Y", invertY.isOn ? 1 : 0);
-        PlayerPrefs.SetInt("First Time Item UI", firstTimeItemUI.isOn ? 1 : 0);
-        gameObject.SetActive(false);
-        GetComponentInParent<menuControls>().freezeInput = false;
-        if (gameManager.instance != null)
-            gameManager.instance.loadSettings();
+        StartCoroutine(ApplyOnDelay());
     }
 
     public void Cancel()
     {
-        Start();
-        gameObject.SetActive(false);
+        StartCoroutine(CancelOnDelay());
+    }
+
+    private IEnumerator ApplyOnDelay()
+    {
+        float timer = 0f;
+        float delay = 0.5f;
+
+        PlayerPrefs.SetInt("Mouse Sensitivity", (int) mouseSensitivity.value);
+        PlayerPrefs.SetInt("Invert Y", invertY.isOn ? 1 : 0);
+        PlayerPrefs.SetInt("First Time Item UI", firstTimeItemUI.isOn ? 1 : 0);
         GetComponentInParent<menuControls>().freezeInput = false;
+        if (gameManager.instance != null)
+            gameManager.instance.loadSettings();
+        animController.SetTrigger("Close");
+        while (timer < delay)
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator CancelOnDelay()
+    {
+        float timer = 0f;
+        float delay = 0.5f;
+        Start();
+        GetComponentInParent<menuControls>().freezeInput = false;
+        animController.SetTrigger("Close");
+        while (timer < delay)
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+        gameObject.SetActive(false);
     }
 
     public void updateMouseSensitivityLabel()

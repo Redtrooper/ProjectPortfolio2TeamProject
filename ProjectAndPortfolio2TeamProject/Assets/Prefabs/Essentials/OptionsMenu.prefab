@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 2403161876032351122}
   - component: {fileID: 3452382824410807672}
   - component: {fileID: 5325675325611478057}
+  - component: {fileID: 5657622241944608858}
   m_Layer: 5
   m_Name: OptionsMenu
   m_TagString: Untagged
@@ -161,10 +162,10 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 425157936915231546}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7649380502889797026}
   - {fileID: 2692210305884454432}
@@ -209,6 +210,7 @@ MonoBehaviour:
   mouseSensitivityLabel: {fileID: 690218481924053823}
   invertY: {fileID: 7952504583822099258}
   firstTimeItemUI: {fileID: 2842159046448800084}
+  animController: {fileID: 5657622241944608858}
 --- !u!114 &3452382824410807672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +268,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &5657622241944608858
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425157936915231546}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 56b93b988e4c884498c9f40f3acef08c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &537839971091625717
 GameObject:
   m_ObjectHideFlags: 0

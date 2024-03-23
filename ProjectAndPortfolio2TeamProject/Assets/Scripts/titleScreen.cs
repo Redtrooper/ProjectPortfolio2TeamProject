@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,7 @@ public class titleScreen : MonoBehaviour
 {
     [SerializeField] GameObject optionsMenu;
     [SerializeField] GameObject creditsScreen;
+    [SerializeField] TMP_Text titleText;
 
     IEnumerator PlayAfterDelay()
     {
@@ -32,6 +34,8 @@ public class titleScreen : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+        titleText.outlineColor = Color.black;
+        titleText.outlineWidth = 0.2f;
     }
 
     public void play()
@@ -54,12 +58,6 @@ public class titleScreen : MonoBehaviour
     {
         creditsScreen.SetActive(true);
         this.GetComponent<menuControls>().freezeInput = true;
-    }
-
-    public void closeCredits()
-    {
-        creditsScreen.SetActive(false);
-        this.GetComponent<menuControls>().freezeInput = false;
     }
 
     public void practice()

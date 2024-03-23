@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
     {
         // Load volume from PlayerPrefs
         float savedVolume = PlayerPrefs.GetFloat(_volumeParameter, 1.0f);
-        SFXSlider.value = savedVolume;
+        SFXSlider.value = (float) System.Math.Truncate(savedVolume * 100)/100;
         SFXLabel.text = SFXSlider.value.ToString();
         SetVolume(savedVolume);
     }
