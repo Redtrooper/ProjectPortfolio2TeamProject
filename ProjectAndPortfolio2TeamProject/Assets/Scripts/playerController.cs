@@ -18,17 +18,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     private float playerCritChance = 0;
     private bool playerCanCrit = false;
 
-    [Header("----- Audio -----")]
-    [SerializeField] AudioClip[] playerSteps;
-    [Range(0, 1)][SerializeField] float playerStepsVol;
-    [SerializeField] AudioClip[] playerSoundHurt;
-    [Range(0, 1)][SerializeField] float playerSoundHurtVol;
-    [SerializeField] AudioSource playerAud;
-    [SerializeField] AudioClip[] playerEmptyShootSound;
-    [Range(0, 1)][SerializeField] float playerEmptyShootSoundVol;
-    bool isPlayingEmptyShootSound = false;
-
-    bool isPlayerSteps;
 
     [Header("----- Player Model & Transform -----")]
     [SerializeField] CharacterController playerController;
@@ -195,12 +184,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             }
         }
 
-        // running audio
-        if (playerController.isGrounded && playerMove.normalized.magnitude > 0.3f && !isPlayerSteps)
-        {
-            StartCoroutine(playFootSteps());
-        }
-
         if (!isAirDashing && playerCanAirDash && !playerController.isGrounded && Input.GetButtonDown("Air Dash"))
         {
             airDash();
@@ -260,7 +243,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     public void takeDamage(int amount)
     {
         playerHP -= amount;
-        playerAud.PlayOneShot(playerSoundHurt[Random.Range(0, playerSoundHurt.Length)], playerSoundHurtVol);
         UpdateHealthBar();
         StartCoroutine(flashDamage());
 
@@ -338,23 +320,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerMuzzleFlash.SetActive(false);
     }
 
-    void PlayShootSound()
-    {
-        playerAud.PlayOneShot(playerWeaponList[playerSelectedWeapon].weaponShootSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponShootSound.Length)], playerWeaponList[playerSelectedWeapon].weaponShootSoundVol);
-    }
-
-    void PlayReloadSound()
-    {
-        playerAud.PlayOneShot(playerWeaponList[playerSelectedWeapon].weaponReloadSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length)], playerWeaponList[playerSelectedWeapon].weaponReloadSoundVol);
-    }
-
-    IEnumerator PlayEmptyShootSound()
-    {
-        isPlayingEmptyShootSound = true;
-        playerAud.PlayOneShot(playerEmptyShootSound[Random.Range(0, playerEmptyShootSound.Length)], playerEmptyShootSoundVol);
-        yield return new WaitForSeconds(playerFireRate * playerFireRateMultiplier);
-        isPlayingEmptyShootSound = false;
-    }
 
     void Shoot()
     {
@@ -362,10 +327,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         if (Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo > 0 && !isReloading)
         {
             StartCoroutine(ShootTimer());
-            PlayShootSound();
+
         }
-        else if (Input.GetButton("Shoot") && playerCurrentAmmo <= 0 && !isReloading && !isPlayingEmptyShootSound)
-            StartCoroutine(PlayEmptyShootSound());
         else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
         {
             isReloading = true;
@@ -373,7 +336,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerWeaponAnimator.SetFloat("ReloadTime", 1 / playerReloadTime);
             playerReloadAnimFX.SetActive(true);
             Invoke("Reload", playerReloadTime);
-            PlayReloadSound();
+
         }
     }
 
@@ -547,20 +510,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerGrenadeCount -= 1;
             gameManager.instance.updateGrenadeCountUI(playerGrenadeCount);
         }
-    }
-
-    IEnumerator playFootSteps()
-    {
-        isPlayerSteps = true;
-        playerAud.PlayOneShot(playerSteps[Random.Range(0, playerSteps.Length)], playerStepsVol);
-
-        if (!isSprinting)
-            yield return new WaitForSeconds(0.5f);
-        else if (isSprinting)
-            yield return new WaitForSeconds(0.3f);
-
-        isPlayerSteps = false;
-
     }
 
     public void addItem(itemStats item)
