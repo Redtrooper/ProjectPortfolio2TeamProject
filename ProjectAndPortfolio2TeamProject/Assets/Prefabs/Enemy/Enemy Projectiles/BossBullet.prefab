@@ -62,7 +62,8 @@ MonoBehaviour:
   bulletSpeed: 10
   bulletDestroyTime: 5
   bulletSourceIsFriendly: 0
-  chasePlayer: 1
+  chasePlayer: 0
+  bulletHitFx: {fileID: 0}
 --- !u!96 &4109781055711456105
 TrailRenderer:
   serializedVersion: 3

@@ -24,10 +24,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     [SerializeField] AudioClip[] playerSoundHurt;
     [Range(0, 1)][SerializeField] float playerSoundHurtVol;
     [SerializeField] AudioSource playerAud;
-    [SerializeField] AudioClip[] playerReloadSound;
-    [Range(0, 1)][SerializeField] float playerReloadSoundVol;
-    [SerializeField] AudioClip[] playerShootSound;
-    [Range(0, 1)][SerializeField] float playerShootSoundVol;
     [SerializeField] AudioClip[] playerEmptyShootSound;
     [Range(0, 1)][SerializeField] float playerEmptyShootSoundVol;
     bool isPlayingEmptyShootSound = false;
@@ -112,6 +108,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     // AirDash
     [SerializeField] float playerAirDashSpeed;
     private bool playerCanAirDash = false;
+
+    // Recoil
+    [SerializeField] GameObject playerWeaponHolder;
 
     void Start()
     {
@@ -322,7 +321,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         isShooting = true;
         if (playerCritChance >= Random.value)
             playerCanCrit = true;
-        Instantiate(playerProjectile, playerExitLocation.position, Camera.main.transform.rotation);
+        Instantiate(playerProjectile, playerExitLocation.position, playerWeaponHolder.transform.rotation);;
         StartCoroutine(MuzzleFlash());
         playerPushBack -= Camera.main.transform.forward * (playerWeaponKnockback * playerWeaponKnockbackMultiplier);
         playerCurrentAmmo -= 1;
@@ -341,12 +340,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void PlayShootSound()
     {
-        playerAud.PlayOneShot(playerShootSound[Random.Range(0, playerShootSound.Length)], playerShootSoundVol);
+        playerAud.PlayOneShot(playerWeaponList[playerSelectedWeapon].weaponShootSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponShootSound.Length)], playerWeaponList[playerSelectedWeapon].weaponShootSoundVol);
     }
 
     void PlayReloadSound()
     {
-        playerAud.PlayOneShot(playerReloadSound[Random.Range(0, playerReloadSound.Length)], playerReloadSoundVol);
+        playerAud.PlayOneShot(playerWeaponList[playerSelectedWeapon].weaponReloadSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length)], playerWeaponList[playerSelectedWeapon].weaponReloadSoundVol);
     }
 
     IEnumerator PlayEmptyShootSound()
@@ -365,10 +364,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             StartCoroutine(ShootTimer());
             PlayShootSound();
         }
-        else if(Input.GetButton("Shoot") && playerCurrentAmmo <= 0 && !isReloading && !isPlayingEmptyShootSound)
-        {
+        else if (Input.GetButton("Shoot") && playerCurrentAmmo <= 0 && !isReloading && !isPlayingEmptyShootSound)
             StartCoroutine(PlayEmptyShootSound());
-        }
         else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
         {
             isReloading = true;

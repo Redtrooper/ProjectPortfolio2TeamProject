@@ -123,6 +123,177 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: c167d07a716f51341a28af7aeaf8936d, type: 2}
+--- !u!1001 &17864838
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+--- !u!1001 &22120131
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (9)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+--- !u!1001 &95625765
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (10)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &152896818
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,6 +372,234 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6384267913061248994, guid: f4348c7290a0304499f139a555b75ee5, type: 3}
   m_PrefabInstance: {fileID: 152896818}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &178184441
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (8)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+--- !u!1001 &217735236
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+--- !u!1001 &279161876
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+--- !u!1001 &281336435
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (7)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &351290897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -324,6 +723,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32a656cf6f7638f438c86ea1503e826a, type: 3}
+--- !u!1001 &359842452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &370686976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -499,6 +955,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6384267913061248994, guid: f4348c7290a0304499f139a555b75ee5, type: 3}
   m_PrefabInstance: {fileID: 445972339}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &651538994
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (12)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &804501005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -507,6 +1020,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 267381164823176654, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: b6c7995a10d41dc439284b3ea436c208, type: 2}
     - target: {fileID: 306448665430234397, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.958208
@@ -547,9 +1064,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: playerMaxRecoil
+      value: -35
+      objectReference: {fileID: 0}
     - target: {fileID: 3932315587194361411, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780214415258173778, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: speed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780214415258173778, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: sensitivityMultiplier
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -817,6 +1346,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2433307831330811436, guid: 377a56fec200b604c960977614bafca3, type: 3}
+      propertyPath: getsDisabledOnUse
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8629274682560164514, guid: 377a56fec200b604c960977614bafca3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner
@@ -826,6 +1359,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 377a56fec200b604c960977614bafca3, type: 3}
+--- !u!1001 &1247114202
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &1271288662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -904,6 +1494,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6384267913061248994, guid: f4348c7290a0304499f139a555b75ee5, type: 3}
   m_PrefabInstance: {fileID: 1271288662}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1304498404
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &1363465001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1251,6 +1898,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &1973287858
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (11)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &2027312711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1329,6 +2033,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6384267913061248994, guid: f4348c7290a0304499f139a555b75ee5, type: 3}
   m_PrefabInstance: {fileID: 2027312711}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2096380277
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.4642878
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6145945
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 320344461400278114, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792811204254060511, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
+      propertyPath: m_Name
+      value: GunTuneUp (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2853211495ee70343bbb62a81cda1479, type: 3}
 --- !u!1001 &3758461129887724444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1461,3 +2222,16 @@ SceneRoots:
   - {fileID: 3758461129887724444}
   - {fileID: 1085836226}
   - {fileID: 1160373880}
+  - {fileID: 1304498404}
+  - {fileID: 279161876}
+  - {fileID: 359842452}
+  - {fileID: 1247114202}
+  - {fileID: 2096380277}
+  - {fileID: 17864838}
+  - {fileID: 217735236}
+  - {fileID: 281336435}
+  - {fileID: 178184441}
+  - {fileID: 22120131}
+  - {fileID: 95625765}
+  - {fileID: 1973287858}
+  - {fileID: 651538994}

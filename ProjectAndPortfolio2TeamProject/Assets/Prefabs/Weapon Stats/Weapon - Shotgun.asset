@@ -15,10 +15,17 @@ MonoBehaviour:
   weaponProjectile: {fileID: 523656449581014684, guid: 820eba4b8589d5847a8de83e23d66f7c, type: 3}
   weaponFireRate: 1
   weaponReloadTime: 3
-  weaponAmmoCurr: 7
+  weaponAmmoCurr: 6
   weaponAmmoMax: 8
   weaponKnockback: 25
   weaponTakesAmmo: 1
+  weaponRecoilDegrees: 20
   weaponModel: {fileID: 1236257789494122, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
-  weaponExitPointPos: {x: -0.00037, y: -0.001, z: -0.47874}
+  weaponExitPointPos: {x: -0.00036958605, y: -0.0009999871, z: -0.4787403}
   weaponType: 1
+  weaponReloadSound:
+  - {fileID: 8300000, guid: d6a1ff71a2a5fb64ba2caafb83b87cd9, type: 3}
+  weaponReloadSoundVol: 0.11
+  weaponShootSound:
+  - {fileID: 8300000, guid: 393310fdc1f676b41a7110e12863b743, type: 3}
+  weaponShootSoundVol: 0.15

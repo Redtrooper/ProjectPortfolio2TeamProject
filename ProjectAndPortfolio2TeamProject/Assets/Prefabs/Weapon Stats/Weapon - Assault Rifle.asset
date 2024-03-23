@@ -19,6 +19,13 @@ MonoBehaviour:
   weaponAmmoMax: 30
   weaponKnockback: 0
   weaponTakesAmmo: 1
+  weaponRecoilDegrees: 10
   weaponModel: {fileID: 1487774384131766, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
   weaponExitPointPos: {x: 0, y: 0, z: -0.44771454}
   weaponType: 0
+  weaponReloadSound:
+  - {fileID: 8300000, guid: 69f7b039c9685f947ad0d97a508e8461, type: 3}
+  weaponReloadSoundVol: 0.11
+  weaponShootSound:
+  - {fileID: 8300000, guid: 39c29b1eb44b9d544a79d436de8cbc9f, type: 3}
+  weaponShootSoundVol: 0.15

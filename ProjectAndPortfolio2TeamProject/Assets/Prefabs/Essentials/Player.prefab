@@ -239,17 +239,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0e49ed650a0284242bb4787b4953deab, type: 3}
   - {fileID: 8300000, guid: 2fcf5103e82161047a2fc2e2eb2e71d4, type: 3}
   - {fileID: 8300000, guid: 677042ba3a304594ea9ce291ade86dbe, type: 3}
-  playerSoundHurtVol: 0
-  playerAud: {fileID: 0}
-  playerReloadSound:
-  - {fileID: 8300000, guid: 69f7b039c9685f947ad0d97a508e8461, type: 3}
-  playerReloadSoundVol: 0
-  playerShootSound:
-  - {fileID: 8300000, guid: 393310fdc1f676b41a7110e12863b743, type: 3}
-  playerShootSoundVol: 0
+  playerSoundHurtVol: 0.2
+  playerAud: {fileID: 267381164823176654}
   playerEmptyShootSound:
   - {fileID: 8300000, guid: 7b1f189079a8c064b8ed0eae7cfcde8d, type: 3}
-  playerEmptyShootSoundVol: 0
+  playerEmptyShootSoundVol: 0.24
   playerController: {fileID: 840522430156782247}
   playerModel: {fileID: 306448665430234397}
   playerWeaponModel: {fileID: 2046674759455637118}
@@ -275,6 +269,7 @@ MonoBehaviour:
   playerCanLifeSteal: 0
   playerLifeStealPercentage: 0.15
   playerAirDashSpeed: 8
+  playerWeaponHolder: {fileID: 7442822677909401598}
 --- !u!82 &267381164823176654
 AudioSource:
   m_ObjectHideFlags: 0

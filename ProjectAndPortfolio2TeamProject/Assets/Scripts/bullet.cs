@@ -13,6 +13,7 @@ public class bullet : MonoBehaviour
     [SerializeField] int bulletDestroyTime;
     [SerializeField] bool bulletSourceIsFriendly;
     [SerializeField] bool chasePlayer = false;
+    [SerializeField] GameObject bulletHitFx;
 
     private Transform bulletNearestEnemyTransform;
 
@@ -59,6 +60,10 @@ public class bullet : MonoBehaviour
             {
                 gameManager.instance.playerScript.heal(Mathf.RoundToInt((damageToApply * gameManager.instance.playerScript.playerLifeStealPercentage) * gameManager.instance.playerScript.playerLifeStealMultiplier));
             }
+        }
+        else if (bulletHitFx)
+        {
+            Instantiate(bulletHitFx, transform.position, transform.rotation);
         }
 
         Destroy(gameObject);

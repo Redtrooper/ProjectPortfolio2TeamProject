@@ -327,7 +327,7 @@ public class gameManager : MonoBehaviour
                 newItemImages[1].sprite = item.itemSprite;
                 TMP_Text[] newItemText = currentNewItemUI.GetComponentsInChildren<TMP_Text>();
                 newItemText[0].text = item.itemName;
-                newItemText[1].text = item.itemDescription; 
+                newItemText[1].text = item.itemDescription;  
             }
             if (item.itemName != "Grenade")
             {
