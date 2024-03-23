@@ -26,16 +26,14 @@ public class bullet : MonoBehaviour
         else
             bulletRigidBody.velocity = transform.forward * bulletSpeed;
         if (bulletSourceIsFriendly && gameManager.instance.playerScript.canBulletChase())
-        {
             bulletNearestEnemyTransform = gameManager.instance.findNearestEnemy();
-        }
         Destroy(gameObject, bulletDestroyTime);
     }
 
     private void Update()
     {
-        if (bulletSourceIsFriendly && gameManager.instance.playerScript.canBulletChase() && bulletNearestEnemyTransform != null)
-            transform.position = Vector3.MoveTowards(transform.position, bulletNearestEnemyTransform.position, Time.deltaTime * bulletSpeed * gameManager.instance.playerScript.playerProjectileSpeedMultiplier);
+        if(bulletSourceIsFriendly && gameManager.instance.playerScript.canBulletChase() && bulletNearestEnemyTransform != null)
+            transform.position = Vector3.MoveTowards(transform.position, bulletNearestEnemyTransform.position, Time.deltaTime * bulletSpeed);
         if(chasePlayer)
             transform.position = Vector3.MoveTowards(transform.position, gameManager.instance.player.transform.position, Time.deltaTime * bulletSpeed);
     }

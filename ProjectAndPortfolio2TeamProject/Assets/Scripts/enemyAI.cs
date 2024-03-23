@@ -150,7 +150,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 Debug.LogError("Spawn FX position not assigned for spawn effect!");
             }
         }
-    
+
+        gameManager.instance.enemyReportAlive(this.transform);
+
         yield return new WaitForSeconds(spawnDelay);
 
         foreach (Renderer renderer in enemyModel)
