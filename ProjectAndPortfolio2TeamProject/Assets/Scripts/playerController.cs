@@ -106,12 +106,21 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     public SFXSettings sfxSettings;
     public SoundManager soundManager;
 
+    public AudioClip[] walkingSounds;
+    public AudioSource walkingAudioSource;
+    public AudioSource audioSource;
+    public float walkingSoundInterval = 0.5f;
+    private bool isWalkingSoundPlaying = false;
+
+
     void Start()
     {
         if (gameManager.instance.playerShouldLoadStats)
             loadPlayerData();
         respawn();
         playerCurrentAmmo = playerMaxAmmo;
+        walkingAudioSource = GetComponent<AudioSource>();
+        sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateWalkingSoundVolume);
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         playerOrigDamageRegenDelay = playerDamageRegenDelay;
         playerDamageRegenDelay = 0;
@@ -142,8 +151,52 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
                 playerDamageRegenDelay -= Time.deltaTime;
             else if (playerCanRegenerate && playerHP < playerMaxHP && !isRegeneratingHealth && playerDamageRegenDelay <= 0)
                 StartCoroutine(healthRegen());
+
+            if (isMoving() && playerController.isGrounded && !isWalkingSoundPlaying)
+            {
+                StartCoroutine(PlayWalkingSound());
+            }
         }
     }
+    void UpdateWalkingSoundVolume(float newValue)
+    {
+        walkingAudioSource.volume = newValue;
+    }
+
+    bool isMoving()
+    {
+        float horizontalMovement = Input.GetAxis("Horizontal");
+        float verticalMovement = Input.GetAxis("Vertical");
+
+        return horizontalMovement != 0 || verticalMovement != 0;
+    }
+
+
+    IEnumerator PlayWalkingSound()
+    {
+        isWalkingSoundPlaying = true;
+
+        int randomIndex = Random.Range(0, walkingSounds.Length);
+        walkingAudioSource.PlayOneShot(walkingSounds[randomIndex]);
+
+        float interval = isSprinting ? walkingSoundInterval * 0.5f : walkingSoundInterval;
+        yield return new WaitForSeconds(interval);
+
+        isWalkingSoundPlaying = false;
+    }
+
+
+
+    void PlayRandomWalkingSound()
+    {
+        if (walkingSounds.Length == 0 || walkingAudioSource == null)
+        {
+            return;
+        }
+        int randomIndex = Random.Range(0, walkingSounds.Length);
+        walkingAudioSource.PlayOneShot(walkingSounds[randomIndex]);
+    }
+
 
     public void pushInDirection(Vector3 dir)
     {
