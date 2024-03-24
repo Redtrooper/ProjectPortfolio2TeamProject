@@ -9,7 +9,7 @@ public class itemSpawner : MonoBehaviour
     private bool playerInRange = false;
     [SerializeField] Renderer model;
     [SerializeField] Transform itemSpawnPos;
-    private Color originalColor;
+    private Material originalMaterial;
     private bool isOpen;
     private List<itemPickup> commonItemList = new List<itemPickup>();
     private List<itemPickup> rareItemList = new List<itemPickup>();
@@ -18,10 +18,11 @@ public class itemSpawner : MonoBehaviour
     [SerializeField] float legendaryDropChance;
     private List<itemPickup> wackyItemList = new List<itemPickup>();
     [SerializeField] float wackyDropChance;
+    [SerializeField] Material blackMaterial;
 
     private void Start()
     {
-        originalColor = model.material.color;
+        originalMaterial = model.material;
         foreach(itemPickup item in gameManager.instance.itemsList)
         {
             switch (item.getItemRarity())
@@ -105,11 +106,12 @@ public class itemSpawner : MonoBehaviour
 
     IEnumerator flashInteract()
     {
+        model.material = blackMaterial;
         model.material.color = Color.green;
         yield return new WaitForSeconds(.15f);
         if (getsDisabledOnUse)
             model.material.color = Color.black;
         else
-            model.material.color = originalColor;
+            model.material = originalMaterial;
     }
 }
