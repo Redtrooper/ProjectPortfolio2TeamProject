@@ -29,6 +29,7 @@ public class weaponStats : ScriptableObject
     [Range(0, 1)] public float weaponReloadSoundVol;
     public AudioClip[] weaponShootSound;
     [Range(0, 1)] public float weaponShootSoundVol;
+
 }
 
 public enum Weapon
@@ -36,4 +37,5 @@ public enum Weapon
     Rifle,
     Shotgun
 }
+
 

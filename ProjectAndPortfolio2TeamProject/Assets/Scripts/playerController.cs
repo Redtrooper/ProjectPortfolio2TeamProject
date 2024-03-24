@@ -101,6 +101,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     // Recoil
     [SerializeField] GameObject playerWeaponHolder;
 
+
+    //testing sound
+    public SFXSettings sfxSettings;
+    public SoundManager soundManager;
+
     void Start()
     {
         if (gameManager.instance.playerShouldLoadStats)
@@ -113,6 +118,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerGrenadeCount = playerMaxGrenades;
         playerCurrentGrenadeCooldown = playerGrenadeCooldown;
         gameManager.instance.updateHealthBarMax(playerHP, playerMaxHP);
+        soundManager = GameObject.FindObjectOfType<SoundManager>();
+        if (soundManager == null)
+        {
+            Debug.LogError("SoundManager object not found in the scene.");
+        }
+
     }
 
     void Update()
@@ -332,11 +343,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void Shoot()
     {
-
         if (Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo > 0 && !isReloading)
         {
             StartCoroutine(ShootTimer());
 
+            if (soundManager != null && playerWeaponList[playerSelectedWeapon].weaponShootSound.Length > 0)
+            {
+                AudioClip shootSound = playerWeaponList[playerSelectedWeapon].weaponShootSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponShootSound.Length)];
+                float volume = playerWeaponList[playerSelectedWeapon].weaponShootSoundVol * sfxSettings.sfxVolumeSlider.value; 
+                soundManager.PlaySound(shootSound, volume);
+            }
         }
         else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
         {
@@ -346,8 +362,15 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerReloadAnimFX.SetActive(true);
             Invoke("Reload", playerReloadTime);
 
+            if (soundManager != null && playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length > 0)
+            {
+                AudioClip reloadSound = playerWeaponList[playerSelectedWeapon].weaponReloadSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length)];
+                float volume = playerWeaponList[playerSelectedWeapon].weaponReloadSoundVol * soundManager.sfxVolumeSlider.value;
+                soundManager.sfxSource.PlayOneShot(reloadSound, volume);
+            }
         }
     }
+
 
     void Reload()
     {
