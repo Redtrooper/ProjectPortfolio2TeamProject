@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 using static UnityEngine.ParticleSystem;
 
 public class gameManager : MonoBehaviour

@@ -303,7 +303,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         isShooting = true;
         if (playerCritChance >= Random.value)
             playerCanCrit = true;
-        Instantiate(playerProjectile, playerExitLocation.position, playerWeaponHolder.transform.rotation);;
+        if (playerWeaponHolder)
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 200f))
+            {
+                playerWeaponHolder.transform.LookAt(hit.point);
+            }
+        }
+        Instantiate(playerProjectile, playerExitLocation.position, playerWeaponHolder.transform.rotation);
         StartCoroutine(MuzzleFlash());
         playerPushBack -= Camera.main.transform.forward * (playerWeaponKnockback * playerWeaponKnockbackMultiplier);
         playerCurrentAmmo -= 1;
