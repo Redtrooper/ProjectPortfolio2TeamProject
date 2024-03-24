@@ -14,7 +14,8 @@ public class MusicSettings : MonoBehaviour
     {
         float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
         musicVolumeSlider.value = savedMusicVolume;
-        soundManager.SetMusicVolume(savedMusicVolume);
+        if (soundManager)
+            soundManager.SetMusicVolume(savedMusicVolume); 
     }
 
     public void SetMusicVolume(float volume)

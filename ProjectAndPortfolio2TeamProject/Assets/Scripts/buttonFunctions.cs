@@ -46,6 +46,20 @@ public class buttonFunctions : MonoBehaviour
 
     public void resume()
     {
+        StartCoroutine(resumeOnDelay());
+    }
+
+    IEnumerator resumeOnDelay()
+    {
+        float timer = 0f;
+        float delay = 1f;
+
+        while (timer < delay)
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
         gameManager.instance.stateUnpaused();
         gameManager.instance.lockCursor();
     }
@@ -92,8 +106,8 @@ public class buttonFunctions : MonoBehaviour
             timer += Time.unscaledDeltaTime;
             yield return null;
         }
-
-        Application.Quit();
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 
     public void respawnPlayer()

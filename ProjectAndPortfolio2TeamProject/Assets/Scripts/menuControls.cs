@@ -40,13 +40,27 @@ public class menuControls : MonoBehaviour
             }
             if (currentlySelectedInteractable.TryGetComponent<Slider>(out selectedSlider))
             {
-                if (Input.GetKey(KeyCode.RightArrow))
+                if (selectedSlider.maxValue == 1)
                 {
-                    selectedSlider.value += 1;
+                    if (Input.GetKey(KeyCode.RightArrow))
+                    {
+                        selectedSlider.value += 0.01f;
+                    }
+                    else if (Input.GetKey(KeyCode.LeftArrow))
+                    {
+                        selectedSlider.value -= 0.01f;
+                    } 
                 }
-                else if (Input.GetKey(KeyCode.LeftArrow))
+                else
                 {
-                    selectedSlider.value -= 1;
+                    if (Input.GetKey(KeyCode.RightArrow))
+                    {
+                        selectedSlider.value += 1;
+                    }
+                    else if (Input.GetKey(KeyCode.LeftArrow))
+                    {
+                        selectedSlider.value -= 1;
+                    }
                 }
             }
         }

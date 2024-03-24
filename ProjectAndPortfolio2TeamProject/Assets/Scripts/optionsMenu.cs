@@ -11,7 +11,8 @@ public class optionsMenu : MonoBehaviour
     [SerializeField] Toggle invertY;
     [SerializeField] Toggle firstTimeItemUI;
     [SerializeField] Animator animController;
-    [SerializeField] Slider musicVolumeSlider; 
+    [SerializeField] Slider musicVolumeSlider;
+    [SerializeField] GameObject parentObject;
 
     // When the options menu opens set all the fields in it according to player prefs
     private void Start()
@@ -71,7 +72,6 @@ public class optionsMenu : MonoBehaviour
         PlayerPrefs.SetInt("Mouse Sensitivity", (int) mouseSensitivity.value);
         PlayerPrefs.SetInt("Invert Y", invertY.isOn ? 1 : 0);
         PlayerPrefs.SetInt("First Time Item UI", firstTimeItemUI.isOn ? 1 : 0);
-        GetComponentInParent<menuControls>().freezeInput = false;
         if (gameManager.instance != null)
             gameManager.instance.loadSettings();
         animController.SetTrigger("Close");
@@ -81,6 +81,7 @@ public class optionsMenu : MonoBehaviour
             yield return null;
         }
         gameObject.SetActive(false);
+        parentObject.GetComponent<menuControls>().freezeInput = false;
     }
 
     private IEnumerator CancelOnDelay()
@@ -88,7 +89,6 @@ public class optionsMenu : MonoBehaviour
         float timer = 0f;
         float delay = 0.5f;
         Start();
-        GetComponentInParent<menuControls>().freezeInput = false;
         animController.SetTrigger("Close");
         while (timer < delay)
         {
@@ -96,6 +96,7 @@ public class optionsMenu : MonoBehaviour
             yield return null;
         }
         gameObject.SetActive(false);
+        parentObject.GetComponent<menuControls>().freezeInput = false;
     }
 
     public void updateMouseSensitivityLabel()
