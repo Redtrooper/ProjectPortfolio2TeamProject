@@ -32303,6 +32303,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 666434508735606344, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: SFXSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 666434508735606344, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: SFXSounds.Array.data[2].name
+      value: RifleShoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 666434508735606344, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: SFXSounds.Array.data[2].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 666434508735606344, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: SFXSounds.Array.data[2].clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 666434508735606344, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: SFXSounds.Array.data[2].clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 39c29b1eb44b9d544a79d436de8cbc9f, type: 3}
+    - target: {fileID: 666434508735606344, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: SFXSounds.Array.data[2].clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 39c29b1eb44b9d544a79d436de8cbc9f, type: 3}
     - target: {fileID: 3213027782766320238, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -32392,6 +32416,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+--- !u!114 &1027113056 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7218155993786720836, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+  m_PrefabInstance: {fileID: 1027113055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121f596fe64149c43917c970e247205d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1027113057 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 666434508735606344, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+  m_PrefabInstance: {fileID: 1027113055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879cb6cb77e09944b85b4cb1357ebe2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1027922191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54182,6 +54228,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: sfxSettings
+      value: 
+      objectReference: {fileID: 1027113056}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: soundManager
+      value: 
+      objectReference: {fileID: 1027113057}
     - target: {fileID: 3932315587194361411, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: m_Name
       value: Player

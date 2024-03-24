@@ -25,7 +25,7 @@ MonoBehaviour:
   weaponType: 0
   weaponReloadSound:
   - {fileID: 8300000, guid: 69f7b039c9685f947ad0d97a508e8461, type: 3}
-  weaponReloadSoundVol: 0.11
+  weaponReloadSoundVol: 1
   weaponShootSound:
   - {fileID: 8300000, guid: 39c29b1eb44b9d544a79d436de8cbc9f, type: 3}
-  weaponShootSoundVol: 0.15
+  weaponShootSoundVol: 1

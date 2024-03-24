@@ -21,6 +21,8 @@ public class SoundManager : MonoBehaviour
     private const string MusicVolumeKey = "MusicVolume";
     private const string SFXVolumeKey = "SFXVolume";
 
+
+
     private void Start()
     {
         float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
@@ -63,8 +65,19 @@ public class SoundManager : MonoBehaviour
     {
         sfxSource.volume = volume;
         PlayerPrefs.SetFloat(SFXVolumeKey, volume);
-    }
 
+        foreach (Sound sound in SFXSounds)
+        {
+            foreach (AudioClip clip in sound.clips)
+            {
+                if (clip != null && sfxSource.isPlaying && sfxSource.clip == clip)
+                {
+                    sfxSource.volume = volume;
+                    return;
+                }
+            }
+        }
+    }
 
     private IEnumerator ChangeMusicVolume(float volume)
     {
@@ -118,5 +131,10 @@ public class SoundManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void PlaySound(AudioClip clip, float volume)
+    {
+        sfxSource.PlayOneShot(clip, volume);
     }
 }
