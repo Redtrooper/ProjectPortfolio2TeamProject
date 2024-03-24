@@ -54,7 +54,7 @@ MonoBehaviour:
   doorCOpen: 1
   doorDOpen: 1
   posX: 0
-  posY: 0
+  posZ: 0
 --- !u!114 &3657887350328907324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8445,7 +8445,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 8132
+  m_VersionIndex: 8135
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
