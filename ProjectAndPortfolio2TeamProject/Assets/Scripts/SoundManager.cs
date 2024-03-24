@@ -1,27 +1,21 @@
-using System.Collections;
 using UnityEngine;
-using System.Collections.Generic;
-
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
-    public Sound[] musicSounds; // Array of music sounds
-    public Sound[] SFXSounds; // Array of SFX sounds
 
-<<<<<<< Updated upstream
+    public Sound[] musicSounds;
+    public Sound[] SFXSounds;
+
+    public AudioSource musicSource;
+    public AudioSource SFXSource;
+
+    private const string MusicVolumeKey = "MusicVolume";
+
     private void Start()
     {
-        // Load volume from PlayerPrefs
-        float savedVolume = PlayerPrefs.GetFloat(_volumeParameter, 1.0f);
-        SFXSlider.value = (float) System.Math.Truncate(savedVolume * 100)/100;
-        SFXLabel.text = SFXSlider.value.ToString();
-        SetVolume(savedVolume);
+        PlayMusic("MusicThemes");
     }
-=======
-    public AudioSource musicSource; // AudioSource for music
-    public AudioSource SFXSource; // AudioSource for SFX
->>>>>>> Stashed changes
 
 
     void Awake()
@@ -40,56 +34,46 @@ public class SoundManager : MonoBehaviour
         musicSource = gameObject.AddComponent<AudioSource>();
         SFXSource = gameObject.AddComponent<AudioSource>();
 
-        // Play music on start if available
-        if (musicSounds.Length > 0)
-        {
-            Sound music = musicSounds[Random.Range(0, musicSounds.Length)];
-            AudioClip clip = music.clips[Random.Range(0, music.clips.Length)];
-            musicSource.clip = clip;
-            musicSource.volume = music.volume;
-            musicSource.loop = true;
-            musicSource.Play();
-        }
+        float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+        SetMusicVolume(savedMusicVolume);
+
+    
     }
 
-
-    void Start()
+    public void SetMusicVolume(float volume)
     {
-        // Initialize AudioSource if not set
-        if (musicSource == null)
-            musicSource = gameObject.AddComponent<AudioSource>();
-
-        if (SFXSource == null)
-            SFXSource = gameObject.AddComponent<AudioSource>();
+        musicSource.volume = volume;
     }
 
-    // Play a random music sound
-    public void PlayRandomMusic()
+    public void PlayMusic(string musicTheme)
     {
-        if (musicSounds.Length > 0)
+        Sound music = FindMusicThemeByName(musicTheme);
+
+        if (music == null || music.clips.Length == 0)
         {
-            Sound music = musicSounds[Random.Range(0, musicSounds.Length)];
-            AudioClip clip = music.clips[Random.Range(0, music.clips.Length)];
-            musicSource.PlayOneShot(clip, music.volume);
+            Debug.LogWarning("no music found or empty " + musicTheme); // debug here 
+            return;
         }
-        else
-        {
-            Debug.LogWarning("No music clips found in the array.");
-        }
+
+        AudioClip clip = music.clips[Random.Range(0, music.clips.Length)];
+        musicSource.clip = clip;
+        musicSource.volume = music.volume;
+        musicSource.loop = true;
+        musicSource.Play();
     }
 
-    // Play a random SFX sound
-    public void PlayRandomSFX()
+    private Sound FindMusicThemeByName(string musicTheme)
     {
-        if (SFXSounds.Length > 0)
+        foreach (Sound music in musicSounds)
         {
-            Sound SFX = SFXSounds[Random.Range(0, SFXSounds.Length)];
-            AudioClip clip = SFX.clips[Random.Range(0, SFX.clips.Length)];
-            SFXSource.PlayOneShot(clip, SFX.volume);
+            if (music.name == musicTheme)
+            {
+                return music;
+            }
         }
-        else
-        {
-            Debug.LogWarning("No SFX clips found in the array.");
-        }
+        return null;
     }
 }
+    
+
+
