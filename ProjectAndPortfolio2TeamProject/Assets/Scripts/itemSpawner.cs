@@ -9,7 +9,6 @@ public class itemSpawner : MonoBehaviour
     private bool playerInRange = false;
     [SerializeField] Renderer model;
     [SerializeField] Transform itemSpawnPos;
-    private Material originalMaterial;
     private bool isOpen;
     private List<itemPickup> commonItemList = new List<itemPickup>();
     private List<itemPickup> rareItemList = new List<itemPickup>();
@@ -18,11 +17,10 @@ public class itemSpawner : MonoBehaviour
     [SerializeField] float legendaryDropChance;
     private List<itemPickup> wackyItemList = new List<itemPickup>();
     [SerializeField] float wackyDropChance;
-    [SerializeField] Material blackMaterial;
+    [SerializeField] Animator itemSpawnerAnim;
 
     private void Start()
     {
-        originalMaterial = model.material;
         foreach(itemPickup item in gameManager.instance.itemsList)
         {
             switch (item.getItemRarity())
@@ -50,10 +48,7 @@ public class itemSpawner : MonoBehaviour
         {
             if (!isOpen && Input.GetButtonDown("Pickup"))
             {
-                StartCoroutine(flashInteract());
-                Instantiate(getRandomItem(), itemSpawnPos.position, transform.rotation);
-                if (getsDisabledOnUse)
-                    isOpen = true;
+                StartCoroutine(spawnRandomItem());
             }
         }
     }
@@ -104,14 +99,13 @@ public class itemSpawner : MonoBehaviour
             playerInRange = false;
     }
 
-    IEnumerator flashInteract()
+    private IEnumerator spawnRandomItem()
     {
-        model.material = blackMaterial;
-        model.material.color = Color.green;
-        yield return new WaitForSeconds(.15f);
         if (getsDisabledOnUse)
-            model.material.color = Color.black;
-        else
-            model.material = originalMaterial;
+            isOpen = true;
+        if (itemSpawnerAnim)
+            itemSpawnerAnim.SetTrigger("Open");
+        yield return new WaitForSeconds(1.0f);
+        Instantiate(getRandomItem(), itemSpawnPos.position, transform.rotation);
     }
 }
