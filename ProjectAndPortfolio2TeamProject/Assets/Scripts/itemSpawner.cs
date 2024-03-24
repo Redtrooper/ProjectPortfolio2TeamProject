@@ -18,6 +18,7 @@ public class itemSpawner : MonoBehaviour
     private List<itemPickup> wackyItemList = new List<itemPickup>();
     [SerializeField] float wackyDropChance;
     [SerializeField] Animator itemSpawnerAnim;
+    [SerializeField] GameObject interactUI;
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class itemSpawner : MonoBehaviour
         {
             if (!isOpen && Input.GetButtonDown("Pickup"))
             {
+                interactUI.SetActive(false);
                 StartCoroutine(spawnRandomItem());
             }
         }
@@ -90,13 +92,25 @@ public class itemSpawner : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInRange = true;
+            if (interactUI && !isOpen)
+            {
+                interactUI.SetActive(true);
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInRange = false;
+            if (interactUI)
+            {
+                interactUI.SetActive(false);
+            }
+        }
     }
 
     private IEnumerator spawnRandomItem()

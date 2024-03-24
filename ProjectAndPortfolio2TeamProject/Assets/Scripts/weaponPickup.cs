@@ -10,6 +10,7 @@ public class weaponPickup : MonoBehaviour
     [SerializeField] GameObject weaponExitPoint;
     [SerializeField] bool isBlank;
     [SerializeField] GameObject parentObject;
+    [SerializeField] GameObject interactUI;
 
     private bool playerInRange;
 
@@ -46,13 +47,21 @@ public class weaponPickup : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInRange = true;
+            if (interactUI)
+                interactUI.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInRange = false;
+            if (interactUI)
+                interactUI.SetActive(false);
+        }
     }
 
     public void givePlayerWeapon()

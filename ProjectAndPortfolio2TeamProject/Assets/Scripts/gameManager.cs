@@ -81,6 +81,10 @@ public class gameManager : MonoBehaviour
     private GameObject currentNewItemUI = null;
     private bool useFirstTimeItemUI = false;
 
+    [Header("----- Framerate Optimization -----")]
+    [SerializeField] int maxExplosionFX;
+    private int currentExplosionFX;
+
     void Awake()
     {
         if (PlayerPrefs.HasKey("Player ShouldLoadStats"))
@@ -388,5 +392,15 @@ public class gameManager : MonoBehaviour
             else if(lastOperator == '/')
                 itemCountStr += currentChar;
         }
+    }
+
+    public void reportExplosion()
+    {
+        currentExplosionFX++;
+    }
+
+    public bool canSpawnExplosionFX()
+    {
+        return currentExplosionFX < maxExplosionFX;
     }
 }

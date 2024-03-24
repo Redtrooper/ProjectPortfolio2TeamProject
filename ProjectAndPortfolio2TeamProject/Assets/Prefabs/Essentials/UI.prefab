@@ -3976,6 +3976,7 @@ MonoBehaviour:
   - {fileID: 5010629393291408486, guid: e659d14c9e91fbc4894983bf4fcc7f90, type: 3}
   - {fileID: 8360184902963735529, guid: a91ff6bb87ffab14ab31f5b63983b243, type: 3}
   - {fileID: 6042500427367640082, guid: c24a6f0c6db499747989b2620ae7ac98, type: 3}
+  maxExplosionFX: 10
 --- !u!114 &4356258682515539575
 MonoBehaviour:
   m_ObjectHideFlags: 0

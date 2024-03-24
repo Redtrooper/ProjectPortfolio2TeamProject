@@ -635,7 +635,7 @@ MonoBehaviour:
   enemyHP: 10
   enemyTurnSpeed: 300
   enemySpeed: 4
-  enemyFireRate: 1
+  enemyFireRate: 3
   enemyStoppingDistance: 10
   enemyModel:
   - {fileID: 5901165727801299822}

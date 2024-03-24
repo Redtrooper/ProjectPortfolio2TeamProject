@@ -15,7 +15,11 @@ public class explosion : MonoBehaviour
         Destroy(gameObject);
         if (explosionParticleFX)
         {
-            Instantiate(explosionParticleFX, transform.position, new Quaternion(0,0,0,0));
+            if (gameManager.instance.canSpawnExplosionFX())
+            {
+                gameManager.instance.reportExplosion();
+                Instantiate(explosionParticleFX, transform.position, new Quaternion(0, 0, 0, 0)); 
+            }
         }
     }
 
