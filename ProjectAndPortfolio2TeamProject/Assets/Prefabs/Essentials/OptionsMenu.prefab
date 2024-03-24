@@ -211,6 +211,7 @@ MonoBehaviour:
   invertY: {fileID: 7952504583822099258}
   firstTimeItemUI: {fileID: 2842159046448800084}
   animController: {fileID: 5657622241944608858}
+  musicVolumeSlider: {fileID: 0}
 --- !u!114 &3452382824410807672
 MonoBehaviour:
   m_ObjectHideFlags: 0

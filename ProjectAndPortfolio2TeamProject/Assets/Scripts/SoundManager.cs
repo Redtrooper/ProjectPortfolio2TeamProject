@@ -10,17 +10,27 @@ public class SoundManager : MonoBehaviour
     public Sound[] SFXSounds;
 
     public AudioSource musicSource;
-    public AudioSource SFXSource;
+    public AudioSource sfxSource;
 
     public Slider musicVolumeSlider;
+    public Slider sfxVolumeSlider;
 
     public float musicVolumeChangeDuration = 1.0f;
+    public float sfxVolumeChangeDuration = 0.5f;
 
     private const string MusicVolumeKey = "MusicVolume";
+    private const string SFXVolumeKey = "SFXVolume";
 
     private void Start()
     {
         float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+        SetMusicVolume(savedMusicVolume);
+
+        float savedSFXVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
+        SetSFXVolume(savedSFXVolume);
+
+        musicVolumeSlider.value = savedMusicVolume;
+        sfxVolumeSlider.value = savedSFXVolume;
 
         if (savedMusicVolume > 0f || musicVolumeSlider.value > 0f)
             PlayMusic("MusicThemes");
@@ -29,17 +39,31 @@ public class SoundManager : MonoBehaviour
 
     void Awake()
     {
-        float savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
-        SetMusicVolume(savedMusicVolume);
-        musicVolumeSlider.value = savedMusicVolume;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-
+        musicSource = gameObject.AddComponent<AudioSource>();
+        sfxSource = gameObject.AddComponent<AudioSource>();
     }
 
     public void SetMusicVolume(float volume)
     {
         musicSource.volume = volume;
         PlayerPrefs.SetFloat("MusicVolume", volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        sfxSource.volume = volume;
+        PlayerPrefs.SetFloat(SFXVolumeKey, volume);
     }
 
 
