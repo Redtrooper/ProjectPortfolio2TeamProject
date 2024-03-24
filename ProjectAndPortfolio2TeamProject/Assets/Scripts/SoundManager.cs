@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -10,40 +12,52 @@ public class SoundManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource SFXSource;
 
+    public Slider musicVolumeSlider;
+
+    public float musicVolumeChangeDuration = 1.0f;
+
     private const string MusicVolumeKey = "MusicVolume";
 
     private void Start()
     {
-        PlayMusic("MusicThemes");
+        float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+
+        if (savedMusicVolume > 0f || musicVolumeSlider.value > 0f)
+            PlayMusic("MusicThemes");
     }
 
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        musicSource = gameObject.AddComponent<AudioSource>();
-        SFXSource = gameObject.AddComponent<AudioSource>();
-
-        float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+        float savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
         SetMusicVolume(savedMusicVolume);
+        musicVolumeSlider.value = savedMusicVolume;
 
-    
+
     }
 
     public void SetMusicVolume(float volume)
     {
         musicSource.volume = volume;
+        PlayerPrefs.SetFloat("MusicVolume", volume);
     }
+
+
+    private IEnumerator ChangeMusicVolume(float volume)
+    {
+        float currentTime = 0;
+        float startVolume = musicSource.volume;
+
+        while (currentTime < musicVolumeChangeDuration)
+        {
+            currentTime += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(startVolume, volume, currentTime / musicVolumeChangeDuration);
+            yield return null;
+        }
+
+        musicSource.volume = volume;
+    }
+
 
     public void PlayMusic(string musicTheme)
     {
@@ -51,16 +65,25 @@ public class SoundManager : MonoBehaviour
 
         if (music == null || music.clips.Length == 0)
         {
-            Debug.LogWarning("no music found or empty " + musicTheme); // debug here 
+            Debug.LogWarning("No music" + musicTheme);
             return;
         }
 
         AudioClip clip = music.clips[Random.Range(0, music.clips.Length)];
         musicSource.clip = clip;
-        musicSource.volume = music.volume;
         musicSource.loop = true;
-        musicSource.Play();
+
+        if (music.volume > 0f)
+        {
+            musicSource.volume = music.volume;
+            musicSource.Play();
+        }
+        else
+        {
+            musicSource.Stop();
+        }
     }
+
 
     private Sound FindMusicThemeByName(string musicTheme)
     {
@@ -74,6 +97,3 @@ public class SoundManager : MonoBehaviour
         return null;
     }
 }
-    
-
-

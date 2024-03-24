@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MusicSettings : MonoBehaviour
 {
-
     public Slider musicVolumeSlider;
     public SoundManager soundManager;
 
@@ -13,7 +12,6 @@ public class MusicSettings : MonoBehaviour
 
     void Start()
     {
-        // load colume set slider
         float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
         musicVolumeSlider.value = savedMusicVolume;
         soundManager.SetMusicVolume(savedMusicVolume);
@@ -21,10 +19,19 @@ public class MusicSettings : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        // set vol in sound manage
+        // Update the volume parameter with the value from the slider
+        volume = musicVolumeSlider.value;
+
+        // Set the volume to the SoundManager instance
         soundManager.SetMusicVolume(volume);
 
-        // save setting
+        if (volume > 0 && !soundManager.musicSource.isPlaying)
+        {
+            soundManager.PlayMusic("MusicThemes");
+        }
+
+        // Save the setting
         PlayerPrefs.SetFloat(MusicVolumeKey, volume);
     }
+
 }
