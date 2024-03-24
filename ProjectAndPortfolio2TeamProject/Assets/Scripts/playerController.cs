@@ -111,6 +111,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     public AudioSource audioSource;
     public float walkingSoundInterval = 0.5f;
     private bool isWalkingSoundPlaying = false;
+    public AudioSource damageAudioSource;
+    public AudioClip[] damageSounds;
 
 
     void Start()
@@ -121,6 +123,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerCurrentAmmo = playerMaxAmmo;
         walkingAudioSource = GetComponent<AudioSource>();
         sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateWalkingSoundVolume);
+        sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateDamageSoundVolume);
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         playerOrigDamageRegenDelay = playerDamageRegenDelay;
         playerDamageRegenDelay = 0;
@@ -158,6 +161,22 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             }
         }
     }
+
+    void UpdateDamageSoundVolume(float newValue)
+    {
+        damageAudioSource.volume = newValue;
+    }
+
+    public void PlayRandomDamageSound()
+    {
+        if (damageSounds.Length == 0 || damageAudioSource == null)
+        {
+            return;
+        }
+        int randomIndex = Random.Range(0, damageSounds.Length);
+        damageAudioSource.PlayOneShot(damageSounds[randomIndex]);
+    }
+
     void UpdateWalkingSoundVolume(float newValue)
     {
         walkingAudioSource.volume = newValue;
@@ -310,11 +329,14 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         UpdateHealthBar();
         StartCoroutine(flashDamage());
 
+        PlayRandomDamageSound();
+
         if (playerHP <= 0)
             gameManager.instance.youLose();
 
         playerDamageRegenDelay = playerOrigDamageRegenDelay;
     }
+
 
     IEnumerator flashDamage() // just like in class
     {
