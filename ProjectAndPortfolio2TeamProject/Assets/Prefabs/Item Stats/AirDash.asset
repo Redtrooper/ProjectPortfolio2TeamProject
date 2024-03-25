@@ -33,5 +33,5 @@ MonoBehaviour:
   itemRarity: 1
   itemName: Air Dash
   itemDescription: Using the power of caffine, you can now dash through the air.
-    Activated by pressing 'E'
+    Activated by pressing 'Q'
   itemSprite: {fileID: 21300000, guid: 712a20862239784428e87395024312f1, type: 3}

@@ -85,7 +85,7 @@ MonoBehaviour:
   itemSpawnPos: {fileID: 1014111767464747728}
   rareDropChance: 0.4
   legendaryDropChance: 0.15
-  wackyDropChance: 0.05
+  wackyDropChance: 0
   itemSpawnerAnim: {fileID: 749733622565960357}
   interactUI: {fileID: 4057549598415987986}
 --- !u!135 &2250401058280070606

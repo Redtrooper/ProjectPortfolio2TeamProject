@@ -32,5 +32,5 @@ MonoBehaviour:
   weaponRecoilMultiplier: 1
   itemRarity: 1
   itemName: Grenade
-  itemDescription: + 1 Grenade Pressing 'Q' throws a grenade.
+  itemDescription: + 1 Grenade Pressing 'G' throws a grenade.
   itemSprite: {fileID: 21300000, guid: cebbfc51714f1fe428cf043ea9457963, type: 3}

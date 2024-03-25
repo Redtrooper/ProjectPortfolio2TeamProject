@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484596fde1f033a46b0960a7161b178b, type: 3}
   m_Name: Weapon - Shotgun
   m_EditorClassIdentifier: 
-  weaponProjectile: {fileID: 523656449581014684, guid: 820eba4b8589d5847a8de83e23d66f7c, type: 3}
+  weaponProjectile: {fileID: 5470078586585666542, guid: e1b7985d2b537c04888ce2407ae7b3e5, type: 3}
   weaponFireRate: 1
   weaponReloadTime: 3
   weaponAmmoCurr: 6
