@@ -291,11 +291,23 @@ PrefabInstance:
     - target: {fileID: 5435400073307013157, guid: 74f90ffb7fea156439e8e062735b12c1, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1895929913}
+      objectReference: {fileID: 179860886}
+    - target: {fileID: 5435400073307013157, guid: 74f90ffb7fea156439e8e062735b12c1, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435400073307013157, guid: 74f90ffb7fea156439e8e062735b12c1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7477441850965173623, guid: 74f90ffb7fea156439e8e062735b12c1, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 179860886}
+    - target: {fileID: 7842317269873853123, guid: 74f90ffb7fea156439e8e062735b12c1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11939,6 +11951,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5751635029358301287, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052003059123989708, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_text
+      value: YOU WIN!!!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052003059123989708, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.080745935
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052003059123989708, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052003059123989708, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052003059123989708, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279631616
+      objectReference: {fileID: 0}
     - target: {fileID: 7388983906942097200, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
       propertyPath: soundManager
       value: 
@@ -11947,6 +11983,10 @@ PrefabInstance:
       propertyPath: soundManager
       value: 
       objectReference: {fileID: 1247236406}
+    - target: {fileID: 8801123219732634487, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_text
+      value: Title Screen
+      objectReference: {fileID: 0}
     - target: {fileID: 9056537788978124473, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
       propertyPath: m_Name
       value: UI
@@ -30905,6 +30945,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1895929913}
+    - target: {fileID: 7842317269873853123, guid: 74f90ffb7fea156439e8e062735b12c1, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

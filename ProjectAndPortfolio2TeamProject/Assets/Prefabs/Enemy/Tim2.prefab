@@ -1557,7 +1557,7 @@ MonoBehaviour:
   keyModel: {fileID: 0}
   hasKey: 0
   checkPointToInstantiate: {fileID: 2639123383217257370, guid: cf52799399887df42bf885674bdf4fbd, type: 3}
-  instantiateCheckpoint: 0
+  instantiateCheckpoint: 1
   isDead: 0
   specialAttackCooldown: 3
   specialAttackFireRate: 0.1

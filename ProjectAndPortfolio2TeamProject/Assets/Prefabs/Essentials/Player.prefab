@@ -221,29 +221,6 @@ MonoBehaviour:
   playerGravity: -25
   playerPushBackResolution: 3
   playerPushBack: {x: 0, y: 0, z: 0}
-  playerSteps:
-  - {fileID: 8300000, guid: 7b0fa5ab327f51e478876d2d64839eff, type: 3}
-  - {fileID: 8300000, guid: 8b0b9101e00cd274a84df80279aebd5d, type: 3}
-  - {fileID: 8300000, guid: e555e2ed604544542a6269742c2088da, type: 3}
-  - {fileID: 8300000, guid: 2cef1a61730054e428a26e6c21439e77, type: 3}
-  - {fileID: 8300000, guid: 043b7769813eba046931ca39a9951905, type: 3}
-  - {fileID: 8300000, guid: 4cffae966d5199f469afac12f9ab93c1, type: 3}
-  - {fileID: 8300000, guid: 0caadd60715768f41a3a4b11c8f5e276, type: 3}
-  - {fileID: 8300000, guid: 78bf1d75b68026849832ae34154d11ed, type: 3}
-  - {fileID: 8300000, guid: c666976bb5dc5c247ac94c68a72b2623, type: 3}
-  playerStepsVol: 0.0125
-  playerSoundHurt:
-  - {fileID: 8300000, guid: 92be6032b22788649a107444e408dfe6, type: 3}
-  - {fileID: 8300000, guid: 1c35d950a2f82314b8a8b46399dcc728, type: 3}
-  - {fileID: 8300000, guid: 6c307859175414a47949654de426238d, type: 3}
-  - {fileID: 8300000, guid: 0e49ed650a0284242bb4787b4953deab, type: 3}
-  - {fileID: 8300000, guid: 2fcf5103e82161047a2fc2e2eb2e71d4, type: 3}
-  - {fileID: 8300000, guid: 677042ba3a304594ea9ce291ade86dbe, type: 3}
-  playerSoundHurtVol: 0.2
-  playerAud: {fileID: 267381164823176654}
-  playerEmptyShootSound:
-  - {fileID: 8300000, guid: 7b1f189079a8c064b8ed0eae7cfcde8d, type: 3}
-  playerEmptyShootSoundVol: 0.24
   playerController: {fileID: 840522430156782247}
   playerModel: {fileID: 306448665430234397}
   playerWeaponModel: {fileID: 2046674759455637118}
@@ -270,6 +247,36 @@ MonoBehaviour:
   playerLifeStealPercentage: 0.15
   playerAirDashSpeed: 8
   playerWeaponHolder: {fileID: 7442822677909401598}
+  sfxSettings: {fileID: 0}
+  soundManager: {fileID: 0}
+  walkingSounds:
+  - {fileID: 8300000, guid: 7b0fa5ab327f51e478876d2d64839eff, type: 3}
+  - {fileID: 8300000, guid: 8b0b9101e00cd274a84df80279aebd5d, type: 3}
+  - {fileID: 8300000, guid: e555e2ed604544542a6269742c2088da, type: 3}
+  - {fileID: 8300000, guid: 2cef1a61730054e428a26e6c21439e77, type: 3}
+  - {fileID: 8300000, guid: 043b7769813eba046931ca39a9951905, type: 3}
+  - {fileID: 8300000, guid: 4cffae966d5199f469afac12f9ab93c1, type: 3}
+  - {fileID: 8300000, guid: 0caadd60715768f41a3a4b11c8f5e276, type: 3}
+  - {fileID: 8300000, guid: 78bf1d75b68026849832ae34154d11ed, type: 3}
+  - {fileID: 8300000, guid: c666976bb5dc5c247ac94c68a72b2623, type: 3}
+  walkingAudioSource: {fileID: 267381164823176654}
+  audioSource: {fileID: 267381164823176654}
+  walkingSoundInterval: 0.5
+  damageAudioSource: {fileID: 267381164823176654}
+  damageSounds:
+  - {fileID: 8300000, guid: 92be6032b22788649a107444e408dfe6, type: 3}
+  - {fileID: 8300000, guid: 1c35d950a2f82314b8a8b46399dcc728, type: 3}
+  - {fileID: 8300000, guid: 6c307859175414a47949654de426238d, type: 3}
+  - {fileID: 8300000, guid: 0e49ed650a0284242bb4787b4953deab, type: 3}
+  - {fileID: 8300000, guid: 2fcf5103e82161047a2fc2e2eb2e71d4, type: 3}
+  - {fileID: 8300000, guid: 677042ba3a304594ea9ce291ade86dbe, type: 3}
+  jumpSounds:
+  - {fileID: 8300000, guid: 25834a5a5f3bd8745a6bf2a0b23af334, type: 3}
+  - {fileID: 8300000, guid: 7aeaba6dd3807d446a2e557d94450c88, type: 3}
+  - {fileID: 8300000, guid: b74b835ace555ca49808805dcbe4c722, type: 3}
+  jumpAudioSource: {fileID: 267381164823176654}
+  staminaExhaustedSound: {fileID: 8300000, guid: b76f79fbbbcae914fa6513e7df045eb6, type: 3}
+  staminaExhaustedAudioSource: {fileID: 267381164823176654}
 --- !u!82 &267381164823176654
 AudioSource:
   m_ObjectHideFlags: 0

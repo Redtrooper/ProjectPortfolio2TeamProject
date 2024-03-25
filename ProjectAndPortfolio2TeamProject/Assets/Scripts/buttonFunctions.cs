@@ -32,16 +32,17 @@ public class buttonFunctions : MonoBehaviour
             PlayerPrefs.SetInt("Player ShouldLoadStats", gameManager.instance.playerShouldLoadStats ? 1 : 0);
         }
 
+        gameManager.instance.stateUnpaused();
+        gameManager.instance.lockCursor();
+
         if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(0);
         }
-
-        resume();
     }
 
     public void resume()

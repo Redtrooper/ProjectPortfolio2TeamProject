@@ -101,7 +101,6 @@ public class SoundManager : MonoBehaviour
 
         if (music == null || music.clips.Length == 0)
         {
-            Debug.LogWarning("No music" + musicTheme);
             return;
         }
 

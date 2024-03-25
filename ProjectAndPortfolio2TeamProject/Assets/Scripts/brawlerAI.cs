@@ -16,7 +16,6 @@ public class brawlerAI : enemyAI
 
         if (IsPlayerInRange(meleeRange) && canAttack && !isDying)
         {
-            Debug.Log("Attack anim trigger");
             anim.SetTrigger("Attack");
             
         }

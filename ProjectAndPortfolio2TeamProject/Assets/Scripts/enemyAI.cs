@@ -145,10 +145,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 effectInstance.transform.up = spawnFXPosition.up;
                 hasSpawnEffectOccurred = true;
             }
-            else
-            {
-                Debug.LogError("Spawn FX position not assigned for spawn effect!");
-            }
         }
 
         gameManager.instance.enemyReportAlive(this.transform);
@@ -170,7 +166,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     protected virtual void OnSpawnEffectFinished()
     {
-        Debug.Log("Spawn effect finished playing.");
     }
 
     protected virtual void SpawnEffect()
