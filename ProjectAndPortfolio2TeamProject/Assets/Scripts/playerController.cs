@@ -117,6 +117,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     [SerializeField] AudioClip[] jumpSounds;
     [SerializeField] AudioSource jumpAudioSource;
+    [SerializeField] AudioClip staminaExhaustedSound;
+    [SerializeField] AudioSource staminaExhaustedAudioSource;
+
+
 
 
     void Start()
@@ -260,6 +264,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         playerPushBack += dir;
     }
+
+    public void PlayStaminaExhaustedSound()
+    {
+        if (staminaExhaustedSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(staminaExhaustedSound, sfxSettings.sfxVolumeSlider.value);
+        }
+    }
+
+
     void Movement()
     {
         playerPushBack = Vector3.Lerp(playerPushBack, Vector3.zero, Time.deltaTime * playerPushBackResolution);
@@ -285,9 +299,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
         if (Input.GetButtonDown("Jump") && playerJumpCount < playerJumpMax && playerCurrentStamina > 0 && !isExhausted)
         {
-  
-            Jump();
-
             UseStamina(playerJumpStaminaCost);
             playerVel.y = playerJumpForce;
             playerJumpCount++;
@@ -313,7 +324,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         {
             airDash();
         }
+
+
+        if (playerCurrentStamina <= 0 && !isExhausted)
+        {
+            isExhausted = true;
+            gameManager.instance.toggleExhaustedStaminaBar();
+            PlayStaminaExhaustedSound();
+        }
     }
+
 
 
     void HandleSprintInput()
@@ -360,9 +380,16 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             {
                 isExhausted = true;
                 gameManager.instance.toggleExhaustedStaminaBar();
+
+                if (!staminaExhaustedAudioSource.isPlaying && staminaExhaustedSound != null)
+                {
+                    float volume = sfxSettings.sfxVolumeSlider.value;
+                    staminaExhaustedAudioSource.PlayOneShot(staminaExhaustedSound, volume);
+                }
             }
         }
     }
+
 
 
     public void takeDamage(int amount)

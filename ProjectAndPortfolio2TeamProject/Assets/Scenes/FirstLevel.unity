@@ -32650,6 +32650,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8150684688238589882, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9056537788978124473, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
       propertyPath: m_Name
       value: UI
@@ -54665,6 +54669,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: staminaExhaustedSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b76f79fbbbcae914fa6513e7df045eb6, type: 3}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: damageSounds.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -54708,6 +54716,10 @@ PrefabInstance:
       propertyPath: damageSounds.Array.data[5]
       value: 
       objectReference: {fileID: 8300000, guid: 677042ba3a304594ea9ce291ade86dbe, type: 3}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: staminaExhaustedAudioSource
+      value: 
+      objectReference: {fileID: 1841684788}
     - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: walkingSounds.Array.data[0]
       value: 
