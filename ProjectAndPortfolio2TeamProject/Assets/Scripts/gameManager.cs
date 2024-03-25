@@ -114,7 +114,7 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") && !isPaused)
+        if ((Input.GetButtonDown("Cancel") || Input.GetButtonDown("P")) && !isPaused)
         {
             statePaused();
             activeMenu = pauseMenu;
