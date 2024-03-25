@@ -115,6 +115,10 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     public AudioClip[] damageSounds;
 
 
+    [SerializeField] AudioClip[] jumpSounds;
+    [SerializeField] AudioSource jumpAudioSource;
+
+
     void Start()
     {
         if (gameManager.instance.playerShouldLoadStats)
@@ -135,6 +139,18 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         {
             Debug.LogError("SoundManager object not found in the scene.");
         }
+
+        /// jump 
+
+
+        jumpAudioSource = gameObject.AddComponent<AudioSource>();
+        jumpAudioSource.playOnAwake = false;
+        jumpAudioSource.volume = sfxSettings.sfxVolumeSlider.value;
+        jumpAudioSource.spatialBlend = 0.0f; 
+        jumpAudioSource.loop = false;
+
+
+        sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateJumpSoundVolume);
 
     }
 
@@ -160,6 +176,12 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
                 StartCoroutine(PlayWalkingSound());
             }
         }
+    }
+
+    void UpdateJumpSoundVolume(float newValue)
+    {
+        
+        jumpAudioSource.volume = newValue;
     }
 
     void UpdateDamageSoundVolume(float newValue)
@@ -216,6 +238,23 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         walkingAudioSource.PlayOneShot(walkingSounds[randomIndex]);
     }
 
+    void Jump()
+    {
+     
+        if (jumpSounds.Length > 0 && jumpAudioSource != null)
+        {
+            int randomIndex = Random.Range(0, jumpSounds.Length);
+            jumpAudioSource.PlayOneShot(jumpSounds[randomIndex]);
+        }
+
+    }
+    void HandleJumpInput()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            Jump();
+        }
+    }
 
     public void pushInDirection(Vector3 dir)
     {
@@ -246,6 +285,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
         if (Input.GetButtonDown("Jump") && playerJumpCount < playerJumpMax && playerCurrentStamina > 0 && !isExhausted)
         {
+  
+            Jump();
+
             UseStamina(playerJumpStaminaCost);
             playerVel.y = playerJumpForce;
             playerJumpCount++;
@@ -271,8 +313,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         {
             airDash();
         }
-
     }
+
 
     void HandleSprintInput()
     {
