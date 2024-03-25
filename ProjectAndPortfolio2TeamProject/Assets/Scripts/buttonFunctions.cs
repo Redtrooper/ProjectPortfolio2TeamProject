@@ -41,6 +41,8 @@ public class buttonFunctions : MonoBehaviour
         }
         else
         {
+            gameManager.instance.playerShouldLoadStats = false;
+            PlayerPrefs.SetInt("Player ShouldLoadStats", gameManager.instance.playerShouldLoadStats ? 1 : 0);
             SceneManager.LoadScene(0);
         }
     }

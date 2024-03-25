@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         if (gameManager.instance.playerShouldLoadStats)
             loadPlayerData();
         respawn();
+        sfxSettings = GameObject.FindObjectOfType<SFXSettings>();
         playerCurrentAmmo = playerMaxAmmo;
         walkingAudioSource = GetComponent<AudioSource>();
         sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateWalkingSoundVolume);
@@ -139,10 +140,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerCurrentGrenadeCooldown = playerGrenadeCooldown;
         gameManager.instance.updateHealthBarMax(playerHP, playerMaxHP);
         soundManager = GameObject.FindObjectOfType<SoundManager>();
-        if (soundManager == null)
-        {
-            Debug.LogError("SoundManager object not found in the scene.");
-        }
 
         /// jump 
 

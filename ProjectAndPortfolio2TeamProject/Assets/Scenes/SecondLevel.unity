@@ -19607,6 +19607,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347034523}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1350839359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7218155993786720836, guid: c2b91dc7ad162f44795547640d44d2f2, type: 3}
+  m_PrefabInstance: {fileID: 876759271}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121f596fe64149c43917c970e247205d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1353046459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26225,6 +26236,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2434981040916304303, guid: 3f80f583eed292a40853df9899d85553, type: 3}
+      propertyPath: sfxSettings
+      value: 
+      objectReference: {fileID: 1350839359}
     - target: {fileID: 3932315587194361411, guid: 3f80f583eed292a40853df9899d85553, type: 3}
       propertyPath: m_Name
       value: Player
