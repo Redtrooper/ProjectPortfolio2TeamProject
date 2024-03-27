@@ -327,6 +327,19 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                 gameManager.instance.enemyReportDead(this.transform);
                 if (IsDead)
                 {
+
+                    // stop move 
+                    enemyAgent.velocity = Vector3.zero;
+                    enemyAgent.isStopped = true;
+
+                    // stop coliiders 
+                    Collider[] colliders = GetComponentsInChildren<Collider>();
+                    foreach (Collider collider in colliders)
+                    {
+                        collider.enabled = false;
+                    }
+
+                    // death animation 
                     if (anim)
                         anim.SetTrigger("Death");
                     StartCoroutine(DestroyAfterAnimation());
@@ -334,6 +347,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             }
         }
     }
+
 
     private IEnumerator DestroyAfterAnimation()
     {
@@ -395,17 +409,17 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     {
         if (!isDying)
         {
-           
+
             List<Color> originalColors = new List<Color>();
             foreach (Renderer renderer in enemyModel)
             {
                 originalColors.Add(renderer.material.color);
-                renderer.material.color = Color.red; 
+                renderer.material.color = Color.red;
             }
 
             yield return new WaitForSeconds(.15f);
 
-          
+
             for (int i = 0; i < enemyModel.Count; i++)
             {
                 enemyModel[i].material.color = originalColors[i];
