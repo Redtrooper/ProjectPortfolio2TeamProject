@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemCount: 1
+  itemCountText: {fileID: 1337253693559236939}
   item: {fileID: 0}
 --- !u!1 &5001191408270740879
 GameObject:
