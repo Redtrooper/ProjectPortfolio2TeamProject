@@ -11,6 +11,7 @@ public class titleScreen : MonoBehaviour
     [SerializeField] GameObject optionsMenu;
     [SerializeField] GameObject creditsScreen;
     [SerializeField] TMP_Text titleText;
+    [SerializeField] TMP_Text creditsText;
 
     IEnumerator PlayAfterDelay()
     {
@@ -58,6 +59,13 @@ public class titleScreen : MonoBehaviour
     {
         creditsScreen.SetActive(true);
         this.GetComponent<menuControls>().freezeInput = true;
+        StartCoroutine(EnableCreditsTextAfterDelay());
+    }
+
+    IEnumerator EnableCreditsTextAfterDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        creditsText.gameObject.SetActive(true);
     }
 
     public void practice()
