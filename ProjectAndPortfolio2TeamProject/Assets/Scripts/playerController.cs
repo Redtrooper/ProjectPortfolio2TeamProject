@@ -284,10 +284,20 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
                 playerHasAirDash = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-            Crouch();
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
-            UnCrouch();
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+                Crouch();
+            else if (Input.GetKeyUp(KeyCode.C))
+                UnCrouch();
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+                Crouch();
+            else if (Input.GetKeyUp(KeyCode.LeftControl))
+                UnCrouch();
+        }
 
         float speed = isSprinting ? playerSprintSpeed : playerWalkSpeed;
         float horizontalInput = Input.GetAxisRaw("Horizontal");

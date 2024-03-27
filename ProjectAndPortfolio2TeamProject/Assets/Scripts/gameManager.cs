@@ -113,12 +113,25 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetButtonDown("Cancel") || Input.GetButtonDown("P")) && !isPaused)
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
         {
-            statePaused();
-            activeMenu = pauseMenu;
-            activeMenu.SetActive(isPaused);
-            confineCursor();
+            if ((Input.GetButtonDown("P")) && !isPaused)
+            {
+                statePaused();
+                activeMenu = pauseMenu;
+                activeMenu.SetActive(isPaused);
+                confineCursor();
+            } 
+        }
+        else
+        {
+            if ((Input.GetButtonDown("Cancel") && !isPaused)
+            {
+                statePaused();
+                activeMenu = pauseMenu;
+                activeMenu.SetActive(isPaused);
+                confineCursor();
+            }
         }
     }
 
