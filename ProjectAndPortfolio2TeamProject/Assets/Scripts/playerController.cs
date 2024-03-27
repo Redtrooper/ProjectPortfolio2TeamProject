@@ -498,27 +498,30 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
                 soundManager.PlaySound(shootSound, volume);
             }
         }
+        else if(Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo == 0 && !isReloading)
+        {
+            StartCoroutine(Reload());
+        }
         else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
         {
-            isReloading = true;
-            gameManager.instance.toggleReloadIcon();
-            playerWeaponAnimator.SetFloat("ReloadTime", 1 / playerReloadTime);
-            playerReloadAnimFX.SetActive(true);
-            Invoke("Reload", playerReloadTime);
-
-            if (soundManager != null && playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length > 0)
-            {
-                AudioClip reloadSound = playerWeaponList[playerSelectedWeapon].weaponReloadSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length)];
-                float volume = playerWeaponList[playerSelectedWeapon].weaponReloadSoundVol * soundManager.sfxVolumeSlider.value;
-                soundManager.sfxSource.PlayOneShot(reloadSound, volume);
-            }
+            StartCoroutine(Reload());
         }
     }
 
 
-    void Reload()
+    IEnumerator Reload()
     {
-
+        isReloading = true;
+        gameManager.instance.toggleReloadIcon();
+        playerWeaponAnimator.SetFloat("ReloadTime", 1 / playerReloadTime);
+        playerReloadAnimFX.SetActive(true);
+        if (soundManager != null && playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length > 0)
+        {
+            AudioClip reloadSound = playerWeaponList[playerSelectedWeapon].weaponReloadSound[Random.Range(0, playerWeaponList[playerSelectedWeapon].weaponReloadSound.Length)];
+            float volume = playerWeaponList[playerSelectedWeapon].weaponReloadSoundVol * soundManager.sfxVolumeSlider.value;
+            soundManager.sfxSource.PlayOneShot(reloadSound, volume);
+        }
+        yield return new WaitForSeconds(playerReloadTime);
         playerCurrentAmmo = playerMaxAmmo;
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
         gameManager.instance.toggleReloadIcon();
