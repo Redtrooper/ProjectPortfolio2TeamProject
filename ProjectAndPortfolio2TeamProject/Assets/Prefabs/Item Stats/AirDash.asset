@@ -24,7 +24,7 @@ MonoBehaviour:
   critChanceMultiplier: 1
   grenadeCount: 0
   airDash: 1
-  airDashSpeedMultiplier: 1.5
+  airDashSpeedMultiplier: 1.1
   bulletChase: 0
   damageMultiplier: 1
   bulletSpeedMultiplier: 1

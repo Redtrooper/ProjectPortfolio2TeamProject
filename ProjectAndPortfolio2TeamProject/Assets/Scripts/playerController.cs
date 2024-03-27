@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     // AirDash
     [SerializeField] float playerAirDashSpeed;
     private bool playerCanAirDash = false;
+    private bool playerHasAirDash = false;
 
     // Recoil
     [SerializeField] GameObject playerWeaponHolder;
@@ -279,7 +280,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         {
             playerVel = Vector3.zero;
             playerJumpCount = 0;
-            isAirDashing = false;
+            if (playerCanAirDash)
+                playerHasAirDash = true;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -301,7 +303,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             playerJumpCount++;
         }
 
-        playerVel.y += playerGravity * Time.deltaTime;
+        if (!isAirDashing)
+            playerVel.y += playerGravity * Time.deltaTime; 
         playerController.Move((playerVel + playerPushBack) * Time.deltaTime);
 
         if (isSprinting)
@@ -317,9 +320,9 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             }
         }
 
-        if (!isAirDashing && playerCanAirDash && !playerController.isGrounded && Input.GetButtonDown("Air Dash"))
+        if (!isAirDashing && playerHasAirDash && !playerController.isGrounded && Input.GetButtonDown("Air Dash"))
         {
-            airDash();
+            StartCoroutine(airDash());
         }
 
 
@@ -750,10 +753,15 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             return false;
     }
 
-    private void airDash()
+    private IEnumerator airDash()
     {
+        playerHasAirDash = false;
+        if (playerVel.y < 0)
+            playerVel.y = 0; 
         isAirDashing = true;
         playerVel = (Camera.main.transform.forward * playerAirDashSpeed) * playerAirDashSpeedMultiplier;
+        yield return new WaitForSeconds(0.15f);
+        isAirDashing = false;
     }
 
     public bool canBulletChase()
