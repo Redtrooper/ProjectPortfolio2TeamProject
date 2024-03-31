@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     // Private Weapon Variables
     private int playerMaxAmmo;
-    private int playerCurrentAmmo;
+    private List<int> playerCurrentAmmo = new List<int>() {0, 0};
     private float playerReloadTime;
     private float playerFireRate;
     private int playerWeaponKnockback;
@@ -128,13 +128,14 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         if (gameManager.instance.playerShouldLoadStats)
             loadPlayerData();
+        else
+            playerCurrentAmmo[playerSelectedWeapon] = playerMaxAmmo;
         respawn();
         sfxSettings = GameObject.FindObjectOfType<SFXSettings>();
-        playerCurrentAmmo = playerMaxAmmo;
         walkingAudioSource = GetComponent<AudioSource>();
         sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateWalkingSoundVolume);
         sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateDamageSoundVolume);
-        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo[playerSelectedWeapon]);
         playerOrigDamageRegenDelay = playerDamageRegenDelay;
         playerDamageRegenDelay = 0;
         playerGrenadeCount = playerMaxGrenades;
@@ -480,8 +481,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         Instantiate(playerProjectile, playerExitLocation.position, playerWeaponHolder.transform.rotation);
         StartCoroutine(MuzzleFlash());
         playerPushBack -= Camera.main.transform.forward * (playerWeaponKnockback * playerWeaponKnockbackMultiplier);
-        playerCurrentAmmo -= 1;
-        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
+        playerCurrentAmmo[playerSelectedWeapon] -= 1;
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo[playerSelectedWeapon]);
         yield return new WaitForSeconds(playerFireRate * playerFireRateMultiplier);
         isShooting = false;
     }
@@ -497,7 +498,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void Shoot()
     {
-        if (Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo > 0 && !isReloading)
+        if (Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo[playerSelectedWeapon] > 0 && !isReloading)
         {
             StartCoroutine(ShootTimer());
 
@@ -508,11 +509,11 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
                 soundManager.PlaySound(shootSound, volume);
             }
         }
-        else if(Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo == 0 && !isReloading)
+        else if(Input.GetButton("Shoot") && !isShooting && playerCurrentAmmo[playerSelectedWeapon] == 0 && !isReloading)
         {
             StartCoroutine(Reload());
         }
-        else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo < playerMaxAmmo)
+        else if (Input.GetButtonDown("Reload") && !isReloading && playerCurrentAmmo[playerSelectedWeapon] < playerMaxAmmo)
         {
             StartCoroutine(Reload());
         }
@@ -532,8 +533,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             soundManager.sfxSource.PlayOneShot(reloadSound, volume);
         }
         yield return new WaitForSeconds(playerReloadTime);
-        playerCurrentAmmo = playerMaxAmmo;
-        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
+        playerCurrentAmmo[playerSelectedWeapon] = playerMaxAmmo;
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo[playerSelectedWeapon]);
         gameManager.instance.toggleReloadIcon();
         isReloading = false;
         playerWeaponAnimator.SetFloat("ReloadTime", 1); 
@@ -612,7 +613,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
         playerFireRate = weapon.weaponFireRate;
         playerProjectile = weapon.weaponProjectile;
-        playerCurrentAmmo = weapon.weaponAmmoCurr;
+        playerCurrentAmmo[playerSelectedWeapon] = weapon.weaponAmmoMax;
         playerMaxAmmo = weapon.weaponAmmoMax;
         playerReloadTime = weapon.weaponReloadTime;
         playerWeaponKnockback = weapon.weaponKnockback;
@@ -620,7 +621,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerMuzzleFlash.transform.position = playerExitLocation.position;
         playerMuzzleFlash.transform.localPosition += Vector3.forward * .07f;
 
-        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo[playerSelectedWeapon]);
 
         changePlayerWeaponModel(weapon);
     }
@@ -631,7 +632,6 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerFireRate = playerWeaponList[playerSelectedWeapon].weaponFireRate;
         playerProjectile = playerWeaponList[playerSelectedWeapon].weaponProjectile;
 
-        playerCurrentAmmo = playerWeaponList[playerSelectedWeapon].weaponAmmoCurr;
         playerMaxAmmo = playerWeaponList[playerSelectedWeapon].weaponAmmoMax;
         playerReloadTime = playerWeaponList[playerSelectedWeapon].weaponReloadTime;
         playerWeaponKnockback = playerWeaponList[playerSelectedWeapon].weaponKnockback;
@@ -639,7 +639,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerMuzzleFlash.transform.position = playerExitLocation.position;
         playerMuzzleFlash.transform.localPosition += Vector3.forward * .07f;
 
-        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo);
+        gameManager.instance.updateAmmoCountUI(playerCurrentAmmo[playerSelectedWeapon]);
 
         changePlayerWeaponModel(playerWeaponList[playerSelectedWeapon]);
     }
@@ -667,17 +667,18 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
 
     void selectWeapon()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && playerSelectedWeapon < playerWeaponList.Count - 1)
+        if (!isReloading)
         {
-            playerWeaponList[playerSelectedWeapon].weaponAmmoCurr = playerCurrentAmmo;
-            playerSelectedWeapon++;
-            changeWeapon();
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && playerSelectedWeapon > 0)
-        {
-            playerWeaponList[playerSelectedWeapon].weaponAmmoCurr = playerCurrentAmmo;
-            playerSelectedWeapon--;
-            changeWeapon();
+            if (Input.GetAxis("Mouse ScrollWheel") > 0 && playerSelectedWeapon < playerWeaponList.Count - 1)
+            {
+                playerSelectedWeapon++;
+                changeWeapon();
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0 && playerSelectedWeapon > 0)
+            {
+                playerSelectedWeapon--;
+                changeWeapon();
+            } 
         }
     }
 
@@ -786,6 +787,8 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     {
         // Grenade Stats To Save
         PlayerPrefs.SetInt("Player MaxGrenades", playerMaxGrenades);
+        PlayerPrefs.SetInt("Player CurrentAmmo 1", playerCurrentAmmo[0]);
+        PlayerPrefs.SetInt("Player CurrentAmmo 2", playerCurrentAmmo[1]);
 
         // Player Weapon Data
         if (playerWeaponList.Count == 2)
@@ -827,6 +830,15 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
             int playerWeapon2 = PlayerPrefs.GetInt("Player WeaponTwo");
             if (playerWeapon2 != int.MaxValue && playerWeapon2 < gameManager.instance.playerWeapons.Count)
                 gameManager.instance.playerWeapons[playerWeapon2].givePlayerWeapon();
+        }
+
+        if (PlayerPrefs.HasKey("Player CurrentAmmo 1"))
+        {
+            playerCurrentAmmo[0] = PlayerPrefs.GetInt("Player CurrentAmmo 1");
+        }
+        if (PlayerPrefs.HasKey("Player CurrentAmmo 2"))
+        {
+            playerCurrentAmmo[1] = PlayerPrefs.GetInt("Player CurrentAmmo 2");
         }
     }
 }

@@ -11,7 +11,6 @@ public class weaponStats : ScriptableObject
     [Header("----- Weapon Stats -----")]
     public float weaponFireRate;
     public float weaponReloadTime;
-    public int weaponAmmoCurr;
     public int weaponAmmoMax;
     public int weaponKnockback;
     public bool weaponTakesAmmo;
