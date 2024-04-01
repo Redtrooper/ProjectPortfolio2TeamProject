@@ -2219,15 +2219,16 @@ MonoBehaviour:
     Effects - Unity Asset Store\r\nLowly Poly - Stylized Lava Texture - Unity Asset
     Store\r\nInfima Games - Toon Muzzle Flash Pack - Unity Asset Store\r\nPolygon
     Blacksmith - Toony Tiny WW1 Soldiers Demo - Unity Asset Store\r\nDungeon Mason
-    - Battle Wizard Poly Art - Unity Asset Store\r\n\r\n--------------Mixamo Animations
-    Used--------------\r\nMixamo - Standing Melee Attack Horizontal\r\n\r\n--------------Game
-    Icons Used--------------\r\nLorc - Sprint Icon - game-icons.net\r\nLorc - Targeting
-    Icon - game-icons.net\r\nDelapouite - Silver bullet icon - game-icons.net\r\nLorc
-    - Gunshot icon - game-icons.net\r\nLorc - Grenade icon - game-icons.net\r\nsbed
-    - Health increase icon - game-icons.net\r\nsbed - Key icon - game-icons.net\r\nLorc
-    - Transfuse icon - game-icons.net\r\nPriorBlue - Increasing Battery icon - game-icons.net\r\nrihlsul
-    - Milk carton icon - game-icons.net\r\nDelapouite - Take mny money icon - game-icons.net\r\nDelapouite
-    - Healing icon - game-icons.net\r\nsbed - Falling icon - game-icons.net\r\n"
+    - Battle Wizard Poly Art - Unity Asset Store\r\nJohnFarmer - Keyboard Keys &
+    Mouse Sprites - Unity Asset Store\n\r\n--------------Mixamo Animations Used--------------\r\nMixamo
+    - Standing Melee Attack Horizontal\r\n\r\n--------------Game Icons Used--------------\r\nLorc
+    - Sprint Icon - game-icons.net\r\nLorc - Targeting Icon - game-icons.net\r\nDelapouite
+    - Silver bullet icon - game-icons.net\r\nLorc - Gunshot icon - game-icons.net\r\nLorc
+    - Grenade icon - game-icons.net\r\nsbed - Health increase icon - game-icons.net\r\nsbed
+    - Key icon - game-icons.net\r\nLorc - Transfuse icon - game-icons.net\r\nPriorBlue
+    - Increasing Battery icon - game-icons.net\r\nrihlsul - Milk carton icon - game-icons.net\r\nDelapouite
+    - Take mny money icon - game-icons.net\r\nDelapouite - Healing icon - game-icons.net\r\nsbed
+    - Falling icon - game-icons.net\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 254002f6cd3d8d043bd741c218a9b1a8, type: 2}
   m_sharedMaterial: {fileID: -7110174900356115115, guid: 254002f6cd3d8d043bd741c218a9b1a8, type: 2}

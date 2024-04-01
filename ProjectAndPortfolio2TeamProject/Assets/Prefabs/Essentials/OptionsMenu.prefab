@@ -2833,6 +2833,7 @@ MonoBehaviour:
   firstTimeItemUI: {fileID: 808654903435644786}
   animController: {fileID: 1797235005156344202}
   musicVolumeSlider: {fileID: 925600064168004272}
+  parentObject: {fileID: 0}
 --- !u!114 &7986982250459018662
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b88cc35c5f962449974285872cf86d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHP: 50
+  enemyHP: 225
   enemyTurnSpeed: 300
   enemySpeed: 1
   enemyFireRate: 0.8

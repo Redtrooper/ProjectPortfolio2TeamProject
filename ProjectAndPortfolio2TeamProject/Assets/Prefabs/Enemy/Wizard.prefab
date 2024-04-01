@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999f6229376d0ea43adbd8da7963801e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHP: 10
+  enemyHP: 25
   enemyTurnSpeed: 300
   enemySpeed: 3
   enemyFireRate: 1

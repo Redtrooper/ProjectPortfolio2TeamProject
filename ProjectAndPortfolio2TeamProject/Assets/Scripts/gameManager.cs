@@ -84,17 +84,34 @@ public class gameManager : MonoBehaviour
     [SerializeField] int maxExplosionFX;
     private int currentExplosionFX;
 
+    // Control Screen
+    [SerializeField] GameObject controlScreen;
+    [SerializeField] GameObject webGLControlScreen;
+
     void Awake()
     {
         if (PlayerPrefs.HasKey("Player ShouldLoadStats"))
+        {
             playerShouldLoadStats = PlayerPrefs.GetInt("Player ShouldLoadStats") == 1 ? true : false;
+        }
         instance = this;
         timeScale = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Player Spawn Position");
         if (playerShouldLoadStats)
+        { 
+            if(Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                webGLControlScreen.SetActive(true);
+            }
+            else
+            {
+                controlScreen.SetActive(true);
+            }
             loadUIData();
+        }
+
         maxHP = playerScript.getHP();
         maxStamina = playerScript.getMaxStamina();
         staminaBarColor = staminaBar.color;
