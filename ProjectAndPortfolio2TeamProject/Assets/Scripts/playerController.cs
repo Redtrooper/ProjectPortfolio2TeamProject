@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
     //testing sound
     public SFXSettings sfxSettings;
     public SoundManager soundManager;
+    public static PlayerController instance;
 
     public AudioClip[] walkingSounds;
     public AudioSource walkingAudioSource;
@@ -133,6 +134,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         respawn();
         sfxSettings = GameObject.FindObjectOfType<SFXSettings>();
         walkingAudioSource = GetComponent<AudioSource>();
+        soundManager = GameObject.FindObjectOfType<SoundManager>();
         sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateWalkingSoundVolume);
         sfxSettings.sfxVolumeSlider.onValueChanged.AddListener(UpdateDamageSoundVolume);
         gameManager.instance.updateAmmoCountUI(playerCurrentAmmo[playerSelectedWeapon]);
@@ -142,6 +144,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         playerCurrentGrenadeCooldown = playerGrenadeCooldown;
         gameManager.instance.updateHealthBarMax(playerHP, playerMaxHP);
         soundManager = GameObject.FindObjectOfType<SoundManager>();
+
 
         /// jump 
 
@@ -202,7 +205,7 @@ public class PlayerController : MonoBehaviour, IDamage, IHeal, IPhysics
         damageAudioSource.PlayOneShot(damageSounds[randomIndex]);
     }
 
-    void UpdateWalkingSoundVolume(float newValue)
+    public void UpdateWalkingSoundVolume(float newValue)
     {
         walkingAudioSource.volume = newValue;
     }

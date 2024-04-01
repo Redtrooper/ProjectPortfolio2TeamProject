@@ -20,10 +20,7 @@ public class MusicSettings : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        // Update the volume parameter with the value from the slider
         volume = musicVolumeSlider.value;
-
-        // Set the volume to the SoundManager instance
         soundManager.SetMusicVolume(volume);
 
         if (volume > 0 && !soundManager.musicSource.isPlaying)
@@ -31,7 +28,6 @@ public class MusicSettings : MonoBehaviour
             soundManager.PlayMusic("MusicThemes");
         }
 
-        // Save the setting
         PlayerPrefs.SetFloat(MusicVolumeKey, volume);
     }
 

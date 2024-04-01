@@ -21,25 +21,9 @@ public class SoundManager : MonoBehaviour
     private const string MusicVolumeKey = "MusicVolume";
     private const string SFXVolumeKey = "SFXVolume";
 
+    private bool musicStarted = false;
 
-
-    private void Start()
-    {
-        float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
-        SetMusicVolume(savedMusicVolume);
-
-        float savedSFXVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
-        SetSFXVolume(savedSFXVolume);
-
-        musicVolumeSlider.value = savedMusicVolume;
-        sfxVolumeSlider.value = savedSFXVolume;
-
-        if (savedMusicVolume > 0f || musicVolumeSlider.value > 0f)
-            PlayMusic("MusicThemes");
-    }
-
-
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
@@ -53,47 +37,39 @@ public class SoundManager : MonoBehaviour
 
         musicSource = gameObject.AddComponent<AudioSource>();
         sfxSource = gameObject.AddComponent<AudioSource>();
+
+        // Set default volume values
+        float defaultMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+        float defaultSFXVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
+        musicVolumeSlider.value = defaultMusicVolume;
+        sfxVolumeSlider.value = defaultSFXVolume;
+        SetMusicVolume(defaultMusicVolume);
+        SetSFXVolume(defaultSFXVolume);
+    }
+
+    private void Start()
+    {
+        if (musicVolumeSlider.value > 0f)
+            PlayMusic("MusicThemes");
     }
 
     public void SetMusicVolume(float volume)
     {
         musicSource.volume = volume;
-        PlayerPrefs.SetFloat("MusicVolume", volume);
+        PlayerPrefs.SetFloat(MusicVolumeKey, volume);
+
+        if (!musicStarted && volume > 0f)
+        {
+            PlayMusic("MusicThemes");
+            musicStarted = true;
+        }
     }
 
     public void SetSFXVolume(float volume)
     {
         sfxSource.volume = volume;
         PlayerPrefs.SetFloat(SFXVolumeKey, volume);
-
-        foreach (Sound sound in SFXSounds)
-        {
-            foreach (AudioClip clip in sound.clips)
-            {
-                if (clip != null && sfxSource.isPlaying && sfxSource.clip == clip)
-                {
-                    sfxSource.volume = volume;
-                    return;
-                }
-            }
-        }
     }
-
-    private IEnumerator ChangeMusicVolume(float volume)
-    {
-        float currentTime = 0;
-        float startVolume = musicSource.volume;
-
-        while (currentTime < musicVolumeChangeDuration)
-        {
-            currentTime += Time.deltaTime;
-            musicSource.volume = Mathf.Lerp(startVolume, volume, currentTime / musicVolumeChangeDuration);
-            yield return null;
-        }
-
-        musicSource.volume = volume;
-    }
-
 
     public void PlayMusic(string musicTheme)
     {
@@ -118,7 +94,6 @@ public class SoundManager : MonoBehaviour
             musicSource.Stop();
         }
     }
-
 
     private Sound FindMusicThemeByName(string musicTheme)
     {
