@@ -1531,7 +1531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4d78d6f368d5248a054491c0afd947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDestroy: 4
+  timeToDestroy: 6
   anim: {fileID: 3336369875058201191}
 --- !u!95 &3336369875058201191
 Animator:

@@ -101,7 +101,11 @@ public class gameManager : MonoBehaviour
         playerSpawn = GameObject.FindWithTag("Player Spawn Position");
         if (playerShouldLoadStats)
         { 
-            if(Application.platform == RuntimePlatform.WebGLPlayer)
+            loadUIData();
+        }
+        else
+        {
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
             {
                 webGLControlScreen.SetActive(true);
             }
@@ -109,7 +113,6 @@ public class gameManager : MonoBehaviour
             {
                 controlScreen.SetActive(true);
             }
-            loadUIData();
         }
 
         maxHP = playerScript.getHP();
